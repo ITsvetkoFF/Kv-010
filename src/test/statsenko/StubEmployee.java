@@ -10,7 +10,7 @@ public class StubEmployee {
     public StubEmployee(){
         String name = "Adam";
         int age = 22;
-        int seniority = 2;
+        int seniority = 23;
         int hours = 160;
         if (seniority > age){
             throw new MyException("Exception.");
