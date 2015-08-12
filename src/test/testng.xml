@@ -8,6 +8,9 @@
 			<class name="com.softserve.edu.TestNGTest1" />
 			<class name="com.softserve.edu.TestNGTest2" />
 			 -->
+			<class name="test.deorditsa.EmployeeGetPaymentTest" />
+			<class name="test.deorditsa.MyExceptionTest" />
+			<class name="test.JuniorEmployeeTest" />
 			<class name="test.SeniorEmployeeTest" />
 			<class name="test.JuniorEmployeeTest" />
 		</classes>
