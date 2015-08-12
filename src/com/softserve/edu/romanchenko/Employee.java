@@ -1,8 +1,8 @@
+package com.softserve.edu.romanchenko;
 
-package com.softserve.edu;
 
-import com.softserve.edu.MyException;
-import com.softserve.edu.Worker;
+import com.softserve.edu.romanchenko.MyException;
+import com.softserve.edu.romanchenko.Worker;
 
 public abstract class Employee implements Worker, Comparable<Employee> {
     protected String name;
@@ -55,4 +55,3 @@ public abstract class Employee implements Worker, Comparable<Employee> {
         return this.hours;
     }
 }
-

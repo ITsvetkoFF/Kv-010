@@ -1,6 +1,8 @@
+package com.softserve.edu.romanchenko;
 
-package com.softserve.edu;
-
+/**
+ * Created by vika on 12.08.15.
+ */
 public interface Worker {
     String getName();
 
@@ -10,4 +12,3 @@ public interface Worker {
 
     double getPayment();
 }
-

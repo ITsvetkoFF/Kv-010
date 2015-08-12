@@ -1,6 +1,7 @@
-package com.softserve.edu;
+package com.softserve.edu.romanchenko;
 
-import com.softserve.edu.Employee;
+
+import com.softserve.edu.romanchenko.Employee;
 
 public class SeniorEmployee extends Employee {
     public SeniorEmployee(String eName, int eAge, int eSeniority, int eHours) {

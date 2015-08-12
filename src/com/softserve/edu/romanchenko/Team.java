@@ -1,8 +1,8 @@
-package com.softserve.edu;
+package com.softserve.edu.romanchenko;
 
-import com.softserve.edu.Employee;
-import com.softserve.edu.JuniorEmployee;
-import com.softserve.edu.SeniorEmployee;
+import com.softserve.edu.romanchenko.Employee;
+import com.softserve.edu.romanchenko.JuniorEmployee;
+import com.softserve.edu.romanchenko.SeniorEmployee;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -70,4 +70,3 @@ public class Team {
 
     }
 }
-

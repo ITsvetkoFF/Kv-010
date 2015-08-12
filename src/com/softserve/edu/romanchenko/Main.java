@@ -1,7 +1,6 @@
-package com.softserve.edu;
+package com.softserve.edu.romanchenko;
 
-import com.softserve.edu.GetPaymentTest;
-import com.softserve.edu.Team;
+import com.softserve.edu.romanchenko.Team;
 
 public class Main {
     public Main() {
@@ -12,8 +11,5 @@ public class Main {
         team.createTeam();
         team.sortTeam();
         team.createArrayOfEmployees();
-        GetPaymentTest getPaymentTest = new GetPaymentTest();
-        getPaymentTest.Test();
     }
 }
-
