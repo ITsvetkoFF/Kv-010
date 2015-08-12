@@ -8,8 +8,8 @@
 			<class name="com.softserve.edu.TestNGTest1" />
 			<class name="com.softserve.edu.TestNGTest2" />
 			 -->
-			<class name="test.SeniorEmployeeTest" />
-			<class name="test.JuniorEmployeeTest" />
+			<class name="test.moshchonskiy.SeniorEmployeeTest" />
+			<class name="test.moshchonskiy.JuniorEmployeeTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
