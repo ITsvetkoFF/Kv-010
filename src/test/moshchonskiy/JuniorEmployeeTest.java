@@ -1,4 +1,4 @@
-package test;
+package test.moshchonskiy;
 
 import com.softserve.edu.moshchonskiy.JuniorEmployee;
 import com.softserve.edu.moshchonskiy.MyException;
@@ -6,6 +6,7 @@ import com.softserve.edu.moshchonskiy.stubs.StubJuniorEmployee;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Evgen on 8/12/2015.
