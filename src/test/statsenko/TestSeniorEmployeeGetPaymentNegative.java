@@ -12,7 +12,7 @@ public class TestSeniorEmployeeGetPaymentNegative {
     public void getPaymentTest(){
         StubSeniorEmployeeNegative iStubSeniorEmployee = new StubSeniorEmployeeNegative();
         double actualPayment = 6.5 * iStubSeniorEmployee.getSeniority() * iStubSeniorEmployee.getHours();
-        double expectedPayment = 2280;
+        double expectedPayment = 22880;
         Assert.assertEquals(expectedPayment, actualPayment, 0);
     }
 }
