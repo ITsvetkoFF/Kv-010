@@ -1,4 +1,4 @@
-package test.Masha_Test;
+package test.vlasenko;
 
 /**
  * Created by mvlasetc on 12.08.2015.
