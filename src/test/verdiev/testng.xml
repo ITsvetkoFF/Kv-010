@@ -4,7 +4,7 @@
 	<test name="Test">
 		<parameter name="number" value="222" />
 		<classes>
-			<class name="test.verdiev.JuniorEmployeeTest2" />
+			<class name="test.verdiev.JuniorEmployeeTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

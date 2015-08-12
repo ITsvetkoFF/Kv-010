@@ -3,12 +3,7 @@ package test.verdiev;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
-/**
- * Created by yioteh on 11.08.15.
- */
-public class JuniorEmployeeTest2 {
+public class JuniorEmployeeTest {
 
     @Test
     public void testGetPayment() throws Exception {

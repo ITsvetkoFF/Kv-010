@@ -15,10 +15,7 @@ abstract public class Employee implements Worker, Comparable{
         this.seniority = seniority;
         this.hours = hours;
         if (seniority > age){
-            try {
                 throw new MyException("Attention! " + name + "'s work experience can't be true.");
-            }catch (MyException ex){
-            }
         }
     }
 
