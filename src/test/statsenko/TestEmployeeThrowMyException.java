@@ -1,4 +1,4 @@
-package test;
+package test.statsenko;
 
 import com.softserve.edu.statsenko.MyException;
 import org.junit.Assert;

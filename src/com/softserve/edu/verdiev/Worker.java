@@ -1,9 +1,9 @@
-package com.softserve.edu.moshchonskiy;
+package com.softserve.edu.verdiev;
 
 /**
- * Created by Evgen on 8/8/2015.
+ * Created by yioteh on 09.08.15.
  */
-public interface IWorker {
+public interface Worker {
 
     String getName();
 

@@ -1,4 +1,4 @@
-package test;
+package test.statsenko;
 
 /**
  * Created by stako on 11.08.2015.

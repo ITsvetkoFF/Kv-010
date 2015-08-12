@@ -3,7 +3,7 @@ package com.softserve.edu.statsenko;
 /**
  * Created by stako on 08.08.2015.
  */
-public class SeniorEmployee extends Employee{
+public class SeniorEmployee extends Employee {
     private String name;
     private int age;
     private int seniority;

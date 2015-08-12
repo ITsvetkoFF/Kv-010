@@ -1,11 +1,11 @@
-package test;
+package test.statsenko;
 
 /**
  * Created by stako on 11.08.2015.
  */
-public class StubJuniorEmployee implements IJuniorEmployee {
+public class StubSeniorEmployeeNegative implements IJuniorEmployee {
 
-    public StubJuniorEmployee(){
+    public StubSeniorEmployeeNegative(){
     }
 
     @Override
@@ -25,5 +25,4 @@ public class StubJuniorEmployee implements IJuniorEmployee {
     public int getHours(){
         return 160;
     }
-
 }

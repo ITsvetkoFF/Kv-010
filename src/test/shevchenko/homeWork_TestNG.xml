@@ -4,10 +4,10 @@
     <test name="Test">
         <classes>
             <class name="test.shevchenko.JuniorEmployeeStub" />
-            <class name="Week1.home_work1_unitTest.SeniorEmployeeStub" />
-            <class name="Week1.home_work1_unitTest.JuniorEmployeeTest" />
-            <class name="Week1.home_work1_unitTest.SeniorEmployeeTest" />
-            <class name="Week1.home_work1_unitTest.TestCreateObjectEmployee" />
+            <class name="test.shevchenko.SeniorEmployeeStub" />
+            <class name="test.shevchenko.JuniorEmployeeTest" />
+            <class name="test.shevchenko.SeniorEmployeeTest" />
+            <class name="test.shevchenko.TestCreateObjectEmployee" />
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
