@@ -1,7 +1,7 @@
 package test.statsenko;
 
+import com.softserve.edu.statsenko.JuniorEmployee;
 import com.softserve.edu.statsenko.MyException;
-import org.junit.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -9,9 +9,8 @@ import org.testng.annotations.Test;
  */
 public class TestEmployeeThrowMyException {
 
-    @Test(expectedExceptions = MyException.class, timeOut = 10000)
+    @Test(expectedExceptions = MyException.class)
     public void testEmployeeThrowMyException(){
-        StubEmployee employee = new StubEmployee();
-        Assert.assertNotNull(employee);
+        new JuniorEmployee("Adam", 22, 23, 160);
     }
 }
