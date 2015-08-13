@@ -6,7 +6,6 @@ import com.softserve.edu.moshchonskiy.stubs.StubJuniorEmployee;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Evgen on 8/12/2015.
@@ -30,13 +29,13 @@ public class JuniorEmployeeTest {
 
 
 
-        @Test(expectedExceptions = MyException.class)
+    @Test(expectedExceptions = MyException.class)
 
-        public void constructorWithException( ) {
+    public void constructorWithException( ) {
 
-            JuniorEmployee jun = new JuniorEmployee("Sasha", 16, 3, 180);
+        JuniorEmployee jun = new JuniorEmployee("Sasha", 16, 3, 180);
 
-        }
+    }
 
 
 

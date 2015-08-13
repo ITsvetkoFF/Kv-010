@@ -6,7 +6,6 @@ import com.softserve.edu.moshchonskiy.stubs.StubSeniorEmployee;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by Evgen on 8/12/2015.
