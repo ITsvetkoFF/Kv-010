@@ -1,4 +1,4 @@
-package test.Masha_Test;
+package test.vlasenko;
 
 import com.softserve.edu.Worker;
 
