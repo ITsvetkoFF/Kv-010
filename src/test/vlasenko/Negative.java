@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 
 public class Negative  {
     @Test (expectedExceptions = com.softserve.edu.vlasenko.MyException.class)
-    public void testNegotiv1 () { new  JuniorEmployee("Susana", 24,25, 2000); }
+    public void testNegotiv1 () { new  JuniorEmployee("Mymy", 24,25, 2000); }
 
     @Test (expectedExceptions = com.softserve.edu.vlasenko.MyException.class)
     public void testNegotiv2 ()  {
-        new   SeniorEmployee("Susana", 24, 25, 2000);
+        new   SeniorEmployee("Mimi", 24, 25, 2000);
     }
 
 }

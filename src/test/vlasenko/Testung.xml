@@ -3,8 +3,8 @@
 <suite name="Suite" parallel="none">
 	<test name="Test">
 		<classes>
-			<class name="test..MyExceptionTest" />
-			<class name="test..EmployeeGetPaymentTest" />
+			<class name="test.vlasenko.JuniorEmployeeTest" />
+			<class name="test.vlasenko.SeniorEmployeeTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

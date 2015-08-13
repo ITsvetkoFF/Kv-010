@@ -1,9 +1,15 @@
-
 package test.vlasenko;
 
+import com.softserve.edu.vlasenko.Worker;
+import org.testng.annotations.BeforeTest;
 
-import com.softserve.edu.deorditsa.Worker;
-import com.softserve.edu.vlasenko.Employee;
 
-public class SeniorEmployeeTest implements Employee {
-    @Override
+public class SeniorEmployeeTest {
+    Worker test;
+
+    @BeforeTest
+    public void init() {
+        test = new SeniorEmployeeStub("Nael", 23, 1, 1222);
+
+    }
+}

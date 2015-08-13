@@ -1,15 +1,16 @@
 package test.vlasenko;
 
-import com.softserve.edu.Worker;
+import com.softserve.edu.vlasenko.Worker;
+import org.testng.annotations.BeforeTest;
 
-/**
- * Created by mvlasetc on 12.08.2015.
- */
+
 public class JuniorEmployeeTest {
     Worker test;
+
     @BeforeTest
-    public void init ()
-    {
-        test = new StubJuniorEmployee("Nael", 23,1,1222);
+    public void init() {
+        test = new JuniorEmployeeStub("Nael", 23, 1, 1222);
+
     }
+}
 
