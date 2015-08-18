@@ -7,5 +7,6 @@
         <suite-file path="shevchenko/homeWork_TestNG.xml" />
         <suite-file path="statsenko/testng.xml" />
         <suite-file path="deorditsa/testng.xml" />
+        <suite-file path="moshchonskiy/testng.xml" />
     </suite-files>
 </suite>
