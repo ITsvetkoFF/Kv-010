@@ -9,7 +9,7 @@ public class SeniorEmployeeTest {
 
     @BeforeTest
     public void init() {
-        test = new SeniorEmployeeStub("Nael", 23, 1, 1222);
+        test = new SeniorEmployeeStub("MiMi", 23, 1, 1222);
 
     }
 }
