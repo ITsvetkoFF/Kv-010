@@ -57,27 +57,31 @@ public class ExcelUtils {
                 }
             }
             return tabArray;
-        }
-        catch (FileNotFoundException e){
+        } catch (IOException e){
             System.out.println("Could not read the Excel sheet");
             e.printStackTrace();
         }
-        catch (IOException e){
-            System.out.println("Could not read the Excel sheet");
-            e.printStackTrace();
-        }
-        return(tabArray);
+        return tabArray;
     }
 
     //This method is to read the test data from the Excel cell, in this we are passing parameters as Row num and Col num
-    public static String getCellData(int RowNum, int ColNum) throws Exception{
+    public static String getCellData(int RowNum, int ColNum){
+        String result = "";
         try{
-            Cell = ExcelWSheet.getRow(RowNum).getCell(ColNum);
-            String CellData = Cell.getStringCellValue();
-            return CellData;
+            Row = ExcelWSheet.getRow(RowNum);
+            if(Row == null){
+                return "";
+            }
+            Cell = Row.getCell(ColNum);
+            if(Cell == null){
+                return "";
+            }
+            result =  Cell.getStringCellValue();
         }catch (Exception e){
-            return"";
+            System.out.println("Something wrong with data from Excel sheet");
+            e.printStackTrace();
         }
+        return result;
     }
 
     //This method is to write in the Excel cell, Row num and Col num are the parameters
@@ -91,20 +95,20 @@ public class ExcelUtils {
             } else {
                 Cell.setCellValue(Result);
             }
-// Constant variables Test Data path and Test Data file name
+            // Constant variables Test Data path and Test Data file name
             FileOutputStream fileOut = new FileOutputStream(Constant.Path_TestData + Constant.File_TestData);
             ExcelWBook.write(fileOut);
             fileOut.flush();
             fileOut.close();
-        }catch(Exception e){
-            throw (e);
+        } catch(Exception e){
+            e.printStackTrace();
         }
     }
     public static int getColumnsNumber() throws Exception {
-        int ci = 0;
-        while (getCellData(0, ci).length() != 0) {
-            ci++;
+        int colNum = 0;
+        while (!getCellData(0, colNum).isEmpty()) {
+            colNum++;
         }
-        return ci--;
+        return colNum;
     }
 }
