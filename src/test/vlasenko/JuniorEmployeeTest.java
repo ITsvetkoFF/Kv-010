@@ -9,7 +9,7 @@ public class JuniorEmployeeTest {
 
     @BeforeTest
     public void init() {
-        test = new JuniorEmployeeStub("Nael", 23, 1, 1222);
+        test = new JuniorEmployeeStub("MyMi", 23, 15, 1222);
 
     }
 }

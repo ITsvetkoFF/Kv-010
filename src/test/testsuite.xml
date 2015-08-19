@@ -8,5 +8,8 @@
         <suite-file path="statsenko/testng.xml" />
         <suite-file path="deorditsa/testng.xml" />
         <suite-file path="moshchonskiy/testng.xml" />
+        <suite-file path="vlasenko/Testung.xml" />
+
+
     </suite-files>
 </suite>

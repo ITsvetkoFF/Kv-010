@@ -8,8 +8,9 @@ import com.softserve.edu.vlasenko.Employee;
  */
 public class SeniorEmployeeStub extends Employee implements Worker{
 
-    public SeniorEmployeeStub(String name, int age, int seniority, int hours) {
-        super(name, age, seniority, hours);
+    public SeniorEmployeeStub(String name, int age, int seniority, int hours)
+    {
+        super("Mary", 25, 3, 800);
     }
 
     @Override
