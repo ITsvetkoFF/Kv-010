@@ -37,8 +37,8 @@ public class MainLocalTest {
                         "admin",                                                                  // admin password
                         "testFirstName",                                                          // new user first name
                         "testLastName",                                                           // new user last name
-                        "test@test.com",                                                          // new user email
-                        "test",                                                                   // new user password
+                        "name0@name.com",                                                          // new user email
+                        "name0",                                                                   // new user password
                         "comment1"                                                                // user's comment
                 }
 
@@ -71,12 +71,27 @@ public class MainLocalTest {
         List<String> gettedURLs;
         List<String> gettedComments;
 
-
-
+/*        anyPage.logIn(newUserEmail, newUserPassword);
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }*/
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemTitle, problemType, problemDescription,
                 problemSolution, imageURLs, imageComments);
+        /*try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+        anyPage.logOut();
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }*/
         anyPage.logIn(adminEmail, adminPassword);
-
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
         Assert.assertTrue(adminPage.checkProblemIsUnderModeration(problemTitle));
 
         adminPage.approveProblem(problemTitle);

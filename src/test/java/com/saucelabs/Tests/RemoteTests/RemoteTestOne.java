@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.DemoTests;
+package com.saucelabs.Tests.RemoteTests;
 
 import com.saucelabs.AdminPage;
 import com.saucelabs.AnyPage;
