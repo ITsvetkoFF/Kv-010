@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/enviromap</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.validator.apply_to_ddl">false</property>
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Activities" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Devicetokens" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Photos" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Problems" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.News" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Userroles" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Resources" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Users" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Activitytypes" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.Problemtypes" />
+    </session-factory>
+</hibernate-configuration>
