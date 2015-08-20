@@ -21,13 +21,13 @@ public class ImageDistanceCalculator {
     private static final double similarityThreshold = 500.0;
     private static final int baseSize = 300;
 
+
     public static boolean isImagesSimilar(String image1UTLString, String image2UTLString) throws IOException {
         URL image1URL = new URL(image1UTLString);
         URL image2URL = new URL(image2UTLString);
         BufferedImage image1 = ImageIO.read(image1URL);
         BufferedImage image2 = ImageIO.read(image2URL);
         double dist = ImageDistanceCalculator.imageDistance(image1, image2);
-
         return dist < similarityThreshold;
     }
 
@@ -52,6 +52,7 @@ public class ImageDistanceCalculator {
             }
         return dist;
     }
+
     public static BufferedImage toBufferedImage(Image image) {
         if (image instanceof BufferedImage) {return (BufferedImage)image;}
         image = new ImageIcon(image).getImage();
@@ -75,14 +76,19 @@ public class ImageDistanceCalculator {
         g.dispose();
         return bimage;
     }
+
+    // Returns whether or not alpha (component for the specified pixel, scaled from 0 to 255) is supported in this ColorModel.
     public static boolean hasAlpha(Image image) {
         if (image instanceof BufferedImage) {return ((BufferedImage)image).getColorModel().hasAlpha();}
         PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
         try {pg.grabPixels();} catch (InterruptedException e) {}
         return pg.getColorModel().hasAlpha();
     }
-    private static Color[][] calcSignature(RenderedImage i)
-    {
+
+    /*
+     * This method calculates and returns signature vectors for the input image.
+     */
+    private static Color[][] calcSignature(RenderedImage i){
         // Get memory for the signature.
         Color[][] sig = new Color[5][5];
         // For each of the 25 signature values average the pixels around it.
@@ -94,8 +100,13 @@ public class ImageDistanceCalculator {
                 sig[x][y] = averageAround(i, prop[x], prop[y]);
         return sig;
     }
-    private static Color averageAround(RenderedImage i, double px, double py)
-    {
+
+    /*
+    * This method averages the pixel values around a central point and return the
+    * average as an instance of Color. The point coordinates are proportional to
+    * the image.
+    */
+    private static Color averageAround(RenderedImage i, double px, double py){
         // Get an iterator for the image.
         RandomIter iterator = RandomIterFactory.create(i, null);
         // Get memory for a pixel and for the accumulator.
@@ -122,6 +133,11 @@ public class ImageDistanceCalculator {
         accum[2] /= numPixels;
         return new Color((int) accum[0], (int) accum[1], (int) accum[2]);
     }
+
+     /*
+     * This method rescales an image to 300,300 pixels
+     * using the JAI scale operator.
+     */
     private static BufferedImage rescale(BufferedImage i) {
         BufferedImage scaledImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = scaledImage.createGraphics();

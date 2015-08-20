@@ -95,10 +95,16 @@ public class NaiveSimilarityFinder extends JFrame {
         return bimage;
     }
 
+
+    // Returns whether or not alpha (component for the specified pixel, scaled from 0 to 255) is supported in this ColorModel.
     public static boolean hasAlpha(Image image) {
-        if (image instanceof BufferedImage) {return ((BufferedImage)image).getColorModel().hasAlpha();}
+        if (image instanceof BufferedImage) {
+            return ((BufferedImage)image).getColorModel().hasAlpha();
+        }
         PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
-        try {pg.grabPixels();} catch (InterruptedException e) {}
+        try {
+            pg.grabPixels();
+        } catch (InterruptedException e) {}
         return pg.getColorModel().hasAlpha();
     }
 
@@ -177,16 +183,6 @@ public class NaiveSimilarityFinder extends JFrame {
         graphics2D.drawImage(i, 0, 0, baseSize, baseSize, null);
         graphics2D.dispose();
         return scaledImage;
-//	  float scaleW = ((float) baseSize) / i.getWidth();
-//    float scaleH = ((float) baseSize) / i.getHeight();
-//    ParameterBlock pb = new ParameterBlock();
-//    pb.addSource(i);
-//    pb.add(scaleW);
-//    pb.add(scaleH);
-//    pb.add(0.0F);
-//    pb.add(0.0F);
-//    pb.add(new InterpolationNearest());
-//    return JAI.create("scale", pb).getAsBufferedImage();
     }
 
     /*
@@ -304,7 +300,7 @@ public class NaiveSimilarityFinder extends JFrame {
         }
     }
 
-};
+}
 
 class DisplayJAI extends JPanel {
 

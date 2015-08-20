@@ -5,7 +5,7 @@ package utility;
  */
 public class Constant {
     public static final String URLlocal = "http://localhost:8090/#/map";
-    public static final String URL = "http://176.36.11.25/#/map";
+    public static final String URL = "http://176.36.11.25/#/map";                               // ?
     public static final String Username = "admin@.com";
     public static final String Password = "admin";
     public static final String Path_TestData = ".\\resources\\";
@@ -18,8 +18,7 @@ public class Constant {
     public static final String HashKey = "qawvAsgn2GRtPww066ShB6cX79ZUAV7KTzXXvNIzkr0IlLnJ";
     public static final String Path_DeleteProblemTestData = ".\\resources\\";
     public static final String File_DeleteProblemTestData = "DeleteProblemTestData.xlsx";
-    public static final String Path_ImagesLocalFolder = "C:\\Users\\ykadytc\\KV004\\frontend\\photos\\large";
-    //public static final String Path_ImagesLocalFolder = "C:\\Users\\yermek\\KV004\\frontend\\dist\\photos\\large";
+    public static final String Path_ImagesLocalFolder = ".\\Kv-010\\frontend\\photos\\large";
     public static final String Path_SimpleUserCreateData = ".\\resources\\";
     public static final String File_SimpleUserCreateData = "SimpleUser.xlsx";
     public static final String Path_AdminUserCreateData = ".\\resources\\";

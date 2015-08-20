@@ -22,7 +22,7 @@ class Runner implements Runnable {
     public void run() {
         try {
             Thread.sleep(2000);
-            Robot robot = new Robot();
+            Robot robot = new Robot();        //Class Java.awt.Robot used for emulation of push button of mouse and keyboard. This class can perform actions with keyboard and mouse directly from code.
             StringSelection stringSelection = new StringSelection(filePath);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
             robot.keyPress(KeyEvent.VK_CONTROL);

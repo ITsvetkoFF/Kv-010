@@ -5,7 +5,6 @@ package utility;
  */
 
 import java.io.File;
-import java.util.List;
 
 public class FileSystem {
     private File[] listOfFiles;
@@ -14,12 +13,14 @@ public class FileSystem {
         this.getListOfFiles(folderName);
     }
 
+    // get list of files from "folderName"
     private void getListOfFiles(String folderName) {
         File folder = new File(folderName);
         this.listOfFiles = folder.listFiles();
         return;
     }
 
+    //looks for a file by name in folder list
     public Boolean isImageFilePresentInFolder(String fileName) {
         for (int i = 0; i < listOfFiles.length; i++) {
             if (fileName.equals(listOfFiles[i].getName())) {
@@ -29,6 +30,7 @@ public class FileSystem {
         return false;
     }
 
+    // builds file system
     public static void main(String[] args) {
         FileSystem fs = new FileSystem(Constant.Path_ImagesLocalFolder);
 
