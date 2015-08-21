@@ -12,14 +12,14 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
         <mapping class="com.saucelabs.Tests.DBTests.entities.Activities" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.Devicetokens" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.DeviceTokens" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Photos" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Problems" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.News" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.Userroles" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.UserRoles" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Resources" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Users" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.Activitytypes" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.Problemtypes" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.ActivityTypes" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.ProblemTypes" />
     </session-factory>
 </hibernate-configuration>

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Users implements java.io.Serializable {
 
 	private Integer id;
-	private Userroles userroles;
+	private UserRoles userRoles;
 	private String name;
 	private String surname;
 	private String email;
@@ -33,14 +33,14 @@ public class Users implements java.io.Serializable {
 	public Users() {
 	}
 
-	public Users(Userroles userroles) {
-		this.userroles = userroles;
+	public Users(UserRoles userRoles) {
+		this.userRoles = userRoles;
 	}
 
-	public Users(Userroles userroles, String name, String surname,
+	public Users(UserRoles userRoles, String name, String surname,
 			String email, String password, Set<Activities> activitieses,
 			Set<Photos> photoses) {
-		this.userroles = userroles;
+		this.userRoles = userRoles;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -62,12 +62,12 @@ public class Users implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "UserRoles_Id", nullable = false)
-	public Userroles getUserroles() {
-		return this.userroles;
+	public UserRoles getUserRoles() {
+		return this.userRoles;
 	}
 
-	public void setUserroles(Userroles userroles) {
-		this.userroles = userroles;
+	public void setUserRoles(UserRoles userroles) {
+		this.userRoles = userroles;
 	}
 
 	@Column(name = "Name", length = 45)

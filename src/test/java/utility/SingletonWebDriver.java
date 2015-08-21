@@ -15,9 +15,9 @@ public class SingletonWebDriver {
     private SingletonWebDriver() {
         driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(Constant.URLlocal);
-        AnyPage anypage = new AnyPage(driver);
-        anypage.getFirstResourceTitleFromMenu();
+//        driver.get(Constant.URLlocal);
+//        AnyPage anypage = new AnyPage(driver);
+//        anypage.getFirstResourceTitleFromMenu();
     }
 
     /**
@@ -32,3 +32,4 @@ public class SingletonWebDriver {
         return SingletonHolder.INSTANCE.driver;
     }
 
+}

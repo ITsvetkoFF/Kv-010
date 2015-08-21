@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Problems implements java.io.Serializable {
 
 	private Integer id;
-	private Problemtypes problemtypes;
+	private ProblemTypes problemTypes;
 	private String title;
 	private String content;
 	private String proposal;
@@ -38,15 +38,15 @@ public class Problems implements java.io.Serializable {
 	public Problems() {
 	}
 
-	public Problems(Problemtypes problemtypes) {
-		this.problemtypes = problemtypes;
+	public Problems(ProblemTypes problemTypes) {
+		this.problemTypes = problemTypes;
 	}
 
-	public Problems(Problemtypes problemtypes, String title, String content,
+	public Problems(ProblemTypes problemTypes, String title, String content,
 			String proposal, Byte severity, Boolean moderation, Short votes,
 			Float latitude, Float longtitude, Boolean status,
 			Set<Activities> activitieses, Set<Photos> photoses) {
-		this.problemtypes = problemtypes;
+		this.problemTypes = problemTypes;
 		this.title = title;
 		this.content = content;
 		this.proposal = proposal;
@@ -73,12 +73,12 @@ public class Problems implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ProblemTypes_Id", nullable = false)
-	public Problemtypes getProblemtypes() {
-		return this.problemtypes;
+	public ProblemTypes getProblemTypes() {
+		return this.problemTypes;
 	}
 
-	public void setProblemtypes(Problemtypes problemtypes) {
-		this.problemtypes = problemtypes;
+	public void setProblemTypes(ProblemTypes problemTypes) {
+		this.problemTypes = problemTypes;
 	}
 
 	@Column(name = "Title", length = 130)

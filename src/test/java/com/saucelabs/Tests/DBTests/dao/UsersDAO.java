@@ -26,5 +26,14 @@ public class UsersDAO extends MainDAO{
         }
         return user;
     }
+
+    public void deleteUserByEmail(String email) {
+        Query query = getSession().createQuery("delete Users where email = :email");
+        query.setParameter("email", email);
+        query.executeUpdate();
+
+    }
+
+
 }
 

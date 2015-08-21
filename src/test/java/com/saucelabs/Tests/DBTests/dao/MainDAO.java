@@ -21,11 +21,11 @@ abstract class MainDAO {
         return session;
     }
 
-    protected void openSession() {
+    protected final void openSession() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 
-    protected void closeSession() {
-        session = HibernateUtil.getSessionFactory().close();
+    protected final void closeSession() {
+        session.close();
     }
 }

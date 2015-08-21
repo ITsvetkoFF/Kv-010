@@ -5,9 +5,15 @@ import com.saucelabs.ResourcesPage;
 import com.saucelabs.Tests.DAO.DeleteUserDAO;
 import com.saucelabs.Tests.DAO.UserInfoDAO;
 import com.saucelabs.Tests.DBTests.SingleWebdriver;
+import com.saucelabs.Tests.DBTests.dao.UserRolesDAO;
+import com.saucelabs.Tests.DBTests.dao.UsersDAO;
+import com.saucelabs.Tests.DBTests.entities.Users;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utility.Constant;
+import utility.HashUtil;
+import utility.SingletonWebDriver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,30 +21,34 @@ import java.util.Map;
 /**
  * Created by acidroed on 21.08.2015.
  */
-public class CreateUserDBTest extends SingleWebdriver {
+public class CreateUserDBTest {
 
-    ResourcesPage resourcesPage;
     AnyPage anyPage;
-    UserInfoDAO userInfoDB;
-    DeleteUserDAO deleteUserDAO;
+    UsersDAO userInfoDB = new UsersDAO();;
+    WebDriver driver = SingletonWebDriver.getDriver();
 
     @Test(sequential = true, dataProvider = "SimpleUser", groups = {"createUser"})
-    public void userRegistrationDBCheck(String UserName, String UserSurname, String UserEmail, String UserPassword, String UserRoleId, String UserRole) throws Exception {
-        checkDriver();
+    public void userRegistrationDBCheck(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
         driver.get(Constant.URLlocal);
         anyPage = new AnyPage(driver);
-        userInfoDB = new UserInfoDAO();
-        deleteUserDAO = new DeleteUserDAO();
+        UserRolesDAO userRolesDAO = new UserRolesDAO();
 
-        anyPage.register(UserName, UserSurname, UserEmail, UserPassword);
+        anyPage.register(userName, userSurname, userEmail, userPassword);
 
-        Map result = userInfoDB.getInfo("root", "root","jdbc:mysql://localhost:3306/enviromap",UserEmail);
-        Map<String, String> ExpectedUserData = new HashMap<String, String>();
-        ExpectedUserData.put("Name", UserName);
-        ExpectedUserData.put("Surname", UserSurname);
-        ExpectedUserData.put("Password", userInfoDB.hmacSha1(UserPassword,Constant.HashKey));
-        ExpectedUserData.put("UserRoles_Id", UserRoleId);
+        Users actualUser = userInfoDB.findUserByEmail(userEmail);
 
-        Assert.assertEquals(result, ExpectedUserData);
+        Assert.assertEquals(actualUser.getName(), userName);
+        Assert.assertEquals(actualUser.getSurname(), userSurname);
+        Assert.assertEquals(actualUser.getPassword(), HashUtil.hmacSha1(userPassword, Constant.HashKey));
+        Assert.assertEquals(actualUser.getUserRoles(), userRolesDAO.findUserRolesByRole(userRole));
+    }
+
+
+    @Test(sequential = true, dataProvider = "SimpleUser", dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"createUser"})
+    public void deleteUser(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
+
+        userInfoDB.deleteUserByEmail(userEmail);
+        Users actualUser = userInfoDB.findUserByEmail(userEmail);
+        Assert.assertTrue(actualUser == null);
     }
 }
