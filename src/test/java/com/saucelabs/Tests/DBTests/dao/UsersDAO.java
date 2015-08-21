@@ -7,36 +7,24 @@ import utility.HibernateUtil;
 
 import java.util.List;
 
-public class UsersDAO {
-
-    private Session session = null;
-
-    public Session getSession() {
-        return session;
-    }
-
-    private void openSession() {
-        session = HibernateUtil.getSessionFactory().openSession();
-    }
-
-    private void closeSession() {
-        session = HibernateUtil.getSessionFactory().close();
-    }
+public class UsersDAO extends MainDAO{
 
     public Users findById(Integer id) {
-        openSession();
         Users user = (Users) getSession().get(Users.class, id);
         closeSession();
         return user;
     }
 
-    public List<Users> findByEmail(String email) {
-        openSession();
-        Query query = session.createQuery("from Users where email = :email");
+    public Users findUserByEmail(String email) {
+        Users user = null;
+        Query query = getSession().createQuery("from Users where email = :email");
         query.setParameter("email", email);
         List<Users> users = query.list();
         closeSession();
-        return users;
+        if (!users.isEmpty()) {
+            user = users.get(0);
+        }
+        return user;
     }
 }
 
