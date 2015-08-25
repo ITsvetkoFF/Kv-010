@@ -128,10 +128,11 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     /**
      * This method registers you on website by your parameters (name, last name, email, pass)
+     *
      * @param first_name The name user; may not be null.
-     * @param last_name The last name user; may not be null.
-     * @param email The email user; may not be null; your email should uses '@' and be in lower case
-     * @param password The password user; may not be null; pls sent minimum 6 unique characters
+     * @param last_name  The last name user; may not be null.
+     * @param email      The email user; may not be null; your email should uses '@' and be in lower case
+     * @param password   The password user; may not be null; pls sent minimum 6 unique characters
      */
     @Override
     public void register(String first_name, String last_name, String email, String password) {
@@ -165,14 +166,14 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     /**
      * This method adds problem to the website using forms and field for describe problem.
      *
-     * @param latitude is coordinate X where problem on the map.
-     * @param longitude is coordinate Y where problem on the map.
-     * @param problemName is title our problem.
-     * @param problemType is type of the problem like landfill, illegal construction, poaching etc
+     * @param latitude           is coordinate X where problem on the map.
+     * @param longitude          is coordinate Y where problem on the map.
+     * @param problemName        is title our problem.
+     * @param problemType        is type of the problem like landfill, illegal construction, poaching etc
      * @param problemDescription is description your problem. Try to describe your problem in detail
-     * @param problemPropose How would you have solved this problem?
-     * @param imageUrls are urls to you pictures/photos this problem.
-     * @param imageComments are comments to your photos. Size list should be same with imageUrls
+     * @param problemPropose     How would you have solved this problem?
+     * @param imageUrls          are urls to you pictures/photos this problem.
+     * @param imageComments      are comments to your photos. Size list should be same with imageUrls
      */
     @Override
     public void addProblemToVisibleCenter(double latitude, double longitude,
@@ -263,6 +264,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     /**
      * This method collects information from driver manage, put it in hashmap.
+     *
      * @return HashMap with cookie data.
      * @throws UnsupportedEncodingException in URLDecoder.decode(...) if character encoding needs to be consulted,
      *                                      but named character encoding is not supported.
@@ -278,7 +280,8 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     /**
      * Exact time waiting for button. Public method for tests.
-     * @param time It's time how much need wait (int)
+     *
+     * @param time    It's time how much need wait (int)
      * @param byValue Element which need wait
      */
     public void explicitWaitForButton(int time, By byValue) {
@@ -288,7 +291,8 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     /**
      * Exact time waiting for button. Private method for this class.
-     * @param time It's time how much need wait (int)
+     *
+     * @param time    It's time how much need wait (int)
      * @param byValue Element which need wait
      */
     private void explicitWaitForElement(int time, By byValue) {
@@ -298,8 +302,9 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     /**
      * This method change old password on new password.
+     *
      * @param currentPassword It's password which now on your account.
-     * @param newPassword It's new password you want to change
+     * @param newPassword     It's new password you want to change
      */
     public void changePassword(String currentPassword, String newPassword) {
         driver.findElement(USER_DROPDOWN).click();                        //проверить залогин ли юзер на сайте?
@@ -314,17 +319,16 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     /*--------------------Selenium 2.0 Web-driver and Sikuli-api integration------------------------------------------*/
 
     /**
-     *
      * This method adds problem to the website using forms and field for describe problem.
      *
-     * @param latitude is coordinate X where problem on the map.
-     * @param longitude is coordinate Y where problem on the map.
-     * @param problemName is title our problem.
-     * @param problemType is type of the problem like landfill, illegal construction, poaching etc
+     * @param latitude           is coordinate X where problem on the map.
+     * @param longitude          is coordinate Y where problem on the map.
+     * @param problemName        is title our problem.
+     * @param problemType        is type of the problem like landfill, illegal construction, poaching etc
      * @param problemDescription is description your problem. Try to describe your problem in detail
-     * @param problemPropose How would you have solved this problem?
-     * @param imagesPath are urls to you pictures/photos this problem.
-     * @param imagesComment are comments to your photos. Size list should be same with imageUrls
+     * @param problemPropose     How would you have solved this problem?
+     * @param imagesPath         are urls to you pictures/photos this problem.
+     * @param imagesComment      are comments to your photos. Size list should be same with imageUrls
      */
     public void addProblemSymbiosis(double latitude, double longitude, int zoom,
                                     String problemName, String problemType,
@@ -480,8 +484,9 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     /**
      * This is a private method helps to resize images. Usually used when the picture is very large
      * and it is necessary to reduce
-     * @param img Image which need to change; may not be null
-     * @param width New width of your image; must be greater than zero
+     *
+     * @param img    Image which need to change; may not be null
+     * @param width  New width of your image; must be greater than zero
      * @param height New height of your image; must be greater than zero
      * @return new image with new size (width, height).
      */
