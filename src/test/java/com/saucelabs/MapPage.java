@@ -80,14 +80,10 @@ public class MapPage implements IMapPage {
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 
         System.out.println("Before Explicit Wait during set view");
-        try {
-            WebDriverWait webDriverWait = new WebDriverWait(driver, 1);
-            WebElement addProblem = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(ADD_PROBLEM_MENU));
-            addProblemWidth = addProblem.getSize().getWidth();
-            addProblemHeight = addProblem.getSize().getHeight();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        WebDriverWait webDriverWait = new WebDriverWait(driver, 1);
+        WebElement addProblem = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(ADD_PROBLEM_MENU));
+        addProblemWidth = addProblem.getSize().getWidth();
+        addProblemHeight = addProblem.getSize().getHeight();
         System.out.println("After Explicit Wait during set view");
 
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -124,30 +120,23 @@ public class MapPage implements IMapPage {
         }
     }
 
-    /**
-     * Method find center on the map and click there.
-     */
     @Override
     public void clickAtPagesCenter() {
-        int centerCoordinateX;
-        int centerCoordinateY;
+        int x;
+        int y;
 
         WebElement map = driver.findElement(MAP);
         Dimension point = map.getSize();
-        centerCoordinateX = point.getWidth() / 2;
-        centerCoordinateY = point.getHeight() / 2;
+        x = point.getWidth() / 2;
+        y = point.getHeight() / 2;
         Actions builder = new Actions(driver);
-        builder.moveToElement(map, centerCoordinateX, centerCoordinateY).clickAndHold().release().build().perform();
+        builder.moveToElement(map, x, y).clickAndHold().release().build().perform();
     }
 
-    /**
-     * Method find the center of the visible map, click at center.
-     * @param offset is added to the variable 'centerCoordinateY'. Default is zero if you don't want offset in longitude.
-     */
     @Override
     public void clickAtVisibleMapCenter(int offset) {
-        int centerCoordinateX;
-        int centerCoordinateY;
+        int x;
+        int y;
         int mapWidth;
         int mapHeight;
         int addProblemWidth = 0;
@@ -156,41 +145,32 @@ public class MapPage implements IMapPage {
         WebElement map = driver.findElement(MAP);
         int navBarHeight = driver.findElement(NAV_BAR).getSize().getHeight();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-
         System.out.println("Before Explicit Wait during click");
         try {
-            WebDriverWait webDriverWait = new WebDriverWait(driver, 1);
-            WebElement addProblem = webDriverWait.until(ExpectedConditions.presenceOfElementLocated(ADD_PROBLEM_MENU));
+            WebElement addProblem = (new WebDriverWait(driver, 1))
+                    .until(ExpectedConditions.presenceOfElementLocated(ADD_PROBLEM_MENU));
             addProblemWidth = addProblem.getSize().getWidth();
             addProblemHeight = addProblem.getSize().getHeight();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         System.out.println("After Explicit Wait during click");
-
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         mapWidth = map.getSize().getWidth();
         mapHeight = map.getSize().getHeight();
-
-        if (mapWidth == addProblemWidth) {             // tall screen, addProblem at the top
-            centerCoordinateX = mapWidth / 2;
-            centerCoordinateY = navBarHeight + 1 + addProblemHeight + 1 + (mapHeight - navBarHeight - addProblemHeight - 2) / 2;
-        } else {                                       // wide screen, addProblem at the left side
-            centerCoordinateX = (mapWidth - addProblemWidth) / 2;
-            centerCoordinateY = mapHeight / 2;
+        if (mapWidth != addProblemWidth) {              // wide screen, addProblem at the left side
+            x = (mapWidth - addProblemWidth) / 2;
+            y = mapHeight / 2;
+        } else {                                          // tall screen, addProblem at the top
+            x = mapWidth / 2;
+            y = navBarHeight + 1 + addProblemHeight + 1 + (mapHeight - navBarHeight - addProblemHeight - 2) / 2;
         }
-
         Actions builder = new Actions(driver);
-        builder.moveToElement(map, centerCoordinateX, centerCoordinateY + offset).clickAndHold().release().build().perform();
+        builder.moveToElement(map, x, y + offset).clickAndHold().release().build().perform();
     }
 
-    /**
-     *
-     * @param latitude
-     * @param longitude
-     */
     @Override
     public void clickAtProblemByCoordinateVisible(double latitude, double longitude) {
+
         setVisibleView(latitude, longitude, 18);
         clickAtVisibleMapCenter(-10);
     }
