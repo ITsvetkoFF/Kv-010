@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Roma on 23.10.2014.
- * Refactoring by Vadym on 08/25/15.
+ * Refactoring by Vadym on 08/21/15.
  */
 public class MapPage implements IMapPage {
 

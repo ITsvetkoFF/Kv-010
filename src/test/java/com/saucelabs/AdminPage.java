@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Created by Yermek on 20.10.2014.
+ * Refactoring by Vadym on 08/25/15.
  */
 public class AdminPage extends AnyPage implements IAdminPage {
     public static final By LIST_OF_PROBLEMS_UNDER_MODERATION = By.className("b-new-items__item");
@@ -25,6 +26,9 @@ public class AdminPage extends AnyPage implements IAdminPage {
         this.driver = driver;
     }
 
+    /**
+     * @return List with problems names that need to be moderated.
+     */
     public List<String> getAllProblemForModerationNames() {
         List<WebElement> problems = getAllProblemsForModeration();
         List<String> results = new ArrayList<String>(problems.size());
@@ -34,20 +38,32 @@ public class AdminPage extends AnyPage implements IAdminPage {
         return results;
     }
 
+    /**
+     * @return List with problems that need to be confirmed.
+     */
     public List<WebElement> getAllProblemsForModeration() {
-        List<WebElement> results = driver.findElements(LIST_OF_PROBLEMS_UNDER_MODERATION);
-        return results;
+        return driver.findElements(LIST_OF_PROBLEMS_UNDER_MODERATION);
     }
 
+    /**
+     * @return String name problem under moderation.
+     */
     public String getProblemTitle() {
         return driver.findElement(PROBLEM_UNDER_MODERATION_TITLE).getText();
     }
 
+    /**
+     * Click on the button problem for validate it.
+     * @param problem Which problem need validate, approve.
+     */
     public void clickProblemCheck(WebElement problem) {
         problem.findElement(APPROVE_PROBLEM_TICK_MARK).click();
-        return;
     }
 
+    /**
+     * Click on the button problem for validate it.
+     * @param problemName Which problem need validate, approve by name (String).
+     */
     public void approveProblem(String problemName) {
         List<WebElement> problems = getAllProblemsForModeration();
         for (WebElement problem: problems) {
@@ -57,6 +73,11 @@ public class AdminPage extends AnyPage implements IAdminPage {
         }
     }
 
+    /**
+     * This problem is under moderation? You can check it with this method.
+     * @param problemName String name problem.
+     * @return true if this problem is under moderation and return false if not.
+     */
     public boolean checkProblemIsUnderModeration(String problemName) {
         List<WebElement> problems = getAllProblemsForModeration();
         for (WebElement problem: problems) {
@@ -67,6 +88,9 @@ public class AdminPage extends AnyPage implements IAdminPage {
         return false;
     }
 
+    /**
+     * This method presses on the delete problem button.
+     */
     public void pressDeleteProblemButton() {
         WebDriverWait wait = new WebDriverWait(driver, 300);
         driver.findElement(DELETE_PROBLEM_BUTTON).click();

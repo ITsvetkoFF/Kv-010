@@ -31,6 +31,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Refactoring by Vadym on 08/25/15.
+ */
+
 public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     public static final By ADD_PROBLEM_BUTTON = By.xpath("//*[@class='navbar-brand b-menu__button']");
@@ -44,7 +48,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     public static final By ADD_PROBLEM_SUBMIT_BUTTON = By.id("btn-submit");
     public static final By ALERT = By.className("alert");
     public static final By CLOSE_CROSS = By.className("close");
-    public static final By LOGIN_LINK = By.linkText("\u0412\u0425\u0406\u0414");
+    public static final By LOGIN_LINK = By.linkText("\u0412\u0425\u0406\u0414"); // 'Вхід'
     public static final By BODY = By.xpath("//body");
     public static final By ADD_PROBLEM_TAB3_IMAGE = By.className("fa-file-photo-o");
     public static final By OPEN_FIRST_RESOURCE_MENU = By.className("fa-caret-down");
@@ -54,7 +58,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     public static final By PASSWORD_FIELD = By.name("password");
     public static final By LOGIN_BUTTON = By.id("login-button");
     public static final By USER_PICTOGRAM = By.className("fa-user");
-    public static final By LOGOUT_LINK = By.linkText("\u0412\u0418\u0419\u0422\u0418");
+    public static final By LOGOUT_LINK = By.linkText("\u0412\u0418\u0419\u0422\u0418"); // 'Вийти'
     public static final By REGISTRATION_LINK = By.xpath("//button[@id='register-button']");
     public static final By FIRST_NAME_FIELD = By.name("first_name");
     public static final By LAST_NAME_FIELD = By.name("last_name");

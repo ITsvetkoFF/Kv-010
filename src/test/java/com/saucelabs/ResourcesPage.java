@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by Olya on 10/26/14.
+ * Refactoring by Vadym on 08/25/15.
  */
 public class ResourcesPage extends AnyPage implements IResourcesPage{
     public static final By RESOURCE_BUTTON = By.linkText("РЕСУРСИ");
