@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Roma on 23.10.2014.
+ * Refactoring by Vadym on 08/25/15.
  */
 public class MapPage implements IMapPage {
 
@@ -137,7 +138,7 @@ public class MapPage implements IMapPage {
 
     /**
      * This method clicks on the center visible map. Finding menu 'addProblem' and on depends where this menu located
-     * click on the center. Offset helps shift your visible map on int distance
+     * click on the center of the map. Offset helps shift your visible map on int distance
      *
      * @param offset is shift of the coordinate newCenterCoordinateY
      */
@@ -196,12 +197,6 @@ public class MapPage implements IMapPage {
         centerCoordinateY = point.getHeight() / 2;
         Actions builder = new Actions(driver);
         builder.moveToElement(map, centerCoordinateX, centerCoordinateY).clickAndHold().release().build().perform();
-    }
-
-    @Override
-    public void clickAtProblemByCoordinateVisible(double latitude, double longitude) {
-        setVisibleView(latitude, longitude, 18);
-        clickAtVisibleMapCenter(-10);
     }
 
     /**
@@ -324,41 +319,10 @@ public class MapPage implements IMapPage {
         }
     }
 
-    @Override //not use
-    public void selectDate(WebElement datePicker, String year, String month, String day) {
-        datePicker.findElement(By.xpath(".//td/button/span[(text()='" + year + "')]")).click();
-        datePicker.findElement(By.xpath(".//td/button/span[(text()='" + month + "')]")).click();
-        datePicker.findElement(By.xpath(".//td/button/span[(text()='" + day + "')]/..")).click();
-    }
-
-    @Override //not use
-    public void selectOneDayPeriod(String fullDate) {
-        String[] splitDate;
-        splitDate = fullDate.split("\\s+");
-
-        List<WebElement> datePickers = driver.findElements(DATE_PICKER);
-
-        for (WebElement datePicker : datePickers) {
-            WebElement buttonElement = datePicker.findElement(CALENDAR_ICON);
-
-            buttonElement.click();
-            datePicker.findElement(TOP_BUTTON_FOR_UPPER_PERIOD).click();
-            datePicker.findElement(TOP_BUTTON_FOR_UPPER_PERIOD).click();
-
-            selectDate(datePicker, splitDate[0], splitDate[1], splitDate[2]);
-        }
-    }
-
     @Override
-    public void setPosition() {    // not use
-        JavascriptExecutor js = null;
-        if (driver instanceof JavascriptExecutor) {
-            js = (JavascriptExecutor) driver;
-        }
-        if (js != null) {
-            js.executeScript("navigator.geolocation.getCurrentPosition = function(success) {" +
-                    "success({coords: {latitude: 50.649460, longitude: 30.731506}}); }");
-        }
+    public void clickAtProblemByCoordinateVisible(double latitude, double longitude) {
+        setVisibleView(latitude, longitude, 18);
+        clickAtVisibleMapCenter(-10);
     }
 
     /**
@@ -396,6 +360,43 @@ public class MapPage implements IMapPage {
                     filtersNames.get(i).click();
                 }
             }
+        }
+    }
+
+    @Override //not use
+    public void selectDate(WebElement datePicker, String year, String month, String day) {
+        datePicker.findElement(By.xpath(".//td/button/span[(text()='" + year + "')]")).click();
+        datePicker.findElement(By.xpath(".//td/button/span[(text()='" + month + "')]")).click();
+        datePicker.findElement(By.xpath(".//td/button/span[(text()='" + day + "')]/..")).click();
+    }
+
+    @Override //not use
+    public void selectOneDayPeriod(String fullDate) {
+        //split by character
+        String[] splitDate = fullDate.split("\\s+");
+
+        List<WebElement> datePickers = driver.findElements(DATE_PICKER);
+
+        for (WebElement datePicker : datePickers) {
+            WebElement buttonElement = datePicker.findElement(CALENDAR_ICON);
+
+            buttonElement.click();
+            datePicker.findElement(TOP_BUTTON_FOR_UPPER_PERIOD).click();
+            datePicker.findElement(TOP_BUTTON_FOR_UPPER_PERIOD).click();
+
+            selectDate(datePicker, splitDate[0], splitDate[1], splitDate[2]);
+        }
+    }
+
+    @Override
+    public void setPosition() {    // not use
+        JavascriptExecutor js = null;
+        if (driver instanceof JavascriptExecutor) {
+            js = (JavascriptExecutor) driver;
+        }
+        if (js != null) {
+            js.executeScript("navigator.geolocation.getCurrentPosition = function(success) {" +
+                    "success({coords: {latitude: 50.649460, longitude: 30.731506}}); }");
         }
     }
 
