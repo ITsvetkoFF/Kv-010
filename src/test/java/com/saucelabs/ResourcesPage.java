@@ -38,12 +38,12 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
     /**
      * This method creates new resource on the website.
      *
-     * @param sTitle The name of the new resource; may not be null.
-     * @param sAlias The alias of the new resource; may not be null.
-     * @param sBody The description of the new resource; may not be null.
+     * @param sTitle       The name of the new resource; may not be null.
+     * @param sAlias       The alias of the new resource; may not be null.
+     * @param sBody        The description of the new resource; may not be null.
      * @param sPlaceToSave Place to save.
      */
-    public void createResource(String sTitle, String sAlias, String sBody, String sPlaceToSave)  {
+    public void createResource(String sTitle, String sAlias, String sBody, String sPlaceToSave) {
         driver.findElement(RESOURCE_BUTTON).click();
         driver.findElement(ADD_NEW_RESOURCE_BUTTON).click();
         driver.findElement(RESOURCE_TITLE).sendKeys(sTitle);
@@ -86,7 +86,7 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
     /**
      * This method allows you to edit the header of the resource.
      *
-     * @param sTitle The name of the resource; may not be null.
+     * @param sTitle     The name of the resource; may not be null.
      * @param sTextToAdd The new resource title; may not be null.
      */
     public void editResourceHeader(String sTitle, String sTextToAdd) {
@@ -106,7 +106,7 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
     /**
      * This method allows you to edit the list (drop-down menu) of the resources.
      *
-     * @param sTitle The name of the resource; may not be null.
+     * @param sTitle     The name of the resource; may not be null.
      * @param sTextToAdd The new resource title; may not be null.
      */
     public void editResourceList(String sTitle, String sTextToAdd) {
@@ -126,7 +126,7 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
     /**
      * This method allows you to edit the resource depends where it located (top menu or in Resources).
      *
-     * @param sTitle The name of the resource; may not be null.
+     * @param sTitle     The name of the resource; may not be null.
      * @param sTextToAdd The resource title; may not be null.
      */
     public void editResource(String sTitle, String sTextToAdd) {
@@ -140,6 +140,7 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
 
     /**
      * This method allows you to delete resource from header.
+     *
      * @param deleteTitle Which resource need to delete.
      */
     public void deleteResourceFromHeader(String deleteTitle) {
@@ -159,6 +160,7 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
 
     /**
      * This method allows you to delete resource from list (drop-down menu).
+     *
      * @param deleteTitle Which resource need to delete.
      */
     public void deleteResourceFromList(String deleteTitle) {
@@ -176,6 +178,7 @@ public class ResourcesPage extends AnyPage implements IResourcesPage, IAnyPage, 
 
     /**
      * This method find where resource is located and choose correct next method for this operation
+     *
      * @param deleteTitle Which resource need to delete.
      */
     public void deleteResource(String deleteTitle) {
