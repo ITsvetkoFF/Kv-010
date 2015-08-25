@@ -80,9 +80,9 @@ public class MapPage implements IMapPage {
         if (script != null) {
             script.executeScript(
                     "var map = document.getElementById(\"map-content\");" +
-                    "var view = function() {angular.element(map).scope().$parent.$parent.$parent.geoJson" +
+                            "var view = function() {angular.element(map).scope().$parent.$parent.$parent.geoJson" +
                             "._map.setView([" + latitude + "," + longitude + "]" + "," + zoom + ");};" +
-                    "window.setTimeout(view, 0);"
+                            "window.setTimeout(view, 0);"
             );
         }
 
@@ -108,7 +108,7 @@ public class MapPage implements IMapPage {
         if (mapWidth == addProblemWidth) {              // tall screen, menu 'addProblem' at the top
             newCenterCoordinateX = mapWidth / 2;
             newCenterCoordinateY = navBarHeight + 1 + addProblemHeight + 1 +
-                                  (mapHeight - navBarHeight - addProblemHeight - 2) / 2;
+                    (mapHeight - navBarHeight - addProblemHeight - 2) / 2;
         } else {                                        // wide screen, menu 'addProblem' at the right side
             newCenterCoordinateX = (mapWidth - addProblemWidth) / 2;
             newCenterCoordinateY = mapHeight / 2;
@@ -118,21 +118,21 @@ public class MapPage implements IMapPage {
             script = (JavascriptExecutor) driver;
         if (script != null) {
             script.executeScript(
-                      "var map = document.getElementById(\"map-content\");"
-                    + "var oldCenter = angular.element(map).scope().$parent.$parent.$parent.geoJson._map.getCenter();"
-                    + "console.log(oldCenter);"
-                    + "var newCenter = angular.element(map).scope().$parent.$parent.$parent"
-                                      + ".geoJson._map.containerPointToLatLng([" + newCenterCoordinateX + ","
-                                                                                 + newCenterCoordinateY + "]);"
-                    + "console.log(newCenter);"
-                    + "console.log([" + latitude + " + oldCenter['lat'] - newCenter['lat'],"
-                                      + longitude + " + oldCenter['lng'] - newCenter['lng']]);"
-                    + "angular.element(map).scope().$parent.$parent.$parent.geoJson" +
-                                      "._map.setView([" + latitude + " + oldCenter['lat'] - newCenter['lat'],"
-                                      + longitude + " + oldCenter['lng'] - newCenter['lng']]," + zoom + ");"
-                    + "console.log(angular.element(map).scope().$parent.$parent.$parent"
-                                      + ".geoJson._map.containerPointToLatLng([" + newCenterCoordinateX + ","
-                                                                                 + newCenterCoordinateY + "]));");
+                    "var map = document.getElementById(\"map-content\");"
+                            + "var oldCenter = angular.element(map).scope().$parent.$parent.$parent.geoJson._map.getCenter();"
+                            + "console.log(oldCenter);"
+                            + "var newCenter = angular.element(map).scope().$parent.$parent.$parent"
+                            + ".geoJson._map.containerPointToLatLng([" + newCenterCoordinateX + ","
+                            + newCenterCoordinateY + "]);"
+                            + "console.log(newCenter);"
+                            + "console.log([" + latitude + " + oldCenter['lat'] - newCenter['lat'],"
+                            + longitude + " + oldCenter['lng'] - newCenter['lng']]);"
+                            + "angular.element(map).scope().$parent.$parent.$parent.geoJson" +
+                            "._map.setView([" + latitude + " + oldCenter['lat'] - newCenter['lat'],"
+                            + longitude + " + oldCenter['lng'] - newCenter['lng']]," + zoom + ");"
+                            + "console.log(angular.element(map).scope().$parent.$parent.$parent"
+                            + ".geoJson._map.containerPointToLatLng([" + newCenterCoordinateX + ","
+                            + newCenterCoordinateY + "]));");
         }
     }
 
@@ -180,7 +180,7 @@ public class MapPage implements IMapPage {
         }
         Actions builder = new Actions(driver);
         builder.moveToElement(map, newCenterCoordinateX, newCenterCoordinateY + offset)
-                             .clickAndHold().release().build().perform();
+                .clickAndHold().release().build().perform();
     }
 
     /**

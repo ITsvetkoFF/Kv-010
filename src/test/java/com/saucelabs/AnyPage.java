@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class AnyPage extends MapPage implements IAnyPage {
+public class AnyPage extends MapPage implements IAnyPage, IMapPage {
 
     public static final By ADD_PROBLEM_BUTTON = By.xpath("//*[@class='navbar-brand b-menu__button']");
     public static final By ADD_PROBLEM_NEXT_TAB2_BUTTON = By.xpath("//button[@class='btn btn-default btn-sm ng-scope']");
@@ -78,27 +78,33 @@ public class AnyPage extends MapPage implements IAnyPage {
         this.driver = driver;
     }
 
+    /**
+     * @return first text in resource menu.
+     */
     @Override
     public String getFirstResourceTitleFromMenu() {
-
-        driver.findElement(OPEN_FIRST_RESOURCE_MENU).click();
-        String linkText = driver.findElement(FIRST_RESOURCE_IN_MENU).getText();
-
-        return linkText;
+        driver.findElement(OPEN_FIRST_RESOURCE_MENU).click();  // Why? We can just return text and dont use this 'click'
+        return driver.findElement(FIRST_RESOURCE_IN_MENU).getText();
     }
 
+    /**
+     * @return title of the first text from resource menu.
+     */
     @Override
     public String getFirstResourceTitleFromOpenedResource() {
-
         driver.findElement(FIRST_RESOURCE_IN_MENU).click();
-        String linkText = driver.findElement(TITLE_EXPRESSION).getText();
-
-        return linkText;
+        return driver.findElement(TITLE_EXPRESSION).getText();
     }
 
+    /**
+     * Sign in on the website.
+     *
+     * @param email    for login
+     * @param password for login.
+     */
     @Override
     public void logIn(String email, String password) {
-        driver.findElement(LOGIN_LINK).click();
+        driver.findElement(LOGIN_LINK).click();     //Может уже зашел в систему? нет этой проверки
         driver.findElement(EMAIL_FIELD).clear();
         driver.findElement(EMAIL_FIELD).sendKeys(email);
         driver.findElement(PASSWORD_FIELD).clear();
@@ -106,16 +112,26 @@ public class AnyPage extends MapPage implements IAnyPage {
         driver.findElement(LOGIN_BUTTON).click();
     }
 
+    /**
+     * Log out from the website.
+     */
     @Override
     public void logOut() {
-        explicitWaitForElement(3,USER_PICTOGRAM);
+        explicitWaitForElement(3, USER_PICTOGRAM);   //Может и не залогинен?
         driver.findElement(USER_PICTOGRAM).click();
         driver.findElement(LOGOUT_LINK).click();
     }
 
+    /**
+     * This method registers you on website by your parameters (name, last name, email, pass)
+     * @param first_name The name user; may not be null.
+     * @param last_name The last name user; may not be null.
+     * @param email The email user; may not be null; your email should uses '@' and be in lower case
+     * @param password The password user; may not be null; pls sent minimum 6 unique characters
+     */
     @Override
     public void register(String first_name, String last_name, String email, String password) {
-        driver.findElement(LOGIN_LINK).click();
+        driver.findElement(LOGIN_LINK).click();              //Проверки на уникальности имейла и т д
         driver.findElement(REGISTRATION_LINK).click();
         driver.findElement(FIRST_NAME_FIELD).clear();
         driver.findElement(FIRST_NAME_FIELD).sendKeys(first_name);
@@ -128,18 +144,32 @@ public class AnyPage extends MapPage implements IAnyPage {
         driver.findElement(REGISTRATION_SUBMIT_BUTTON).click();
         try {
             Thread.sleep(1000);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         driver.findElement(CLOSE_CROSS).click();
     }
 
+    /**
+     * @return name from logged user on the website.
+     */
     @Override
     public String getLoggedInUserName() {
-        String result;
-        result = driver.findElement(LOGGED_IN__USER_NAME).getText();
-        return result;
+        return driver.findElement(LOGGED_IN__USER_NAME).getText();
     }
 
+    /**
+     * This method adds problem to the website using forms and field for describe problem.
+     *
+     * @param latitude is coordinate X where problem on the map.
+     * @param longitude is coordinate Y where problem on the map.
+     * @param problemName is title our problem.
+     * @param problemType is type of the problem like landfill, illegal construction, poaching etc
+     * @param problemDescription is description your problem. Try to describe your problem in detail
+     * @param problemPropose How would you have solved this problem?
+     * @param imageUrls are urls to you pictures/photos this problem.
+     * @param imageComments are comments to your photos. Size list should be same with imageUrls
+     */
     @Override
     public void addProblemToVisibleCenter(double latitude, double longitude,
                                           String problemName, String problemType,
@@ -153,40 +183,43 @@ public class AnyPage extends MapPage implements IAnyPage {
         driver.findElement(ADD_PROBLEM_NEXT_TAB2_BUTTON).click();
         driver.findElement(PROBLEM_NAME_TEXT_BOX).sendKeys(problemName);
 
+        // Finding problem type from drop-down menu. If problemType equals on something click on it
         List<WebElement> elements = driver.findElements(PROBLEM_TYPE_DROP_DOWN_LIST);
-        for (WebElement element: elements) {
-            if (problemType.equals(element.getText()))
+        for (WebElement element : elements) {
+            if (problemType.equals(element.getText())) {
                 element.click();
-        }
+            }
+        } // А если не найдет такой тип проблемы?
 
         driver.findElement(PROBLEM_DESCRIPTION_FIELD).sendKeys(problemDescription);
         driver.findElement(PROBLEM_PROPOSE_FIELD).sendKeys(problemPropose);
         driver.findElement(BODY).sendKeys(Keys.chord(Keys.CONTROL, Keys.HOME));
         driver.findElement(ADD_PROBLEM_TAB3_IMAGE).click();
 
-        for (String url: imageUrls) {
-            if (url.length() == 0) {
+        for (String imageUrl : imageUrls) {
+            if (imageUrl == null || imageUrl.isEmpty()) {
                 continue;
             }
-            Thread thread = new ClipboardUploadThread(url);
+            Thread thread = new ClipboardUploadThread(imageUrl);
             thread.start();
             driver.findElement(DROP_ZONE).click();
             try {
-                Thread.sleep(4000);
-            } catch (Exception e) {
+                Thread.sleep(4000);              // Зачем? лучше сделать в самом потоке тогда уж... хотя.. нужно спросить
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            thread.interrupt();
+            thread.interrupt(); //Тут точно нужно новый поток создавать?
         }
 
+        //add comments to our images
         List<WebElement> commentElements = driver.findElements(IMAGE_COMMENT_TEXT_BOX);
-        int i = 0;
-        for (WebElement element: commentElements) {
-            element.sendKeys(imageComments.get(i));
-            i++;
+        for (int i = 0; i < commentElements.size(); i++) {
+            commentElements.get(i).sendKeys(imageComments.get(i));
         }
 
         driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+
         System.out.println("Before Explicit Wait during problem add");
         try {
             WebElement login = (new WebDriverWait(driver, 1))
@@ -195,55 +228,77 @@ public class AnyPage extends MapPage implements IAnyPage {
                     .until(ExpectedConditions.presenceOfElementLocated(ALERT));
             alert.findElement(CLOSE_CROSS).click();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         System.out.println("After Explicit Wait during problem add");
+
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
-    public String checkUsernameInRightCorner(){
-        explicitWaitForElement(5,USER_DROPDOWN);
-        String user_name =  driver.findElement(USER_DROPDOWN).getText();
-        return user_name;
+    /**
+     * @return user name if you logged on the website
+     */
+    public String checkUsernameInRightCorner() {
+        explicitWaitForElement(5, USER_DROPDOWN); // а если не залогинен? может возращать что то тоже?
+        return driver.findElement(USER_DROPDOWN).getText();
     }
 
-    public boolean checkNewsAvailability(){
-        boolean newsExist = true;
+    /**
+     * @return true if user sees news menu
+     */
+    public boolean checkNewsAvailability() {
         List<WebElement> resources1 = driver.findElements(NEWS_ICON);
-        for (WebElement listElement : resources1){
+        for (WebElement listElement : resources1) {
             String searchText = listElement.getText();
-            if (searchText.equals("НОВИНИ")){
-                System.out.println("Simple user sees News menu");
-            }
-            else {
-                newsExist = false;
+            if (searchText.equals("НОВИНИ")) {                      //а где этот блок то? чет я не пойму))
+                return true;
             }
         }
-        return newsExist;
+        return false;
     }
 
+    /**
+     * This method collects information from driver manage, put it in hashmap.
+     * @return HashMap with cookie data.
+     * @throws UnsupportedEncodingException in URLDecoder.decode(...) if character encoding needs to be consulted,
+     *                                      but named character encoding is not supported.
+     */
     public Map getCookiesName() throws UnsupportedEncodingException {
-
-        String cookie_value = null;
-        Map<String, String> Result = new HashMap<String,String>();
-        Result.put("Name", driver.manage().getCookieNamed("userName").getValue());
-        Result.put("Surname", driver.manage().getCookieNamed("userSurname").getValue());
-        Result.put("Email", URLDecoder.decode(driver.manage().getCookieNamed("userEmail").getValue(), "UTF-8"));
-        Result.put("UserRole", driver.manage().getCookieNamed("userRole").getValue());
-        return Result;
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("Name", driver.manage().getCookieNamed("userName").getValue());
+        result.put("Surname", driver.manage().getCookieNamed("userSurname").getValue());
+        result.put("Email", URLDecoder.decode(driver.manage().getCookieNamed("userEmail").getValue(), "UTF-8"));
+        result.put("UserRole", driver.manage().getCookieNamed("userRole").getValue());
+        return result;
     }
 
-    public void explicitWaitForButton(int time, By byValue){
-        WebDriverWait wait1  = new WebDriverWait(driver, time);
+    /**
+     * Exact time waiting for button. Public method for tests.
+     * @param time It's time how much need wait (int)
+     * @param byValue Element which need wait
+     */
+    public void explicitWaitForButton(int time, By byValue) {
+        WebDriverWait wait1 = new WebDriverWait(driver, time);
         wait1.until(ExpectedConditions.elementToBeClickable(byValue));
     }
 
-    public void explicitWaitForElement(int time, By byValue){
-        WebDriverWait wait1  = new WebDriverWait(driver, time);
+    /**
+     * Exact time waiting for button. Private method for this class.
+     * @param time It's time how much need wait (int)
+     * @param byValue Element which need wait
+     */
+    private void explicitWaitForElement(int time, By byValue) {
+        WebDriverWait wait1 = new WebDriverWait(driver, time);
         wait1.until(ExpectedConditions.visibilityOfElementLocated(byValue));
     }
 
-    public void changePassword(String currentPassword, String newPassword){
-        driver.findElement(USER_DROPDOWN).click();
+    /**
+     * This method change old password on new password.
+     * @param currentPassword It's password which now on your account.
+     * @param newPassword It's new password you want to change
+     */
+    public void changePassword(String currentPassword, String newPassword) {
+        driver.findElement(USER_DROPDOWN).click();                        //проверить залогин ли юзер на сайте?
         driver.findElement(CHANGE_ITEM).click();
         driver.findElement(OLD_PASSWORD).sendKeys(currentPassword);
         driver.findElement(NEW_PASSWORD).sendKeys(newPassword);
@@ -254,6 +309,19 @@ public class AnyPage extends MapPage implements IAnyPage {
 
     /*--------------------Selenium 2.0 Web-driver and Sikuli-api integration------------------------------------------*/
 
+    /**
+     *
+     * This method adds problem to the website using forms and field for describe problem.
+     *
+     * @param latitude is coordinate X where problem on the map.
+     * @param longitude is coordinate Y where problem on the map.
+     * @param problemName is title our problem.
+     * @param problemType is type of the problem like landfill, illegal construction, poaching etc
+     * @param problemDescription is description your problem. Try to describe your problem in detail
+     * @param problemPropose How would you have solved this problem?
+     * @param imagesPath are urls to you pictures/photos this problem.
+     * @param imagesComment are comments to your photos. Size list should be same with imageUrls
+     */
     public void addProblemSymbiosis(double latitude, double longitude, int zoom,
                                     String problemName, String problemType,
                                     String problemDescription, String problemPropose,
@@ -267,7 +335,7 @@ public class AnyPage extends MapPage implements IAnyPage {
         driver.findElement(PROBLEM_NAME_TEXT_BOX).sendKeys(problemName);
 
         List<WebElement> elements = driver.findElements(PROBLEM_TYPE_DROP_DOWN_LIST);
-        for (WebElement element: elements) {
+        for (WebElement element : elements) {
             if (problemType.equals(element.getText()))
                 element.click();
         }
@@ -296,10 +364,7 @@ public class AnyPage extends MapPage implements IAnyPage {
         BufferedImage bufferedImage;
         BufferedImage resizeBufferedImage;
         for (String path : imagesPath) {
-            if (path.equals("")) {
-                continue;
-            }
-            else {
+            if (!path.isEmpty()) {
                 bufferedImage = ImageIO.read(new File(path));
                 resizeBufferedImage = resize(bufferedImage, 85, 64);
                 resizeBufferedImageList.add(resizeBufferedImage);
@@ -317,7 +382,8 @@ public class AnyPage extends MapPage implements IAnyPage {
         keyboard.keyUp(KeyEvent.VK_WINDOWS);
         try {
             Thread.sleep(1000);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         keyboard.keyDown(KeyEvent.VK_WINDOWS);
         keyboard.keyDown(KeyEvent.VK_UP);
@@ -325,7 +391,8 @@ public class AnyPage extends MapPage implements IAnyPage {
         keyboard.keyUp(KeyEvent.VK_WINDOWS);
         try {
             Thread.sleep(250);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         keyboard.keyDown(KeyEvent.VK_WINDOWS);
         keyboard.keyDown(KeyEvent.VK_LEFT);
@@ -333,11 +400,12 @@ public class AnyPage extends MapPage implements IAnyPage {
         keyboard.keyUp(KeyEvent.VK_WINDOWS);
         try {
             Thread.sleep(250);
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         List<ScreenRegion> screenRegionList = screenRegion.findAll(triangle);
-        for(ScreenRegion screen : screenRegionList) {
+        for (ScreenRegion screen : screenRegionList) {
             canvas.addBox(screen);
         }
         canvas.display(1);
@@ -386,7 +454,7 @@ public class AnyPage extends MapPage implements IAnyPage {
 
         List<WebElement> commentElements = driver.findElements(IMAGE_COMMENT_TEXT_BOX);
         int i = 0;
-        for (WebElement element: commentElements) {
+        for (WebElement element : commentElements) {
             element.sendKeys(imagesComment.get(i));
             i++;
         }
@@ -400,18 +468,27 @@ public class AnyPage extends MapPage implements IAnyPage {
                     .until(ExpectedConditions.presenceOfElementLocated(ALERT));
             alert.findElement(CLOSE_CROSS).click();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
-    private BufferedImage resize(BufferedImage img, int newW, int newH) {
+    /**
+     * This is a private method helps to resize images. Usually used when the picture is very large
+     * and it is necessary to reduce
+     * @param img Image which need to change; may not be null
+     * @param width New width of your image; must be greater than zero
+     * @param height New height of your image; must be greater than zero
+     * @return new image with new size (width, height).
+     */
+    private BufferedImage resize(BufferedImage img, int width, int height) {
         int w = img.getWidth();
         int h = img.getHeight();
-        BufferedImage dImg = new BufferedImage(newW, newH, img.getType());
+        BufferedImage dImg = new BufferedImage(width, height, img.getType());
         Graphics2D g = dImg.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(img, 0, 0, newW, newH, 0, 0, w, h, null);
+        g.drawImage(img, 0, 0, width, height, 0, 0, w, h, null);
         g.dispose();
         return dImg;
     }
