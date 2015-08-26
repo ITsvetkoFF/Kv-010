@@ -46,8 +46,8 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     public static final By DROP_ZONE = By.xpath("//div[contains(@class,'dz-clickable')]/span");
     public static final By IMAGE_COMMENT_TEXT_BOX = By.cssSelector("textarea.comment_field");
     public static final By ADD_PROBLEM_SUBMIT_BUTTON = By.id("btn-submit");
-    public static final By ALERT = By.className("alert");
-    public static final By CLOSE_CROSS = By.className("close");
+    public static final By ALERT_WINDOW = By.className("alert");
+    public static final By CLOSE_CROSS_IN_ALERT_WINDOW = By.className("close");
     public static final By LOGIN_LINK = By.linkText("\u0412\u0425\u0406\u0414"); // 'Вхід'
     public static final By BODY = By.xpath("//body");
     public static final By ADD_PROBLEM_TAB3_IMAGE = By.className("fa-file-photo-o");
@@ -152,7 +152,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(CLOSE_CROSS).click();
+        driver.findElement(CLOSE_CROSS_IN_ALERT_WINDOW).click();
     }
 
     /**
@@ -188,13 +188,8 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         driver.findElement(ADD_PROBLEM_NEXT_TAB2_BUTTON).click();
         driver.findElement(PROBLEM_NAME_TEXT_BOX).sendKeys(problemName);
 
-        // Finding problem type from drop-down menu. If problemType equals on something click on it
-        List<WebElement> elements = driver.findElements(PROBLEM_TYPE_DROP_DOWN_LIST);
-        for (WebElement element : elements) {
-            if (problemType.equals(element.getText())) {
-                element.click();
-            }
-        } // А если не найдет такой тип проблемы?
+        // Finding problem type from drop-down menu. If problemType equals on something click on it if not choose "Інші проблеми"
+        clickOnProblemType(problemType);
 
         driver.findElement(PROBLEM_DESCRIPTION_FIELD).sendKeys(problemDescription);
         driver.findElement(PROBLEM_PROPOSE_FIELD).sendKeys(problemPropose);
@@ -222,22 +217,25 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
             commentElements.get(i).sendKeys(imageComments.get(i));
         }
 
-        driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        closeAlertIfPresent();
+    }
 
-        System.out.println("Before Explicit Wait during problem add");
-        try {
-            WebElement login = (new WebDriverWait(driver, 1))
-                    .until(ExpectedConditions.presenceOfElementLocated(LOGIN_LINK));
-            WebElement alert = (new WebDriverWait(driver, 1))
-                    .until(ExpectedConditions.presenceOfElementLocated(ALERT));
-            alert.findElement(CLOSE_CROSS).click();
-        } catch (Exception e) {
-            e.printStackTrace();
+    /**
+     * Finding problem type from drop-down menu. If problemType equals on something click on it if not choose "Інші проблеми"
+     *
+     * @param problemType is type of the problem like landfill, illegal construction, poaching etc
+     */
+    private void clickOnProblemType(String problemType) {
+        List<WebElement> elements = driver.findElements(PROBLEM_TYPE_DROP_DOWN_LIST);
+        for (WebElement element : elements) {
+            if (problemType.equals(element.getText())) {
+                element.click();
+                //if found element exit from this method
+                return;
+            }
         }
-        System.out.println("After Explicit Wait during problem add");
-
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        //if not found by loop we choose last element = "Інші проблеми"
+        elements.get(elements.size()).click();
     }
 
     /**
@@ -466,18 +464,21 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
             element.sendKeys(imagesComment.get(i));
             i++;
         }
+        closeAlertIfPresent();
 
+    }
+
+    /**
+     * This method click 'close' button if alert presents
+     */
+    private void closeAlertIfPresent() {
         driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-        try {
-            WebElement login = (new WebDriverWait(driver, 1))
-                    .until(ExpectedConditions.presenceOfElementLocated(LOGIN_LINK));
-            WebElement alert = (new WebDriverWait(driver, 1))
-                    .until(ExpectedConditions.presenceOfElementLocated(ALERT));
-            alert.findElement(CLOSE_CROSS).click();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        WebElement login = (new WebDriverWait(driver, 1))
+                .until(ExpectedConditions.presenceOfElementLocated(LOGIN_LINK));
+        WebElement alert = (new WebDriverWait(driver, 1))
+                .until(ExpectedConditions.presenceOfElementLocated(ALERT_WINDOW));
+        alert.findElement(CLOSE_CROSS_IN_ALERT_WINDOW).click();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
