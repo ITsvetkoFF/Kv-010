@@ -98,7 +98,9 @@ public class NaiveSimilarityFinder extends JFrame {
             GraphicsDevice gs = ge.getDefaultScreenDevice();
             GraphicsConfiguration gc = gs.getDefaultConfiguration();
             bimage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), transparency);
-        } catch (HeadlessException e) {}
+        } catch (HeadlessException e) {
+            e.printStackTrace();
+        }
         if (bimage == null) {
             int type = BufferedImage.TYPE_INT_RGB;
             if (hasAlpha == true) {type = BufferedImage.TYPE_INT_ARGB;}
@@ -123,7 +125,9 @@ public class NaiveSimilarityFinder extends JFrame {
         PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
         try {
             pg.grabPixels();
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return pg.getColorModel().hasAlpha();
     }
 
