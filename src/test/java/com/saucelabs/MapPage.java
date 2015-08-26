@@ -39,8 +39,8 @@ public class MapPage implements IMapPage {
     /**
      * With this method we can change view our page, we use coordinate and zoom for it
      *
-     * @param latitude  is coordinate in our map page (default latitude when you open the main page is 50)
-     * @param longitude is coordinate in our map page (default latitude when you open the main page is 32)
+     * @param latitude  is coordinate X in our map page (default latitude when you open the main page is 50)
+     * @param longitude is coordinate Y in our map page (default latitude when you open the main page is 32)
      * @param zoom      is in and out map (default 7 'full view of the map of Ukraine')
      */
     @Override
