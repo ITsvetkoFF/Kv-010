@@ -36,9 +36,9 @@ public class Activities implements java.io.Serializable {
 		this.problems = problems;
 	}
 
-	public Activities(ActivityTypes activitytypes, Problems problems,
+	public Activities(ActivityTypes activityTypes, Problems problems,
 			Users users, String content, Date date) {
-		this.activityTypes = activitytypes;
+		this.activityTypes = activityTypes;
 		this.problems = problems;
 		this.users = users;
 		this.content = content;
@@ -58,12 +58,12 @@ public class Activities implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ActivityTypes_Id", nullable = false)
-	public ActivityTypes getActivityTypes() {
+	public ActivityTypes getActivitytypes() {
 		return this.activityTypes;
 	}
 
-	public void setActivityTypes(ActivityTypes activityTypes) {
-		this.activityTypes = activityTypes;
+	public void setActivitytypes(ActivityTypes activitytypes) {
+		this.activityTypes = activitytypes;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
