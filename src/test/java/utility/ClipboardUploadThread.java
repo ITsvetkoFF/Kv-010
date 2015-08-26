@@ -6,15 +6,21 @@ import java.awt.event.KeyEvent;
 
 /**
  * Created by Tanya on 02.11.2014.
+ * Refactoring by Valery on 20.08.2015.
+ *
+ * This class loads clipboard on a new thread.
  */
 public class ClipboardUploadThread extends Thread {
+
     public ClipboardUploadThread(String filePath) {
         super(new Runner(filePath));
     }
 }
 
+
 class Runner implements Runnable {
     private String filePath;
+
     public Runner(String filePath) {
         this.filePath = filePath;
     }
@@ -22,7 +28,7 @@ class Runner implements Runnable {
     public void run() {
         try {
             Thread.sleep(2000);
-            Robot robot = new Robot();        //Class Java.awt.Robot used for emulation of push button of mouse and keyboard. This class can perform actions with keyboard and mouse directly from code.
+            Robot robot = new Robot();
             StringSelection stringSelection = new StringSelection(filePath);
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
             robot.keyPress(KeyEvent.VK_CONTROL);

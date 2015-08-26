@@ -2,10 +2,11 @@ package utility;
 
 /**
  * Created by Volodja on 10/26/14.
+ * Refactoring by Valery on 20.08.2015.
  */
 public class Constant {
     public static final String URLlocal = "http://localhost:8090/#/map";
-    public static final String URL = "http://176.36.11.25/#/map";                               // ?
+    public static final String URL = "http://176.36.11.25/#/map";
     public static final String Username = "admin@.com";
     public static final String Password = "admin";
     public static final String Path_TestData = ".\\resources\\";
