@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.DemoTests;
+package com.saucelabs.Tests.LocalTests;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.saucelabs.AnyPage;

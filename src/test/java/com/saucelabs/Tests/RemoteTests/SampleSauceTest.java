@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.RemoteTests;
 
 /**
  * @author Ross Rowe

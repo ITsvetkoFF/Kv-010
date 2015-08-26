@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.DemoTests;
+package com.saucelabs.Tests.LocalTests;
 
 import com.saucelabs.ResourcesPage;
 import com.saucelabs.Tests.DAO.BaseDAO;
