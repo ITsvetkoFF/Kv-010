@@ -7,19 +7,17 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/enviromap</property>
+        <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/Enviromap</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.validator.apply_to_ddl">false</property>
         <mapping class="com.saucelabs.Tests.DBTests.entities.Activities" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.DeviceTokens" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Photos" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Problems" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.News" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.UserRoles" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Resources" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.Users" />
-        <mapping class="com.saucelabs.Tests.DBTests.entities.ActivityTypes" />
         <mapping class="com.saucelabs.Tests.DBTests.entities.ProblemTypes" />
+        <mapping class="com.saucelabs.Tests.DBTests.entities.ActivityTypes" />
     </session-factory>
 </hibernate-configuration>

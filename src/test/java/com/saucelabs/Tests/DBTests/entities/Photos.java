@@ -47,6 +47,7 @@ public class Photos implements java.io.Serializable {
 	@AttributeOverrides({
 			@AttributeOverride(name = "id", column = @Column(name = "Id", nullable = false)),
 			@AttributeOverride(name = "problemsId", column = @Column(name = "Problems_Id", nullable = false)) })
+
 	public PhotosId getId() {
 		return this.id;
 	}

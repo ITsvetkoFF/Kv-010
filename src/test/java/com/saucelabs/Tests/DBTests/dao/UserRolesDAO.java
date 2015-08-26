@@ -19,7 +19,7 @@ public class UserRolesDAO extends MainDAO{
 
     public UserRoles findUserRolesByRole(String role) {
         UserRoles userRole = null;
-        Query query = getSession().createQuery("from UserRoles where role = :role");
+        Query query = getSession().createQuery("from UserRoles where Role = :role");
         query.setParameter("role", role);
         List<UserRoles> roles = query.list();
         closeSession();

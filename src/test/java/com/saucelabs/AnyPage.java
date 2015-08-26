@@ -186,15 +186,17 @@ public class AnyPage extends MapPage implements IAnyPage {
         }
 
         driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         System.out.println("Before Explicit Wait during problem add");
         try {
-            WebElement login = (new WebDriverWait(driver, 1))
+            WebElement login = (new WebDriverWait(driver, 10))
                     .until(ExpectedConditions.presenceOfElementLocated(LOGIN_LINK));
-            WebElement alert = (new WebDriverWait(driver, 1))
+            WebElement alert = (new WebDriverWait(driver, 10))
                     .until(ExpectedConditions.presenceOfElementLocated(ALERT));
             alert.findElement(CLOSE_CROSS).click();
         } catch (Exception e) {
+            System.out.println("EXCEPTION-!!!!!!!!!!!!!!");
+            e.printStackTrace();
         }
         System.out.println("After Explicit Wait during problem add");
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);

@@ -15,17 +15,18 @@ abstract class MainDAO {
      */
     public Session getSession()
     {
-        if (session == null) {
+        if (session == null || !session.isOpen()) {
             openSession();
         }
         return session;
     }
 
-    protected final void openSession() {
+    private void openSession() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 
     protected final void closeSession() {
+        session.flush();
         session.close();
     }
 }

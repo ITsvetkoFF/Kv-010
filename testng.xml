@@ -1,25 +1,20 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="LocalSuite" verbose="1" thread-count="1">
-    <test name="CreateUserTests" verbose="1">
+    <test name="CreateUserDBTest" verbose="1">
+        <!--<groups>-->
+            <!--<run>-->
+                <!--<include name="CreateUser" />-->
+                <!--<include name="DBTests" />-->
+            <!--</run>-->
+        <!--</groups>-->
+
         <classes>
-            <class name="com.saucelabs.Tests.DBTests.CreateAdminTest"></class>
-            <class name="com.saucelabs.Tests.DBTests.CreateUserTest"></class>
+
+            <!--<class name="com.saucelabs.Tests.DBTests.newTests.CreateUserDBTest"></class>-->
+            <class name="com.saucelabs.Tests.DBTests.newTests.CreateProblemDBTest"></class>
+            <!--<class name="com.saucelabs.Tests.DBTests.AddProblemTest"></class>-->
         </classes>
     </test>
-    <test name="ResourcesTest" verbose="1">
-        <classes>
-            <class name="com.saucelabs.Tests.DBTests.ResourcesWithDBTest"></class>
-        </classes>
-    </test>
-    <test name="AddProblemTest" verbose="1">
-        <classes>
-            <class name="com.saucelabs.Tests.DBTests.AddProblemTest"></class>
-        </classes>
-    </test>
-    <test name="DeleteProblemsTest" group-by-instances="true">
-        <classes>
-            <class name="com.saucelabs.Tests.DBTests.DeleteProblemTestFactory"></class>
-        </classes>
-    </test>
+
 </suite>

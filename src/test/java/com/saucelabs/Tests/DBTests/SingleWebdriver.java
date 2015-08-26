@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Created by ykadytc on 19.11.2014.
  */
 public class SingleWebdriver {
-    static WebDriver driver;
+   public static WebDriver driver;
 
     @BeforeSuite
     public static void setUp() {
