@@ -25,18 +25,18 @@ import java.util.List;
 /**
  * Created by acidroed on 22.08.2015.
  */
-public class CreateProblemDBTest extends SingleWebdriver{
+public class CreateProblemDBTest {
 
     AnyPage anyPage;
     ProblemPage problemPage;
-    ProblemsDAO problemsDAO;
-    //WebDriver driver = SingletonWebDriver.getInstance();
+    ProblemsDAO problemsDAO = new ProblemsDAO();
+    WebDriver driver = SingletonWebDriver.getInstance();
     Problems actualProblem;
 
     public double latitude = 50.1;
     public double longitude = 30.1;
     public String problemNameTest = "problem1";
-    public String problemTypeTest = "Çàãðîçè á³îð³çíîìàí³òòþ";
+    public String problemTypeTest = "Ð—Ð°Ð³Ñ€Ð¾Ð·Ð¸ Ð±Ñ–Ð¾Ñ€Ñ–Ð·Ð½Ð¾Ð¼Ð°Ð½Ñ–Ñ‚Ñ‚ÑŽ";
     public String problemDescriptionTest = "description1";
     public String problemProposeTest = "propose1";
 //    public List<String> imagePath = Arrays.asList(new File("resources" + File.separator + "images" + File.separator + "bomb.jpg").getAbsolutePath(),
@@ -48,64 +48,64 @@ public class CreateProblemDBTest extends SingleWebdriver{
 
     //@Test(sequential = true, dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"DBTests"})
     //@Test(sequential = true, dependsOnGroups = {"CreateUser"}, groups = {"DBTests"})
-//    @Test
-//    public void addProblem() throws SQLException, ClassNotFoundException {
-//        driver.get(Constant.URLlocal);
-//        //driver.navigate().refresh();
-//        System.out.println("111111111111111111111");
-//        anyPage = new AnyPage(driver);
-//        System.out.println("2222222222222222222222");
-//        problemPage = new ProblemPage(driver);
-//        anyPage.logIn("admin@.com", "admin");
-//        System.out.println("333333333333333333333333");
-//        anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
-//                problemDescriptionTest, problemProposeTest, imagePath, imageComments);
-//        System.out.println("4444444444444444444444444");
-//        driver.navigate().refresh();
-//        System.out.println("5555555555555555555555555");
-//        anyPage.clickAtProblemByCoordinateVisible(latitude, longitude);
-//        System.out.println("66666666666666666666666666");
-//        String problemTitle = problemPage.getProblemTitle();
-//        System.out.println("7777777777777777777777777777");
-//        problemPage.closeProblem();
-//        System.out.println("88888888888888888888888888888");
-//        Assert.assertEquals(problemTitle, problemNameTest);
-//        actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
-//
-//        Assert.assertEquals(actualProblem.getLatitude(), latitude);
-//        Assert.assertEquals(actualProblem.getLongtitude(), longitude);
-//        Assert.assertEquals(actualProblem.getTitle(), problemNameTest);
-//        Assert.assertEquals(actualProblem.getContent(), problemDescriptionTest);
-//        Assert.assertEquals(actualProblem.getProposal(), problemProposeTest);
-//        Assert.assertEquals(actualProblem.getLatitude(), latitude);
-//    }
-
     @Test
     public void addProblem() throws SQLException, ClassNotFoundException {
-        checkDriver();
-        driver.get("http://localhost:8090/#/map");
+        driver.get(Constant.URLlocal);
+        //driver.navigate().refresh();
+        System.out.println("111111111111111111111");
         anyPage = new AnyPage(driver);
+        System.out.println("2222222222222222222222");
         problemPage = new ProblemPage(driver);
-        //addProblemDAO = new AddProblemDAO();
         anyPage.logIn("admin@.com", "admin");
-
+        System.out.println("333333333333333333333333");
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imagePath, imageComments);
+        System.out.println("4444444444444444444444444");
         driver.navigate().refresh();
+        System.out.println("5555555555555555555555555");
         anyPage.clickAtProblemByCoordinateVisible(latitude, longitude);
+        System.out.println("66666666666666666666666666");
         String problemTitle = problemPage.getProblemTitle();
+        System.out.println("7777777777777777777777777777");
         problemPage.closeProblem();
+        System.out.println("88888888888888888888888888888" + problemTitle);
+        //Assert.assertEquals(problemTitle, problemNameTest);
+        actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
 
-        Assert.assertEquals(problemTitle, problemNameTest);
+        Assert.assertEquals(actualProblem.getLatitude(), latitude, 0.00001);
+        Assert.assertEquals(actualProblem.getLongtitude(), longitude, 0.00001);
+        Assert.assertEquals(actualProblem.getTitle(), problemNameTest);
+        Assert.assertEquals(actualProblem.getContent(), problemDescriptionTest);
+        Assert.assertEquals(actualProblem.getProposal(), problemProposeTest);
+
     }
 
-    @Test(sequential = true, dependsOnMethods = {"addProblem"}, groups = {"DBTests"})
+//    @Test
+//    public void addProblem() throws SQLException, ClassNotFoundException {
+//        //checkDriver();
+//        driver.get("http://localhost:8090/#/map");
+//        anyPage = new AnyPage(driver);
+//        problemPage = new ProblemPage(driver);
+//        //addProblemDAO = new AddProblemDAO();
+//        anyPage.logIn("admin@.com", "admin");
+//
+//        anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
+//                problemDescriptionTest, problemProposeTest, imagePath, imageComments);
+//        driver.navigate().refresh();
+//        anyPage.clickAtProblemByCoordinateVisible(latitude, longitude);
+//        String problemTitle = problemPage.getProblemTitle();
+//        problemPage.closeProblem();
+//
+//        Assert.assertEquals(problemTitle, problemNameTest);
+//    }
+
+    //@Test(sequential = true, dependsOnMethods = {"addProblem"}, groups = {"DBTests"})
     public void checkProblemTypeAfterAddProblem(){
         ProblemsTypesDAO problemsTypesDAO = new ProblemsTypesDAO();
         Assert.assertEquals(actualProblem.getProblemTypes().getId(), problemsTypesDAO.findByProblemTypeName(problemTypeTest).getId());
     }
 
-    @Test(sequential = true, dependsOnMethods = {"checkProblemTypeAfterAddProblem"}, groups = {"DBTests"})
+    //@Test(sequential = true, dependsOnMethods = {"checkProblemTypeAfterAddProblem"}, groups = {"DBTests"})
     public void checkActivityAfterAddProblem(){
         ActivitiesDAO activitiesDAO = new ActivitiesDAO();
         UsersDAO usersDAO = new UsersDAO();
@@ -116,7 +116,7 @@ public class CreateProblemDBTest extends SingleWebdriver{
     }
 
 
-    @Test(sequential = true, dependsOnMethods = {"checkActivityAfterAddProblem"}, groups = {"DBTests"})
+    //@Test(sequential = true, dependsOnMethods = {"checkActivityAfterAddProblem"}, groups = {"DBTests"})
     public void checkAddedPhotoAfterAddProblem(){
         UsersDAO usersDAO = new UsersDAO();
         int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
@@ -154,7 +154,7 @@ public class CreateProblemDBTest extends SingleWebdriver{
     }
 
 
-    @AfterTest
+    //@AfterTest
     public void deleteProblemUI() {
         anyPage.logOut();
         driver.manage().window().maximize();
@@ -165,10 +165,6 @@ public class CreateProblemDBTest extends SingleWebdriver{
         List<String> receivedURL;
         String receivedId;
         problemPage.openProblemById(actualProblem.getId());
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-        }
         adminPage.pressDeleteProblemButton();
         System.out.println("Problem deleted. ");
 //        try {

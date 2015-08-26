@@ -35,35 +35,35 @@ import java.util.concurrent.TimeUnit;
 //}
 
 
-//public class SingletonWebDriver {
-//    private static volatile WebDriver instance;
-//
-//    public static WebDriver getInstance() {
-//        WebDriver localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (WebDriver.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new FirefoxDriver();
-//                    instance.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-//}
-
-
-public class SingletonWebDriver{
-    private static WebDriver instance;
-    private SingletonWebDriver () {}
+public class SingletonWebDriver {
+    private static volatile WebDriver instance;
 
     public static WebDriver getInstance() {
-        if (instance == null) {
-            instance = new FirefoxDriver();
-            instance.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        WebDriver localInstance = instance;
+        if (localInstance == null) {
+            synchronized (WebDriver.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new FirefoxDriver();
+                    instance.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                }
+            }
         }
-
-        return instance;
+        return localInstance;
     }
 }
+
+
+//public class SingletonWebDriver{
+//    private static WebDriver instance;
+//    private SingletonWebDriver () {}
+//
+//    public static WebDriver getInstance() {
+//        if (instance == null) {
+//            instance = new FirefoxDriver();
+//            instance.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        }
+//
+//        return instance;
+//    }
+//}

@@ -58,11 +58,11 @@ public class Activities implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ActivityTypes_Id", nullable = false)
-	public ActivityTypes getActivitytypes() {
+	public ActivityTypes getActivityTypes() {
 		return this.activityTypes;
 	}
 
-	public void setActivitytypes(ActivityTypes activitytypes) {
+	public void setActivityTypes(ActivityTypes activitytypes) {
 		this.activityTypes = activitytypes;
 	}
 

@@ -43,7 +43,7 @@ public class AddProblemTest extends SingleWebdriver{
         driver.get("http://localhost:8090/#/map");
         anyPage = new AnyPage(driver);
         problemPage = new ProblemPage(driver);
-        addProblemDAO = new AddProblemDAO();
+//        addProblemDAO = new AddProblemDAO();
         anyPage.logIn("admin@.com", "admin");
 
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,

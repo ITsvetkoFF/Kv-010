@@ -196,10 +196,9 @@ public class AnyPage extends MapPage implements IAnyPage {
             alert.findElement(CLOSE_CROSS).click();
         } catch (Exception e) {
             System.out.println("EXCEPTION-!!!!!!!!!!!!!!");
-            e.printStackTrace();
         }
         System.out.println("After Explicit Wait during problem add");
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
     public String checkUsernameInRightCorner(){
