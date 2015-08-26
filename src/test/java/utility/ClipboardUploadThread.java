@@ -17,7 +17,9 @@ public class ClipboardUploadThread extends Thread {
     }
 }
 
-
+/**
+ * This class puts address of pictures in address line. Only for Windows.
+ */
 class Runner implements Runnable {
     private String filePath;
 
