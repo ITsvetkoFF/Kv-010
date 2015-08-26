@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Roma on 23.10.2014.
- * Refactoring by Vadym on 08/25/15.
+ * Refactoring by Vadym on 08/21/15.
  */
 public class MapPage implements IMapPage {
 
@@ -39,9 +39,9 @@ public class MapPage implements IMapPage {
     /**
      * With this method we can change view our page, we use coordinate and zoom for it
      *
-     * @param latitude is coordinate in our map page (default latitude when you open the main page is 50)
+     * @param latitude  is coordinate in our map page (default latitude when you open the main page is 50)
      * @param longitude is coordinate in our map page (default latitude when you open the main page is 32)
-     * @param zoom is in and out map (default 7 'full view of the map of Ukraine')
+     * @param zoom      is in and out map (default 7 'full view of the map of Ukraine')
      */
     @Override
     public void setView(double latitude, double longitude, int zoom) {
@@ -61,9 +61,9 @@ public class MapPage implements IMapPage {
      * 2) menu 'addProblem' can be at top side if you have a small size screen
      * After this operations we would found new center coordinate X, Y. Run angular script which uses our variables
      *
-     * @param latitude is coordinate in our map page (default latitude when you open the main page is 50)
+     * @param latitude  is coordinate in our map page (default latitude when you open the main page is 50)
      * @param longitude is coordinate in our map page (default latitude when you open the main page is 32)
-     * @param zoom is in and out map (default 7 'full view of the map of Ukraine')
+     * @param zoom      is in and out map (default 7 'full view of the map of Ukraine')
      */
     @Override
     public void setVisibleView(double latitude, double longitude, int zoom) {
@@ -119,7 +119,8 @@ public class MapPage implements IMapPage {
         if (script != null) {
             script.executeScript(
                     "var map = document.getElementById(\"map-content\");"
-                            + "var oldCenter = angular.element(map).scope().$parent.$parent.$parent.geoJson._map.getCenter();"
+                            + "var oldCenter = angular.element(map).scope().$parent.$parent.$parent" +
+                            ".geoJson._map.getCenter();"
                             + "console.log(oldCenter);"
                             + "var newCenter = angular.element(map).scope().$parent.$parent.$parent"
                             + ".geoJson._map.containerPointToLatLng([" + newCenterCoordinateX + ","
@@ -215,7 +216,7 @@ public class MapPage implements IMapPage {
     @Override
     public void clickZoomOut() {
         WebElement zoomOut = driver.findElement(ZOOM_OUT);
-        while (!zoomOut.getAttribute("class").contains("disabled")){
+        while (!zoomOut.getAttribute("class").contains("disabled")) {
             zoomOut.click();
         }
     }
@@ -230,6 +231,7 @@ public class MapPage implements IMapPage {
 
     /**
      * Find all problems with one filter by id (int)
+     *
      * @param typeNumber is filter (id) for searching problems.
      */
     @Override
@@ -238,7 +240,7 @@ public class MapPage implements IMapPage {
         List<WebElement> filtersChecks = driver.findElements(PROBLEM_TYPE_STARTS_WITH_TYPE_BY_ID);
         for (int i = 0; i < filtersChecks.size(); i++) {
             if (i != typeNumber - 1) {
-                if ("true".equals(filtersChecks.get(i).getAttribute("checked"))){
+                if ("true".equals(filtersChecks.get(i).getAttribute("checked"))) {
                     filtersNames.get(i).click();
                 }
             } else {
@@ -251,6 +253,7 @@ public class MapPage implements IMapPage {
 
     /**
      * Find all problems with one filter by text (string)
+     *
      * @param typeName is filter (String) for searching problems.
      */
     @Override
@@ -272,6 +275,7 @@ public class MapPage implements IMapPage {
 
     /**
      * This method finds elements filtering by data. Get first element in the list and sets value.
+     *
      * @param afterDate is parameter for set value in WebElement.
      */
     @Override
@@ -284,6 +288,7 @@ public class MapPage implements IMapPage {
 
     /**
      * This method finds elements filtering by data. Get second element in the list and sets value.
+     *
      * @param beforeDate is parameter for set value in WebElement.
      */
     @Override
@@ -327,6 +332,7 @@ public class MapPage implements IMapPage {
 
     /**
      * Find all problems except one filter by id (int)
+     *
      * @param typeNumber is id for list (we find all problems expect this id 'typeNumber')
      */
     @Override  //not use
@@ -344,6 +350,7 @@ public class MapPage implements IMapPage {
 
     /**
      * Find all problems except one filter by name (String) and click
+     *
      * @param typeName we find all problems by filter expect this string 'typeName'
      */
     @Override  //not use
