@@ -293,7 +293,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
      * @param time    It's time how much need wait (int)
      * @param byValue Element which need wait
      */
-    private void explicitWaitForElement(int time, By byValue) {
+    public void explicitWaitForElement(int time, By byValue) {
         WebDriverWait wait1 = new WebDriverWait(driver, time);
         wait1.until(ExpectedConditions.visibilityOfElementLocated(byValue));
     }
