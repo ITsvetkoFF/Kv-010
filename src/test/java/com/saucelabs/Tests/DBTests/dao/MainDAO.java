@@ -3,6 +3,8 @@ package com.saucelabs.Tests.DBTests.dao;
 import org.hibernate.Session;
 import utility.HibernateUtil;
 
+import java.sql.SQLException;
+
 /**
  * Base abstract Class for all DAO classes. It needs for working with a Session.
  */
@@ -26,7 +28,7 @@ abstract class MainDAO {
     }
 
     protected final void closeSession() {
-        session.flush();
+
         session.close();
     }
 }

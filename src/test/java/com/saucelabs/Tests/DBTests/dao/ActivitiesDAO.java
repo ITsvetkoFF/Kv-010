@@ -24,7 +24,7 @@ public class ActivitiesDAO extends MainDAO {
         query.setParameter("userID", userID);
         query.setParameter("problemID", problemID);
         List<Activities> problemTypesList = query.list();
-        closeSession();
+        //closeSession();
         if (!problemTypesList.isEmpty()) {
             activities = problemTypesList.get(0);
         } else {

@@ -22,7 +22,7 @@ public class UserRolesDAO extends MainDAO{
         Query query = getSession().createQuery("from UserRoles where Role = :role");
         query.setParameter("role", role);
         List<UserRoles> roles = query.list();
-        closeSession();
+       //closeSession();
         if (!roles.isEmpty()) {
             userRole = roles.get(0);
         }

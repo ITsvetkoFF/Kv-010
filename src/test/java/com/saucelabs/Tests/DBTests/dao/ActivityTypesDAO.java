@@ -9,7 +9,7 @@ public class ActivityTypesDAO extends MainDAO {
 
     public ActivityTypes findById(Integer id) {
         ActivityTypes activityType = (ActivityTypes) getSession().get(ActivityTypes.class, id);
-        closeSession();
+        //closeSession();
         return activityType;
 
     }

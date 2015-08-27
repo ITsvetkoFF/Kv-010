@@ -13,7 +13,7 @@ public class ProblemsDAO extends MainDAO {
 
     public Problems findById(Integer id) {
         Problems problem = (Problems) getSession().get(Problems.class, id);
-        closeSession();
+        //closeSession();
         return problem;
     }
 
@@ -23,7 +23,7 @@ public class ProblemsDAO extends MainDAO {
         query.setParameter("title", title);
         List<Problems> problems = query.list();
         System.out.println(problems.size());
-        closeSession();
+        //closeSession();
         if (!problems.isEmpty()) {
             problem = problems.get(0);
         } else {

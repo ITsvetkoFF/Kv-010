@@ -19,8 +19,7 @@ public class UsersDAO extends MainDAO{
         Query query = getSession().createQuery("from Users where Email = :email");
         query.setParameter("email", email);
         List<Users> users = query.list();
-
-        closeSession();
+        //closeSession();
         if (!users.isEmpty()) {
             user = users.get(0);
         } else {
@@ -40,7 +39,7 @@ public class UsersDAO extends MainDAO{
             transaction.rollback();
             throw t;
         }
-        closeSession();
+        //closeSession();
     }
 
     public void deleteUser(Users user) {

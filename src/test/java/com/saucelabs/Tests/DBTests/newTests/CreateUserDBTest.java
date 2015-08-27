@@ -31,19 +31,22 @@ public class CreateUserDBTest {
         return ExcelUtils.getTableArray(Constant.Path_SimpleUserCreateData + Constant.File_SimpleUserCreateData, "Sheet1");
     }
 
-    @Test(sequential = true, dataProvider = "SimpleUser", groups = {"CreateUser"})
+    //@Test(sequential = true, dataProvider = "SimpleUser", groups = {"CreateUser"})
+    @Test(dataProvider = "SimpleUser", groups = {"CreateUser"})
     public void userRegistrationDBCheck(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
         Users actualUser;
         driver.get(Constant.URLlocal);
         anyPage = new AnyPage(driver);
         anyPage.register(userName, userSurname, userEmail, userPassword);
         actualUser = userInfoDB.findUserByEmail(userEmail);
+        //driver.close();
 
 
         Assert.assertEquals(actualUser.getName(), userName);
         Assert.assertEquals(actualUser.getSurname(), userSurname);
         Assert.assertEquals(actualUser.getPassword(), HashUtil.hmacSha1(userPassword, Constant.HashKey));
         Assert.assertEquals(actualUser.getUserRoles().getRole(), userRole);
+        System.out.printf("------------------"+actualUser.getId()+"--------------------");
     }
 
 

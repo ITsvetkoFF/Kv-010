@@ -32,7 +32,7 @@ public class CreateProblemDBTest {
     ProblemPage problemPage;
     ProblemsDAO problemsDAO = new ProblemsDAO();
     WebDriver driver = SingletonWebDriver.getInstance();
-    Problems actualProblem;
+    Problems actualProblem = new Problems();
 
     public double latitude = 50.1;
     public double longitude = 30.1;
@@ -46,13 +46,15 @@ public class CreateProblemDBTest {
     public List<String> problemComments = Arrays.asList("problemComment1");
 
     //@Test(sequential = true, dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"DBTests"})
-    //@Test(sequential = true, dependsOnGroups = {"CreateUser"}, groups = {"DBTests"})
-    @Test
+    @Test(dependsOnGroups = {"CreateUser"}, groups = {"DBTests"})
+    //@Test
     public void addProblem() throws SQLException, ClassNotFoundException {
         driver.get(Constant.URLlocal);
         anyPage = new AnyPage(driver);
         problemPage = new ProblemPage(driver);
-        anyPage.logIn("admin@.com", "admin");
+        //anyPage.logOut();
+        //anyPage.logIn("admin@.com", "admin");
+        //anyPage.logIn("test@gmail.com", "test");
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imagePath, imageComments);
         driver.navigate().refresh();
@@ -62,8 +64,8 @@ public class CreateProblemDBTest {
         Assert.assertEquals(problemTitle, problemNameTest);
         actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
 
-        Assert.assertEquals(actualProblem.getLatitude(), latitude, Constant.DeltaAccuracyForCoordinates);
-        Assert.assertEquals(actualProblem.getLongtitude(), longitude, Constant.DeltaAccuracyForCoordinates);
+//        Assert.assertEquals(actualProblem.getLatitude(), latitude, Constant.DeltaAccuracyForCoordinates);
+//        Assert.assertEquals(actualProblem.getLongtitude(), longitude, Constant.DeltaAccuracyForCoordinates);
         Assert.assertEquals(actualProblem.getTitle(), problemNameTest);
         Assert.assertEquals(actualProblem.getContent(), problemDescriptionTest);
         Assert.assertEquals(actualProblem.getProposal(), problemProposeTest);
@@ -83,8 +85,8 @@ public class CreateProblemDBTest {
     public void checkActivityAfterAddProblem(){
         ActivitiesDAO activitiesDAO = new ActivitiesDAO();
         UsersDAO usersDAO = new UsersDAO();
-//        int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
-        int userID = usersDAO.findUserByEmail("admin@.com").getId();
+        int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
+        //int userID = usersDAO.findUserByEmail("admin@.com").getId();
         String activityTypeName = activitiesDAO.findByUserIdAndProblemID(userID, actualProblem.getId()).getActivityTypes().getName();
 
         Assert.assertEquals(activityTypeName, Constant.AddProblemActivityTypeName);
@@ -134,7 +136,7 @@ public class CreateProblemDBTest {
     }
 
 
-    @AfterTest
+    //@AfterTest
     public void deleteProblemUI() {
         anyPage.logOut();
         driver.manage().window().maximize();
