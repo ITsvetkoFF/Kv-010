@@ -48,7 +48,7 @@ public class CreateUserDBTest {
 
 
     //@Test(sequential = true, dataProvider = "SimpleUser", dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"DBTests"})
-    @Test(sequential = true, dataProvider = "SimpleUser", dependsOnGroups = {"CreateProblem"})
+    //@Test(sequential = true, dataProvider = "SimpleUser", dependsOnGroups = {"CreateProblem"})
     public void deleteUser(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
 
         userInfoDB.deleteUserByEmail(userEmail);

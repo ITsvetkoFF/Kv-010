@@ -27,4 +27,13 @@ public class PhotosDAO extends MainDAO {
         return photosList;
     }
 
+    public List<Photos> findByProblemID(int problemID) {
+        Photos photos = null;
+        Query query = getSession().createQuery("from Photos where Problems_Id = :problemID");
+        query.setParameter("problemID", problemID);
+        List<Photos> photosList = query.list();
+        closeSession();
+        return photosList;
+    }
+
 }

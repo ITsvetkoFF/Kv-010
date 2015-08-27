@@ -37,7 +37,7 @@ public class AddProblemTest extends SingleWebdriver{
     public List<String> imageComments = Arrays.asList("imageComment1", "imageComment2");
     public List<String> problemComments = Arrays.asList("problemComment1");
 
-    @Test
+    //@Test
     public void addProblem() throws SQLException, ClassNotFoundException {
         checkDriver();
         driver.get("http://localhost:8090/#/map");

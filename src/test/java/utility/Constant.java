@@ -27,4 +27,6 @@ public class Constant {
     public static final String Path_SmokeTestData = ".\\resources\\";
     public static final String File_SmokeTestData = "SmokeTestData.xlsx";
     public static final String AddProblemActivityTypeName = "addProblem";
+    public static final Double DeltaAccuracyForCoordinates = 0.00001;
+
 }

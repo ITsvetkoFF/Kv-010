@@ -19,11 +19,10 @@ public class ProblemsDAO extends MainDAO {
 
     public Problems findProblemByTitle(String title) {
         Problems problem = null;
-        System.out.println("================================================");
         Query query = getSession().createQuery("from Problems where Title = :title");
         query.setParameter("title", title);
         List<Problems> problems = query.list();
-        System.out.println("================+++++++++++++++++++===============================");
+        System.out.println(problems.size());
         closeSession();
         if (!problems.isEmpty()) {
             problem = problems.get(0);

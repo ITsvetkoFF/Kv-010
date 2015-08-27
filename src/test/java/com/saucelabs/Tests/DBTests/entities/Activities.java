@@ -56,7 +56,7 @@ public class Activities implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ActivityTypes_Id", nullable = false)
 	public ActivityTypes getActivityTypes() {
 		return this.activityTypes;

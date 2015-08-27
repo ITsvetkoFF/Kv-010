@@ -4,6 +4,7 @@ import com.saucelabs.Tests.DBTests.entities.ProblemTypes;
 import com.saucelabs.Tests.DBTests.entities.Users;
 import org.hibernate.Query;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -17,11 +18,10 @@ public class ProblemsTypesDAO extends MainDAO {
         return problemType;
     }
 
-    public ProblemTypes findByProblemTypeName(String name) {
-
+    public ProblemTypes findByProblemTypeName(String type) {
         ProblemTypes problemTypes = null;
-        Query query = getSession().createQuery("from ProblemTypes where Name = :name");
-        query.setParameter("name", name);
+        Query query = getSession().createQuery("from ProblemTypes where Type = :type");
+        query.setParameter("type", type);
         List<ProblemTypes> problemTypesList = query.list();
         closeSession();
         if (!problemTypesList.isEmpty()) {
