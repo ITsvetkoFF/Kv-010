@@ -235,7 +235,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
             }
         }
         //if not found by loop we choose last element = "Інші проблеми"
-        elements.get(elements.size()).click();
+        elements.get(elements.size() - 1).click();
     }
 
     /**
