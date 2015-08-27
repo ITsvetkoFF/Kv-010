@@ -31,7 +31,7 @@ import static java.sql.DriverManager.getConnection;
 /**
  * Created by Olya on 10/31/14.
  */
-public class ResourcesPageTestLocal{
+public class ResourcesPageTest {
     static WebDriver driver = new FirefoxDriver();
     static ResourcesPage resourcesPage = new ResourcesPage(driver);
 
@@ -46,21 +46,6 @@ public class ResourcesPageTestLocal{
     public static Object[][] data() throws Exception{
         return ExcelUtils.getTableArray(Constant.Path_TestData + Constant.File_TestDataLocal, "Sheet1");
     }
-
-    /*private WebDriver createDriver(String browser, String version, String os) throws MalformedURLException {
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
-        if (version != null) {
-            capabilities.setCapability(CapabilityType.VERSION, version);
-        }
-        capabilities.setCapability(CapabilityType.PLATFORM, os);
-        capabilities.setCapability("name", "Resource Sample Test");
-        webDriver.set(new RemoteWebDriver(
-                new URL("http://" + authentication.getUsername() + ":" + authentication.getAccessKey() + "@ondemand.saucelabs.com:80/wd/hub"),capabilities));
-        sessionId.set(((RemoteWebDriver) getWebDriver()).getSessionId().toString());
-        return webDriver.get();
-    }*/
 
     @Test(dataProvider = "testData")
     public void createResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{

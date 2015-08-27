@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 import com.saucelabs.AdminPage;
 import com.saucelabs.AnyPage;
@@ -17,13 +17,15 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Yermek on 03.11.2014.
+ * Created by Yermek on 31.10.2014.
  */
-public class LocalTestThree {
+public class zLocalTestTwo {
     @DataProvider(name = "xlsLocalTestData", parallel = false)
     public static Object[][] data() throws Exception{
         return ExcelUtils.getTableArray(Constant.Path_LocalTestData + Constant.File_LocalTestData, "Sheet1");
     }
+
+
     @Test(dataProvider = "xlsLocalTestData")
     public void sampleAll(String latitudeString, String longitudeString, String problemTitle,
                           String problemType, String problemDescription, String problemSolution,
@@ -34,13 +36,13 @@ public class LocalTestThree {
                           String userCommentsString) throws IOException {
         double          latitude        = Double.parseDouble(latitudeString);
         double          longitude       = Double.parseDouble(longitudeString);
-        List<String> imageURLs       = Arrays.asList(imageURLsString.split("\n"));
+        List<String>    imageURLs       = Arrays.asList(imageURLsString.split("\n"));
         List<String>    imageComments   = Arrays.asList(imageCommentsString.split("\n"));
         List<String>    userComments    = Arrays.asList(userCommentsString.split("\n"));
         List<String>    receivedURLs;
         List<String>    receivedComments;
         String          afterDate       = "31 жовт. 2014";
-        String          beforeDate      = "01 лист. 2014";
+        String          beforeDate      = "05 лист. 2014";
 
 
         WebDriver driver = new FirefoxDriver();
@@ -52,34 +54,31 @@ public class LocalTestThree {
         AdminPage adminPage   = new AdminPage(driver);
         ProblemPage problemPage = new ProblemPage(driver);
 
-        adminPage.logIn(adminEmail, adminPassword);
-
-        anyPage.addProblemToVisibleCenter(latitude, longitude,
-                problemTitle, problemType, problemDescription, problemSolution,
+        anyPage.addProblemToVisibleCenter(latitude, longitude, problemTitle, problemType, problemDescription, problemSolution,
                 imageURLs, imageComments);
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
         }
-//            adminPage.logIn(adminEmail, adminPassword);
-//            Assert.assertTrue(adminPage.checkProblemIsUnderModeration(problemTitle));
-//            adminPage.approveProblem(problemTitle);
-//            try {
-//                Thread.sleep(1000);
-//            } catch (Exception e) {
-//            }        adminPage.logOut();
-//            try {
-//                Thread.sleep(1000);
-//            } catch (Exception e) {
-//            }
-        adminPage.logOut();
+        adminPage.logIn(adminEmail, adminPassword);
+        Assert.assertTrue(adminPage.checkProblemIsUnderModeration(problemTitle));
+        adminPage.approveProblem(problemTitle);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (Exception e) {
         }
-        anyPage.register(newUserFirstName, newUserLastName, newUserEmail, newUserPassword);
-        Assert.assertEquals(anyPage.getLoggedInUserName().toUpperCase(),
-                (newUserFirstName + " " + newUserLastName).toUpperCase());
+        adminPage.logOut();
+
+//        anyPage.clickZoomOut();
+//        anyPage.openFiltersBoard();
+//        anyPage.setAfterDate(afterDate);
+//        anyPage.setBeforeDate(beforeDate);
+//        anyPage.selectOnlyOneFilter(problemType);
+//
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+        }
         problemPage.clickAtProblemByCoordinateVisible(latitude, longitude);
         Assert.assertEquals(problemPage.getProblemTitle(), problemTitle);
         Assert.assertEquals(problemPage.getProblemType(), problemType);
@@ -93,14 +92,18 @@ public class LocalTestThree {
         for(int i = 0; i < receivedComments.size(); i++){
             Assert.assertTrue(receivedComments.get(i).equals(imageComments.get(i)));
         }
-
-        problemPage.addComments(latitude, longitude, userComments);
-        problemPage.logOut();
-
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
         }
+        problemPage.register(newUserFirstName, newUserLastName, newUserEmail, newUserPassword);
+        //problemPage.logIn(newUserEmail, newUserPassword);
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+        problemPage.addComments(latitude, longitude, userComments);
+        problemPage.logOut();
 
         adminPage.logIn(adminEmail, adminPassword);
         try {

@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 import com.saucelabs.AnyPage;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Yermek on 23.10.2014.
  */
-public class UserTest {
+public class zUserTest {
     @Test
     public void userRegisterTest() {
         WebDriver driver = new FirefoxDriver();

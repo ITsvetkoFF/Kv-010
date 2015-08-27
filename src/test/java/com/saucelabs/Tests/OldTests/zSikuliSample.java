@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 import com.saucelabs.AnyPage;
 import org.openqa.selenium.Point;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Roma on 18.11.2014.
  */
-public class SikuliSample {
+public class zSikuliSample {
 
     static WebDriver driver = new FirefoxDriver();
     static AnyPage anyPage = new AnyPage(driver);
