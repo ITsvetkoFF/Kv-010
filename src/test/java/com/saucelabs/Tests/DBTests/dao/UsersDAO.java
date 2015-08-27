@@ -1,6 +1,7 @@
 package com.saucelabs.Tests.DBTests.dao;
 
 import com.saucelabs.Tests.DBTests.entities.Users;
+import org.hibernate.CacheMode;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 
@@ -18,8 +19,10 @@ public class UsersDAO extends MainDAO{
         Users user = null;
         Query query = getSession().createQuery("from Users where Email = :email");
         query.setParameter("email", email);
+        //getSession().setCacheMode(CacheMode.IGNORE);
         List<Users> users = query.list();
-        //closeSession();
+
+        closeSession();
         if (!users.isEmpty()) {
             user = users.get(0);
         } else {
@@ -39,7 +42,7 @@ public class UsersDAO extends MainDAO{
             transaction.rollback();
             throw t;
         }
-        //closeSession();
+        closeSession();
     }
 
     public void deleteUser(Users user) {

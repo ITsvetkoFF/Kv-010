@@ -2,6 +2,7 @@ package com.saucelabs.Tests.DBTests.dao;
 
 import com.saucelabs.Tests.DBTests.entities.Problems;
 import com.saucelabs.Tests.DBTests.entities.Users;
+import org.hibernate.CacheMode;
 import org.hibernate.Query;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class ProblemsDAO extends MainDAO {
 
     public Problems findById(Integer id) {
         Problems problem = (Problems) getSession().get(Problems.class, id);
-        //closeSession();
+        closeSession();
         return problem;
     }
 
@@ -21,9 +22,10 @@ public class ProblemsDAO extends MainDAO {
         Problems problem = null;
         Query query = getSession().createQuery("from Problems where Title = :title");
         query.setParameter("title", title);
+        //getSession().setCacheMode(CacheMode.IGNORE);
         List<Problems> problems = query.list();
         System.out.println(problems.size());
-        //closeSession();
+        closeSession();
         if (!problems.isEmpty()) {
             problem = problems.get(0);
         } else {
