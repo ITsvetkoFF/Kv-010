@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by ykadytc on 28.10.2014.
  */
-public class ImageDistanceTest {
+public class zImageDistanceTest {
     @Test
     public void getImagesAndCompare() throws IOException {
         String image1URL = "http://i.imgur.com/1X4tNs7.jpg";

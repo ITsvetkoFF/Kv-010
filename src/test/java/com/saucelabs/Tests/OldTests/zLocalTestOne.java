@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 import com.saucelabs.AdminPage;
 import com.saucelabs.AnyPage;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
 * Created by Yermek on 30.10.2014.
  */
-public class LocalTestOne {
+public class zLocalTestOne {
     @DataProvider(name = "sampleTestData", parallel = false)
     public static Object[][] testDataExample() {
         return new Object[][]{
