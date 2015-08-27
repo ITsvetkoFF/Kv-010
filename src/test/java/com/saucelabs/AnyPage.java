@@ -152,7 +152,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        driver.findElement(CLOSE_CROSS_IN_ALERT_WINDOW).click();
+        closeAlertIfPresent();
     }
 
     /**
