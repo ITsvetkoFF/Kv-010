@@ -71,7 +71,7 @@ public class Problems implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ProblemTypes_Id", nullable = false)
 	public ProblemTypes getProblemTypes() {
 		return this.problemTypes;
@@ -162,7 +162,7 @@ public class Problems implements java.io.Serializable {
 		this.status = status;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "problems")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "problems")
 	public Set<Activities> getActivitieses() {
 		return this.activitieses;
 	}
@@ -171,7 +171,7 @@ public class Problems implements java.io.Serializable {
 		this.activitieses = activitieses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "problems")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "problems")
 	public Set<Photos> getPhotoses() {
 		return this.photoses;
 	}

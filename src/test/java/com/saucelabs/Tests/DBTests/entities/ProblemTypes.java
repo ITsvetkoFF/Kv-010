@@ -51,7 +51,7 @@ public class ProblemTypes implements java.io.Serializable {
 		this.type = type;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "problemTypes")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "problemTypes")
 	public Set<Problems> getProblemses() {
 		return this.problemses;
 	}

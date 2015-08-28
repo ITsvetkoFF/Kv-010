@@ -2,6 +2,7 @@ package com.saucelabs.Tests.DBTests.dao;
 
 import com.saucelabs.Tests.DBTests.entities.Users;
 import org.hibernate.CacheMode;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
 
@@ -17,12 +18,21 @@ public class UsersDAO extends MainDAO{
 
     public Users findUserByEmail(String email) {
         Users user = null;
-        Query query = getSession().createQuery("from Users where Email = :email");
-        query.setParameter("email", email);
-        //getSession().setCacheMode(CacheMode.IGNORE);
-        List<Users> users = query.list();
+        List<Users> users = null;
+        try {
+            System.out.println("--------"+getSession().isDirty()+"--------");
+            Query query = getSession().createQuery("from Users where Email = :email");
+            query.setParameter("email", email);
+            //getSession().setCacheMode(CacheMode.IGNORE);
+            users = query.list();
+        } catch (HibernateException e) {
+            System.out.println("--------HIBERNATE EXCEPTION-------");
+            e.printStackTrace();
+        }
+        finally {
+            closeSession();
+        }
 
-        closeSession();
         if (!users.isEmpty()) {
             user = users.get(0);
         } else {

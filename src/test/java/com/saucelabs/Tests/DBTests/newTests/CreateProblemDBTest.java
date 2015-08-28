@@ -95,7 +95,10 @@ public class CreateProblemDBTest {
 
     @Test(sequential = true, dependsOnMethods = {"checkActivityAfterAddProblem"}, groups = {"DBTests"})
     public void checkAddedPhotoAfterAddProblem(){
-        actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
+        //C:\Users\acidroed\IdeaProjects\Kv-010\resources\images\bomb.jpg
+        //
+        //
+        // actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
 
         UsersDAO usersDAO = new UsersDAO();
 //        int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();

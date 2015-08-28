@@ -51,7 +51,7 @@ public class ActivityTypes implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "activityTypes")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "activityTypes")
 	public Set<Activities> getActivitieses() {
 		return this.activitieses;
 	}
