@@ -13,7 +13,7 @@ public class PhotosDAO extends MainDAO {
 
     public Photos findById(PhotosId id) {
         Photos photo = (Photos) getSession().get(Photos.class, id);
-        //closeSession();
+        closeSession();
         return photo;
     }
 

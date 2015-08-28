@@ -20,13 +20,11 @@ public class UsersDAO extends MainDAO{
         Users user = null;
         List<Users> users = null;
         try {
-            System.out.println("--------"+getSession().isDirty()+"--------");
             Query query = getSession().createQuery("from Users where Email = :email");
             query.setParameter("email", email);
-            //getSession().setCacheMode(CacheMode.IGNORE);
             users = query.list();
         } catch (HibernateException e) {
-            System.out.println("--------HIBERNATE EXCEPTION-------");
+
             e.printStackTrace();
         }
         finally {

@@ -39,7 +39,6 @@ public class CreateUserDBTest {
         anyPage = new AnyPage(driver);
         anyPage.register(userName, userSurname, userEmail, userPassword);
         actualUser = userInfoDB.findUserByEmail(userEmail);
-        //driver.close();
 
 
         Assert.assertEquals(actualUser.getName(), userName);
@@ -51,9 +50,8 @@ public class CreateUserDBTest {
 
 
     //@Test(sequential = true, dataProvider = "SimpleUser", dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"DBTests"})
-    //@Test(sequential = true, dataProvider = "SimpleUser", dependsOnGroups = {"CreateProblem"})
+    @Test(sequential = true, dataProvider = "SimpleUser", dependsOnGroups = {"DeleteProblem"})
     public void deleteUser(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
-
         userInfoDB.deleteUserByEmail(userEmail);
         Users actualUser = userInfoDB.findUserByEmail(userEmail);
         Assert.assertTrue(actualUser == null);

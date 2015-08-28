@@ -23,7 +23,7 @@ public class ProblemsTypesDAO extends MainDAO {
         Query query = getSession().createQuery("from ProblemTypes where Type = :type");
         query.setParameter("type", type);
         List<ProblemTypes> problemTypesList = query.list();
-        //closeSession();
+        closeSession();
         if (!problemTypesList.isEmpty()) {
             problemTypes = problemTypesList.get(0);
         } else {

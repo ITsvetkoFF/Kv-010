@@ -21,7 +21,7 @@ abstract class MainDAO {
      */
     public Session getSession()
     {
-        if (session == null) {
+        if (session == null || !session.isOpen()) {
             openSession();
         }
         return session;
@@ -34,14 +34,6 @@ abstract class MainDAO {
 
     protected final void closeSession() {
         session.close();
-//        if (session.isOpen()){
-//            Connection c = session.close();
-//            try {
-//                System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbb"+c.isClosed());
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
     }
 }

@@ -10,8 +10,9 @@ import com.saucelabs.Tests.DBTests.entities.Photos;
 import com.saucelabs.Tests.DBTests.entities.PhotosId;
 import com.saucelabs.Tests.DBTests.entities.Problems;
 import org.openqa.selenium.WebDriver;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+
 import org.testng.annotations.Test;
 import utility.Constant;
 import utility.SingletonWebDriver;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
+
 
 /**
  * Created by acidroed on 22.08.2015.
@@ -33,6 +34,7 @@ public class CreateProblemDBTest {
     ProblemsDAO problemsDAO = new ProblemsDAO();
     WebDriver driver = SingletonWebDriver.getInstance();
     Problems actualProblem = new Problems();
+    UsersDAO usersDAO = new UsersDAO();
 
     public double latitude = 50.1;
     public double longitude = 30.1;
@@ -43,18 +45,14 @@ public class CreateProblemDBTest {
     public List<String> imagePath = Arrays.asList(new File("resources" + File.separator + "images" + File.separator + "bomb.jpg").getAbsolutePath(),
                                                     new File("resources" + File.separator + "images" + File.separator +  "svalka.jpg").getAbsolutePath());
     public List<String> imageComments = Arrays.asList("imageComment1", "imageComment2");
-    public List<String> problemComments = Arrays.asList("problemComment1");
+    //public List<String> problemComments = Arrays.asList("problemComment1");
 
-    //@Test(sequential = true, dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"DBTests"})
-    @Test(dependsOnGroups = {"CreateUser"}, groups = {"DBTests"})
-    //@Test
+
+    @Test(dependsOnGroups = {"CreateUser"}, groups = {"CreateProblem"})
     public void addProblem() throws SQLException, ClassNotFoundException {
         driver.get(Constant.URLlocal);
         anyPage = new AnyPage(driver);
         problemPage = new ProblemPage(driver);
-        //anyPage.logOut();
-        //anyPage.logIn("admin@.com", "admin");
-        //anyPage.logIn("test@gmail.com", "test");
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imagePath, imageComments);
         driver.navigate().refresh();
@@ -64,47 +62,35 @@ public class CreateProblemDBTest {
         Assert.assertEquals(problemTitle, problemNameTest);
         actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
 
-//        Assert.assertEquals(actualProblem.getLatitude(), latitude, Constant.DeltaAccuracyForCoordinates);
-//        Assert.assertEquals(actualProblem.getLongtitude(), longitude, Constant.DeltaAccuracyForCoordinates);
+        Assert.assertEquals(actualProblem.getLatitude(), latitude, Constant.DeltaAccuracyForCoordinates);
+        Assert.assertEquals(actualProblem.getLongtitude(), longitude, Constant.DeltaAccuracyForCoordinates);
         Assert.assertEquals(actualProblem.getTitle(), problemNameTest);
         Assert.assertEquals(actualProblem.getContent(), problemDescriptionTest);
         Assert.assertEquals(actualProblem.getProposal(), problemProposeTest);
-
     }
 
 
 
-    @Test(sequential = true, dependsOnMethods = {"addProblem"}, groups = {"DBTests"})
+    @Test(sequential = true, dependsOnMethods = {"addProblem"}, groups = {"CreateProblem"})
     public void checkProblemTypeAfterAddProblem(){
 
         ProblemsTypesDAO problemsTypesDAO = new ProblemsTypesDAO();
         Assert.assertEquals(actualProblem.getProblemTypes().getId(), problemsTypesDAO.findByProblemTypeName(problemTypeTest).getId());
     }
 
-    @Test(sequential = true, dependsOnMethods = {"checkProblemTypeAfterAddProblem"}, groups = {"DBTests"})
+    @Test(sequential = true, dependsOnMethods = {"checkProblemTypeAfterAddProblem"}, groups = {"CreateProblem"})
     public void checkActivityAfterAddProblem(){
         ActivitiesDAO activitiesDAO = new ActivitiesDAO();
-        UsersDAO usersDAO = new UsersDAO();
         int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
-        //int userID = usersDAO.findUserByEmail("admin@.com").getId();
         String activityTypeName = activitiesDAO.findByUserIdAndProblemID(userID, actualProblem.getId()).getActivityTypes().getName();
 
         Assert.assertEquals(activityTypeName, Constant.AddProblemActivityTypeName);
     }
 
 
-    @Test(sequential = true, dependsOnMethods = {"checkActivityAfterAddProblem"}, groups = {"DBTests"})
+    @Test(sequential = true, dependsOnMethods = {"checkActivityAfterAddProblem"}, groups = {"CreateProblem"})
     public void checkAddedPhotoAfterAddProblem(){
-        //C:\Users\acidroed\IdeaProjects\Kv-010\resources\images\bomb.jpg
-        //
-        //
-        // actualProblem = problemsDAO.findProblemByTitle(problemNameTest);
-
-        UsersDAO usersDAO = new UsersDAO();
-//        int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
-//        int userID = usersDAO.findUserByEmail("admin@.com").getId();
-
-
+        //int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
         PhotosDAO photosDAO = new PhotosDAO();
         //List<Photos> photosList = photosDAO.findByUserIdAndProblemID(userID, problemId);
         List<Photos> photosList = photosDAO.findByProblemID(actualProblem.getId());
@@ -139,7 +125,7 @@ public class CreateProblemDBTest {
     }
 
 
-    //@AfterTest
+    @Test(sequential = true, dependsOnGroups = {"CreateProblem"}, groups = {"DeleteProblem"})
     public void deleteProblemUI() {
         anyPage.logOut();
         driver.manage().window().maximize();
@@ -147,25 +133,25 @@ public class CreateProblemDBTest {
         adminPage.logIn(Constant.Username, Constant.Password);
         System.out.println("Groups delete, Test deleteProblemUI. ");
         ProblemPage problemPage = new ProblemPage(driver);
-        List<String> receivedURL;
-        String receivedId;
         problemPage.openProblemById(actualProblem.getId());
         adminPage.pressDeleteProblemButton();
         System.out.println("Problem deleted. ");
-//        try {
-//            Thread.sleep(1000);
-//        } catch (Exception e) {
-//        }
-//        problemPage.openProblemById(actualProblem.getId());
-//        receivedURL = Arrays.asList(driver.getCurrentUrl().split("/"));
-//        receivedId = receivedURL.get(receivedURL.size() - 1);
-//        System.out.println("Last value in URL is " + receivedId);
-//        if (receivedId.matches("\\d+")) {
-//            Assert.assertNotEquals(Integer.parseInt(receivedId), actualProblem.getId());
-//        }
-//        else {
-//            Assert.assertNotEquals(0, actualProblem.getId());
-//        }
+    }
+
+
+    @Test(sequential = true, dependsOnMethods = {"deleteProblemUI"}, groups = {"DeleteProblem"})
+    public void checkProblemIsAbsentAfterDelete() {
+        Assert.assertTrue(problemsDAO.findProblemByTitle(problemNameTest) == null);
+    }
+
+
+    @Test(sequential = true, dependsOnMethods = {"checkProblemIsAbsentAfterDelete"}, groups = {"DeleteProblem"})
+    public void checkPhotoIsAbsentAfterDeleteProblem(){
+        int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
+        PhotosDAO photosDAO = new PhotosDAO();
+        //List<Photos> photosList = photosDAO.findByUserIdAndProblemID(userID, problemId);
+        List<Photos> photosList = photosDAO.findByProblemID(actualProblem.getId());
+         Assert.assertTrue(photosList.isEmpty());
     }
 
 }
