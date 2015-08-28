@@ -41,17 +41,26 @@ import javax.swing.JScrollPane;
  */
 public class NaiveSimilarityFinder extends JFrame {
 
-    // The reference image "signature" (25 representative pixels, each in R,G,B).
-    // We use instances of Color to make things simpler.
+    /**
+     * The reference image "signature" (25 representative pixels, each in R,G,B).
+     * We use instances of Color to make things simpler.
+     */
     private Color[][] signature;
 
     private static final int baseSize = 300;
 
     private static final String basePath = "/home/rafael/Pesquisa/ImageSimilarity";
 
-    public static double imageDistance ( Image i1, Image i2 ) {
-        BufferedImage img1 = toBufferedImage(i1);
-        BufferedImage img2 = toBufferedImage(i2);
+    /**
+     This method determines distance between two images.
+     *
+     * @param image1 is the first image.
+     * @param image2 is the second image.
+     * @return distance between two images.
+     */
+    public static double imageDistance ( Image image1, Image image2 ) {
+        BufferedImage img1 = toBufferedImage(image1);
+        BufferedImage img2 = toBufferedImage(image2);
         Color[][] signature = calcSignature(rescale(img1));
         Color[][] sigOther = calcSignature(rescale(img2));
         double dist = 0;
@@ -71,6 +80,12 @@ public class NaiveSimilarityFinder extends JFrame {
         return dist;
     }
 
+    /**
+     * This method of image buffers.
+     *
+     * @param image is a picture that needs to be buffered.
+     * @return buffered image.
+     */
     public static BufferedImage toBufferedImage(Image image) {
         if (image instanceof BufferedImage) {return (BufferedImage)image;}
         image = new ImageIcon(image).getImage();
@@ -83,7 +98,9 @@ public class NaiveSimilarityFinder extends JFrame {
             GraphicsDevice gs = ge.getDefaultScreenDevice();
             GraphicsConfiguration gc = gs.getDefaultConfiguration();
             bimage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), transparency);
-        } catch (HeadlessException e) {}
+        } catch (HeadlessException e) {
+            e.printStackTrace();
+        }
         if (bimage == null) {
             int type = BufferedImage.TYPE_INT_RGB;
             if (hasAlpha == true) {type = BufferedImage.TYPE_INT_ARGB;}
@@ -95,8 +112,12 @@ public class NaiveSimilarityFinder extends JFrame {
         return bimage;
     }
 
-
-    // Returns whether or not alpha (component for the specified pixel, scaled from 0 to 255) is supported in this ColorModel.
+    /**
+     * Returns whether or not alpha (component for the specified pixel, scaled from 0 to 255) is supported in this ColorModel.
+     *
+     * @param image is a picture in which we must learn there is in alpha or no.
+     * @return true if the alpha has in picture.
+     */
     public static boolean hasAlpha(Image image) {
         if (image instanceof BufferedImage) {
             return ((BufferedImage)image).getColorModel().hasAlpha();
@@ -104,16 +125,19 @@ public class NaiveSimilarityFinder extends JFrame {
         PixelGrabber pg = new PixelGrabber(image, 0, 0, 1, 1, false);
         try {
             pg.grabPixels();
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return pg.getColorModel().hasAlpha();
     }
 
-
-    /*
+    /**
      * The constructor, which creates the GUI and start the image processing task.
+     *
+     * @param reference is reference to processing of the image.
+     * @throws IOException
      */
-    public NaiveSimilarityFinder(File reference) throws IOException
-    {
+    public NaiveSimilarityFinder(File reference) throws IOException {
         // Create the GUI
         super("Naive Similarity Finder");
         Container cp = getContentPane();
@@ -132,17 +156,14 @@ public class NaiveSimilarityFinder extends JFrame {
         // reference signature.
         RenderedImage[] rothers = new RenderedImage[others.length];
         double[] distances = new double[others.length];
-        for (int o = 0; o < others.length; o++)
-        {
+        for (int o = 0; o < others.length; o++) {
             rothers[o] = rescale(ImageIO.read(others[o]));
             distances[o] = calcDistance(rothers[o]);
         }
         // Sort those vectors *together*.
-        for (int p1 = 0; p1 < others.length - 1; p1++)
-            for (int p2 = p1 + 1; p2 < others.length; p2++)
-            {
-                if (distances[p1] > distances[p2])
-                {
+        for (int p1 = 0; p1 < others.length - 1; p1++) {
+            for (int p2 = p1 + 1; p2 < others.length; p2++) {
+                if (distances[p1] > distances[p2]) {
                     double tempDist = distances[p1];
                     distances[p1] = distances[p2];
                     distances[p2] = tempDist;
@@ -154,9 +175,9 @@ public class NaiveSimilarityFinder extends JFrame {
                     others[p2] = tempF;
                 }
             }
+        }
         // Add them to the UI.
-        for (int o = 0; o < others.length; o++)
-        {
+        for (int o = 0; o < others.length; o++) {
             otherPanel.add(new DisplayJAI(rothers[o]));
             JLabel ldist = new JLabel("<html>" + others[o].getName() + "<br>"
                     + String.format("% 13.3f", distances[o]) + "</html>");
@@ -172,45 +193,55 @@ public class NaiveSimilarityFinder extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    /*
+    /**
      * This method rescales an image to 300,300 pixels
      * using the JAI scale operator.
+     *
+     * @param bImage is image for conversion.
+     * @return the transformed image.
      */
-    private static BufferedImage rescale(BufferedImage i) {
+    private static BufferedImage rescale(BufferedImage bImage) {
         BufferedImage scaledImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = scaledImage.createGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.drawImage(i, 0, 0, baseSize, baseSize, null);
+        graphics2D.drawImage(bImage, 0, 0, baseSize, baseSize, null);
         graphics2D.dispose();
         return scaledImage;
     }
 
-    /*
+    /**
      * This method calculates and returns signature vectors for the input image.
+     *
+     * @param rImage the input image for calculation signature of the vector.
+     * @return signature vector.
      */
-    private static Color[][] calcSignature(RenderedImage i)
-    {
+    private static Color[][] calcSignature(RenderedImage rImage) {
         // Get memory for the signature.
         Color[][] sig = new Color[5][5];
         // For each of the 25 signature values average the pixels around it.
         // Note that the coordinate of the central pixel is in proportions.
-        float[] prop = new float[]
-                {1f / 10f, 3f / 10f, 5f / 10f, 7f / 10f, 9f / 10f};
-        for (int x = 0; x < 5; x++)
-            for (int y = 0; y < 5; y++)
-                sig[x][y] = averageAround(i, prop[x], prop[y]);
+        float[] prop = new float[] {1f / 10f, 3f / 10f, 5f / 10f, 7f / 10f, 9f / 10f};
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
+                sig[x][y] = averageAround(rImage, prop[x], prop[y]);
+            }
+        }
         return sig;
     }
 
-    /*
+    /**
      * This method averages the pixel values around a central point and return the
      * average as an instance of Color. The point coordinates are proportional to
      * the image.
+     *
+     * @param rImage is the viewing image.
+     * @param px x coordinate of the point.
+     * @param py y coordinate of the point.
+     * @return the average as an instance of Color.
      */
-    private static Color averageAround(RenderedImage i, double px, double py)
-    {
+    private static Color averageAround(RenderedImage rImage, double px, double py) {
         // Get an iterator for the image.
-        RandomIter iterator = RandomIterFactory.create(i, null);
+        RandomIter iterator = RandomIterFactory.create(rImage, null);
         // Get memory for a pixel and for the accumulator.
         double[] pixel = new double[3];
         double[] accum = new double[3];
@@ -218,10 +249,8 @@ public class NaiveSimilarityFinder extends JFrame {
         int sampleSize = 15;
         int numPixels = 0;
         // Sample the pixels.
-        for (double x = px * baseSize - sampleSize; x < px * baseSize + sampleSize; x++)
-        {
-            for (double y = py * baseSize - sampleSize; y < py * baseSize + sampleSize; y++)
-            {
+        for (double x = px * baseSize - sampleSize; x < px * baseSize + sampleSize; x++) {
+            for (double y = py * baseSize - sampleSize; y < py * baseSize + sampleSize; y++) {
                 iterator.getPixel((int) x, (int) y, pixel);
                 accum[0] += pixel[0];
                 accum[1] += pixel[1];
@@ -236,72 +265,76 @@ public class NaiveSimilarityFinder extends JFrame {
         return new Color((int) accum[0], (int) accum[1], (int) accum[2]);
     }
 
-    /*
+    /**
      * This method calculates the distance between the signatures of an image and
      * the reference one. The signatures for the image passed as the parameter are
      * calculated inside the method.
+     *
+     * @param other is the viewing image.
+     * @return the distance between the signatures of an image and the reference one.
      */
-    private double calcDistance(RenderedImage other)
-    {
+    private double calcDistance(RenderedImage other) {
         // Calculate the signature for that image.
         Color[][] sigOther = calcSignature(other);
         // There are several ways to calculate distances between two vectors,
         // we will calculate the sum of the distances between the RGB values of
         // pixels in the same positions.
         double dist = 0;
-        for (int x = 0; x < 5; x++)
-            for (int y = 0; y < 5; y++)
-            {
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
                 int r1 = signature[x][y].getRed();
                 int g1 = signature[x][y].getGreen();
                 int b1 = signature[x][y].getBlue();
                 int r2 = sigOther[x][y].getRed();
                 int g2 = sigOther[x][y].getGreen();
                 int b2 = sigOther[x][y].getBlue();
-                double tempDist = Math.sqrt((r1 - r2) * (r1 - r2) + (g1 - g2)
-                        * (g1 - g2) + (b1 - b2) * (b1 - b2));
+                double tempDist = Math.sqrt((r1 - r2) * (r1 - r2) + (g1 - g2) * (g1 - g2) + (b1 - b2) * (b1 - b2));
                 dist += tempDist;
             }
+        }
         return dist;
     }
 
-    /*
+    /**
      * This method get all image files in the same directory as the reference.
      * Just for kicks include also the reference image.
+     *
+     * @param reference is reference to directory where need to get list of files.
+     * @return list of files.
      */
-    private File[] getOtherImageFiles(File reference)
-    {
+    private File[] getOtherImageFiles(File reference) {
         File dir = new File(reference.getParent());
         // List all the image files in that directory.
         File[] others = dir.listFiles();
         return others;
     }
 
-    /*
+    /**
      * The entry point for the application, which opens a file with an image that
      * will be used as reference and starts the application.
+     *
+     * @throws IOException
      */
-    public static void main(String[] args) throws IOException
-    {
+    public static void main(String[] args) throws IOException {
         JFileChooser fc = new JFileChooser(basePath);
         int res = fc.showOpenDialog(null);
         // We have an image!
-        if (res == JFileChooser.APPROVE_OPTION)
-        {
+        if (res == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             new NaiveSimilarityFinder(file);
         }
         // Oops!
-        else
-        {
+        else {
             JOptionPane.showMessageDialog(null,
                     "You must select one image to be the reference.", "Aborting...",
                     JOptionPane.WARNING_MESSAGE);
         }
     }
-
 }
 
+/**
+ * Creates the GUI using Swing.
+ */
 class DisplayJAI extends JPanel {
 
     /** image to display */
@@ -323,8 +356,7 @@ class DisplayJAI extends JPanel {
         super();
         setLayout(null);
         source = image;
-        setPreferredSize(new Dimension(source.getWidth(),
-                source.getHeight()));
+        setPreferredSize(new Dimension(source.getWidth(), source.getHeight()));
     }
 
     /** move image within it's container */
@@ -350,15 +382,15 @@ class DisplayJAI extends JPanel {
         return source;
     }
 
-    /** paint routine */
-    public synchronized void paintComponent(Graphics g) {
+    /** Paint routine. */
+    public synchronized void paintComponent(Graphics graphics) {
 
-        Graphics2D g2d = (Graphics2D)g;
+        Graphics2D graphics2d = (Graphics2D)graphics;
 
         // empty component (no image)
         if ( source == null ) {
-            g2d.setColor(getBackground());
-            g2d.fillRect(0, 0, getWidth(), getHeight());
+            graphics2d.setColor(getBackground());
+            graphics2d.fillRect(0, 0, getWidth(), getHeight());
             return;
         }
 
@@ -368,17 +400,12 @@ class DisplayJAI extends JPanel {
         int ty = insets.top  + originY;
 
         // clear damaged component area
-        Rectangle clipBounds = g2d.getClipBounds();
-        g2d.setColor(getBackground());
-        g2d.fillRect(clipBounds.x,
-                clipBounds.y,
-                clipBounds.width,
-                clipBounds.height);
+        Rectangle clipBounds = graphics2d.getClipBounds();
+        graphics2d.setColor(getBackground());
+        graphics2d.fillRect(clipBounds.x, clipBounds.y,
+                clipBounds.width, clipBounds.height);
 
-        /**
-         Translation moves the entire image within the container
-         */
-        g2d.drawRenderedImage(source,
-                AffineTransform.getTranslateInstance(tx, ty));
+        // Translation moves the entire image within the container
+        graphics2d.drawRenderedImage(source, AffineTransform.getTranslateInstance(tx, ty));
     }
 }
