@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.DemoTests;
+package com.saucelabs.Tests.RemoteTests;
 
 import com.saucelabs.ResourcesPage;
 import com.saucelabs.common.SauceOnDemandAuthentication;

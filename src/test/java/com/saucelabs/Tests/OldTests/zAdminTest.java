@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 /**
  * Created by ykadytc on 20.10.2014.
@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AdminTest {
+public class zAdminTest {
     //@Test
     public void adminLogin() {
             WebDriver driver = new FirefoxDriver();

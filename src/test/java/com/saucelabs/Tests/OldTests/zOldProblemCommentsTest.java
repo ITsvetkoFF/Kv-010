@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.Tests.OldTests;
 
 import com.saucelabs.ProblemPage;
 import org.openqa.selenium.WebDriver;
@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by onikistc on 23.10.2014.
  */
-public class ProblemCommentsTest {
-    public static double latitude = 50.243;
-    public static double longitude = 30.243;
+public class zOldProblemCommentsTest {
+    public static double latitude = 50.164585;
+    public static double longitude = 30.358658;
     public List<String> addedComments = Arrays.asList("Comment 1", "Comment 2", "Comment 3");
 
     @Test
