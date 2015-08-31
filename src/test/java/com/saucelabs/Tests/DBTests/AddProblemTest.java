@@ -31,19 +31,19 @@ public class AddProblemTest extends SingleWebdriver{
     public String problemTypeTest = "Загрози біорізноманіттю";
     public String problemDescriptionTest = "description1";
     public String problemProposeTest = "propose1";
-    public List<String> imageUrls = Arrays.asList("http://i.imgur.com/HHXCVbs.jpg", "http://i.imgur.com/1K6AdCH.jpg");
+    //public List<String> imageUrls = Arrays.asList("http://i.imgur.com/HHXCVbs.jpg", "http://i.imgur.com/1K6AdCH.jpg");
     public List<String> imagePath = Arrays.asList("C:\\Users\\Public\\Pictures\\Sample Pictures\\desert.jpg",
                                                   "C:\\Users\\Public\\Pictures\\Sample Pictures\\koala.jpg");
     public List<String> imageComments = Arrays.asList("imageComment1", "imageComment2");
     public List<String> problemComments = Arrays.asList("problemComment1");
 
-    @Test
+    //@Test
     public void addProblem() throws SQLException, ClassNotFoundException {
         checkDriver();
         driver.get("http://localhost:8090/#/map");
         anyPage = new AnyPage(driver);
         problemPage = new ProblemPage(driver);
-        addProblemDAO = new AddProblemDAO();
+//        addProblemDAO = new AddProblemDAO();
         anyPage.logIn("admin@.com", "admin");
 
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,

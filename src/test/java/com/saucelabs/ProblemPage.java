@@ -16,8 +16,12 @@ public class ProblemPage extends AnyPage{
 
     private static final By PROBLEM_ICON_SRC = By.xpath("//img[@class='b-problem-deatiled-info-title__icon']");
     private static final By PROBLEM_TITLE = By.xpath("//h1");
-    private static final By PROBLEM_DESCRIPTION = By.xpath("//div[contains(@class,'b-problem-deatiled-info-description__content')]/editproblemcontent/span");
-    private static final By PROBLEM_PROPOSE = By.xpath("//div[contains(@class,'b-problem-deatiled-info-description__content')]/editproblemcontent/span");
+    private static final By EDIT_PROBLEM_TITLE = By.xpath("//editproblemtitle/input");
+    private static final By PROBLEM_DESCRIPTION = By.xpath("//div[contains(@class,'b-problem-deatiled-info-description__content')]/editproblemcontent[@value='problem.Content']/span");
+    private static final By EDIT_PROBLEM_DESCRIPTION = By.xpath("//editproblemcontent[@value='problem.Content']/textarea");
+    private static final By PROBLEM_PROPOSE = By.xpath("//div[contains(@class,'b-problem-deatiled-info-description__content')]/editproblemcontent[@value='problem.Proposal']/span");
+    private static final By EDIT_PROBLEM_PROPOSE = By.xpath("//editproblemcontent[@value='problem.Proposal']/textarea");
+    private static final By SAVE_CHANGES_BUTTON = By.xpath("//button[@class='btn btn-sm btn-warning']");
 
     private static final By IMAGES_EXISTED = By.xpath("//div[@class='b-problem-deatiled-info-description-photos']/div[contains(@class,'show_photo')]");
     private static final By THE_FIRST_ADDED_PHOTO = By.xpath("//div[@class='b-problem-deatiled-info-description-photos']/div[1]/img");
@@ -41,7 +45,7 @@ public class ProblemPage extends AnyPage{
     }
 
     /**
-     * @return String with name problem type.
+     * @return String with the name of problem type.
      */
     public String getProblemType() {
         String problemIconSRC = driver.findElement(PROBLEM_ICON_SRC).getAttribute("ng-src");
@@ -94,6 +98,56 @@ public class ProblemPage extends AnyPage{
      */
     public String getProblemTitle() {
         return driver.findElement(PROBLEM_TITLE).getText();
+    }
+
+
+    /**
+     * Edit title of problem.
+     * @param newTitle New title for problem.
+     */
+    public void editProblemTitle(String newTitle) {
+        driver.findElement(PROBLEM_TITLE).click();
+        driver.findElement(EDIT_PROBLEM_TITLE).clear();
+        driver.findElement(EDIT_PROBLEM_TITLE).sendKeys(newTitle);
+        clickAtVisibleMapCenter(0);
+    }
+
+    /**
+     * Edit description of problem.
+     * @param newDescription New description for problem.
+     */
+    public void editProblemDescription(String newDescription) {
+        driver.findElement(PROBLEM_DESCRIPTION).click();
+        driver.findElement(EDIT_PROBLEM_DESCRIPTION).clear();
+        driver.findElement(EDIT_PROBLEM_DESCRIPTION).sendKeys(newDescription);
+        clickAtVisibleMapCenter(0);
+    }
+
+    /**
+     * Edit propose of problem.
+     * @param newPropose New propose for problem.
+     */
+    public void editProblemPropose(String newPropose) {
+        driver.findElement(PROBLEM_PROPOSE).click();
+        driver.findElement(EDIT_PROBLEM_PROPOSE).clear();
+        driver.findElement(EDIT_PROBLEM_PROPOSE).sendKeys(newPropose);
+        clickAtVisibleMapCenter(0);
+    }
+
+    /**
+     * Change severity of problem.
+     * @param severity (from 1 to 5)
+     */
+    public void editProblemSeverity(Byte severity) {
+        By by = By.xpath("//i[" + severity + "]");
+        driver.findElement(by).click();
+    }
+
+    /**
+     * Press SaveButtton after edit Problem.
+     */
+    public void pressSaveButton() {
+        driver.findElement(SAVE_CHANGES_BUTTON).click();
     }
 
     /**
