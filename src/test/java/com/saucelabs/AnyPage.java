@@ -218,11 +218,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         }
         driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
 
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         //closeAlertIfPresent();
     }
 
