@@ -2,13 +2,9 @@
 
 <suite name="LocalSuite" verbose="1" thread-count="1">
     <test name="CreateUserDBTest" verbose="1">
-
-
         <classes>
-
-            <class name="com.saucelabs.Tests.DBTests.newTests.CreateUserDBTest"></class>
-            <class name="com.saucelabs.Tests.DBTests.newTests.CreateProblemDBTest"></class>
-            <!--<class name="com.saucelabs.Tests.DBTests.AddProblemTest"></class>-->
+            <class name="com.saucelabs.Tests.DBTests.dataBaseTests.CreateUserDBTest"></class>
+            <class name="com.saucelabs.Tests.DBTests.dataBaseTests.CreateProblemDBTest"></class>
         </classes>
     </test>
 

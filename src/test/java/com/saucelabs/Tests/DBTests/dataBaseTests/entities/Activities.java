@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.DBTests.entities;// default package
+package com.saucelabs.Tests.DBTests.dataBaseTests.entities;// default package
 // Generated 20.08.2015 13:23:16 by Hibernate Tools 4.3.1
 
 import java.util.Date;

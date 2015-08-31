@@ -1,4 +1,4 @@
-package com.saucelabs.Tests.DBTests.dao;
+package com.saucelabs.Tests.DBTests.dataBaseTests.dao;
 
 
 import org.hibernate.Session;

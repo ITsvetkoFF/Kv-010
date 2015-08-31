@@ -1,6 +1,6 @@
-package com.saucelabs.Tests.DBTests.dao;
+package com.saucelabs.Tests.DBTests.dataBaseTests.dao;
 
-import com.saucelabs.Tests.DBTests.entities.ActivityTypes;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.ActivityTypes;
 
 /**
  * Created by acidroed on 25.08.2015.

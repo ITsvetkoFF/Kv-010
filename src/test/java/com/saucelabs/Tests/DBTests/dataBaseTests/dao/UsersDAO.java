@@ -1,7 +1,6 @@
-package com.saucelabs.Tests.DBTests.dao;
+package com.saucelabs.Tests.DBTests.dataBaseTests.dao;
 
-import com.saucelabs.Tests.DBTests.entities.Users;
-import org.hibernate.CacheMode;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.Users;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;

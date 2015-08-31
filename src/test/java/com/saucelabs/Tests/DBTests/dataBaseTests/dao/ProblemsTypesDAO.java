@@ -1,10 +1,8 @@
-package com.saucelabs.Tests.DBTests.dao;
+package com.saucelabs.Tests.DBTests.dataBaseTests.dao;
 
-import com.saucelabs.Tests.DBTests.entities.ProblemTypes;
-import com.saucelabs.Tests.DBTests.entities.Users;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.ProblemTypes;
 import org.hibernate.Query;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**

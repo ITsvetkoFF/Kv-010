@@ -1,11 +1,11 @@
-package com.saucelabs.Tests.DBTests.newTests;
+package com.saucelabs.Tests.DBTests.dataBaseTests;
 
 import com.saucelabs.AdminPage;
 import com.saucelabs.AnyPage;
 import com.saucelabs.ProblemPage;
-import com.saucelabs.Tests.DBTests.dao.*;
-import com.saucelabs.Tests.DBTests.entities.Photos;
-import com.saucelabs.Tests.DBTests.entities.Problems;
+import com.saucelabs.Tests.DBTests.dataBaseTests.dao.*;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.Photos;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.Problems;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;

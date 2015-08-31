@@ -1,7 +1,7 @@
-package com.saucelabs.Tests.DBTests.dao;
+package com.saucelabs.Tests.DBTests.dataBaseTests.dao;
 
-import com.saucelabs.Tests.DBTests.entities.Photos;
-import com.saucelabs.Tests.DBTests.entities.PhotosId;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.Photos;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.PhotosId;
 import org.hibernate.Query;
 
 import java.util.List;

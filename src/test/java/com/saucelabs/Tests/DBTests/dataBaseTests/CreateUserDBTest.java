@@ -1,19 +1,16 @@
-package com.saucelabs.Tests.DBTests.newTests;
+package com.saucelabs.Tests.DBTests.dataBaseTests;
 
 import com.saucelabs.AnyPage;
-import com.saucelabs.Tests.DBTests.dao.UsersDAO;
-import com.saucelabs.Tests.DBTests.entities.Users;
+import com.saucelabs.Tests.DBTests.dataBaseTests.dao.UsersDAO;
+import com.saucelabs.Tests.DBTests.dataBaseTests.entities.Users;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utility.Constant;
 import utility.ExcelUtils;
 import utility.HashUtil;
 import utility.SingletonWebDriver;
-
-import java.io.File;
 
 
 /**

@@ -1,6 +1,6 @@
 // default package
 // Generated 20.08.2015 13:23:16 by Hibernate Tools 4.3.1
-package com.saucelabs.Tests.DBTests.entities;
+package com.saucelabs.Tests.DBTests.dataBaseTests.entities;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
