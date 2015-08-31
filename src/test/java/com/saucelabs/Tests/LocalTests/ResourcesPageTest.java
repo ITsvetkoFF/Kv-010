@@ -31,45 +31,60 @@ import static java.sql.DriverManager.getConnection;
 /**
  * Created by Olya on 10/31/14.
  */
-public class ResourcesPageTest {
+public class ResourcesPageTestLocal{
     static WebDriver driver = new FirefoxDriver();
     static ResourcesPage resourcesPage = new ResourcesPage(driver);
 
     @BeforeSuite
-    public static void beforeTest() throws Exception {
+    public static void beforeTest() throws Exception{
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get(Constant.URLlocal);
         resourcesPage.logIn("admin@.com", "admin");
     }
 
     @DataProvider(name = "testData", parallel = false)
-    public static Object[][] data() throws Exception {
+    public static Object[][] data() throws Exception{
         return ExcelUtils.getTableArray(Constant.Path_TestData + Constant.File_TestDataLocal, "Sheet1");
     }
 
+    /*private WebDriver createDriver(String browser, String version, String os) throws MalformedURLException {
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.BROWSER_NAME, browser);
+        if (version != null) {
+            capabilities.setCapability(CapabilityType.VERSION, version);
+        }
+        capabilities.setCapability(CapabilityType.PLATFORM, os);
+        capabilities.setCapability("name", "Resource Sample Test");
+        webDriver.set(new RemoteWebDriver(
+                new URL("http://" + authentication.getUsername() + ":" + authentication.getAccessKey() + "@ondemand.saucelabs.com:80/wd/hub"),capabilities));
+        sessionId.set(((RemoteWebDriver) getWebDriver()).getSessionId().toString());
+        return webDriver.get();
+    }*/
+
     @Test(dataProvider = "testData")
-    public void createResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
+    public void createResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{
 
         resourcesPage.createResource(ResourceTitle, ResourceAlias, ResourceBody, PlaceToSave);
         Assert.assertEquals(resourcesPage.existResource(ResourceTitle), PlaceToSave);
     }
 
     @Test(dataProvider = "testData", dependsOnMethods = {"createResource"})
-    public void editResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
+    public void editResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{
 
         resourcesPage.editResource(ResourceTitle, TextToAdd);
         Assert.assertEquals(resourcesPage.existResource(ResourceTitle + TextToAdd), PlaceToSave);
     }
 
     @Test(dataProvider = "testData", dependsOnMethods = {"editResource"})
-    public void deleteResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
-        resourcesPage.deleteResource(ResourceTitle + TextToAdd);
-        Assert.assertEquals(resourcesPage.existResource(ResourceTitle + TextToAdd), "");
+    public void deleteResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{
+        resourcesPage.deleteResource(ResourceTitle+TextToAdd);
+        Assert.assertEquals(resourcesPage.existResource(ResourceTitle+TextToAdd),"");
     }
 
     @AfterSuite
-    public static void afterTest() throws Exception {
+    public static void afterTest() throws Exception{
         resourcesPage.logOut();
-        driver.close();
+        driver.quit();
     }
 }
