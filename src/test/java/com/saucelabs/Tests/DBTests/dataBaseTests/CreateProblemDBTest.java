@@ -53,6 +53,11 @@ public class CreateProblemDBTest {
         problemPage = new ProblemPage(driver);
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imagePath, imageComments);
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         driver.navigate().refresh();
         anyPage.clickAtProblemByCoordinateVisible(latitude, longitude);
         String problemTitle = problemPage.getProblemTitle();
