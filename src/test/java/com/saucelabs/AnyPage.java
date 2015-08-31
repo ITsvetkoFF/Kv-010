@@ -58,7 +58,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     public static final By PASSWORD_FIELD = By.name("password");
     public static final By LOGIN_BUTTON = By.id("login-button");
     public static final By USER_PICTOGRAM = By.className("fa-user");
-    public static final By LOGOUT_LINK = By.linkText("\u0412\u0418\u0419\u0422\u0418"); // 'Вийти'
+    public static final By LOGOUT_LINK = By.className("fa-sign-out"); // Icon near 'Вийти'
     public static final By REGISTRATION_LINK = By.xpath("//button[@id='register-button']");
     public static final By FIRST_NAME_FIELD = By.name("first_name");
     public static final By LAST_NAME_FIELD = By.name("last_name");
@@ -152,7 +152,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        closeAlertIfPresent();
+        driver.findElement(CLOSE_CROSS_IN_ALERT_WINDOW).click();
     }
 
     /**
@@ -217,9 +217,9 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
             commentElements.get(i).sendKeys(imageComments.get(i));
         }
         driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
-
-
-        //closeAlertIfPresent();
+        if (driver.findElements(LOGIN_LINK).size() != 0){
+            closeAlertIfPresent();
+        }
     }
 
     /**

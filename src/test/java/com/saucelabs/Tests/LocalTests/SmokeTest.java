@@ -1,23 +1,18 @@
 package com.saucelabs.Tests.LocalTests;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.saucelabs.AdminPage;
 import com.saucelabs.AnyPage;
 import com.saucelabs.ProblemPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import utility.Constant;
-import utility.ExcelUtils;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import com.saucelabs.Tests.DAO.DeleteUserDAO;
+
 /*
  * Created by Yermek on 27.11.2014.
 */
@@ -42,7 +37,7 @@ public class SmokeTest {
                         "admin",
                         "testFirstName",
                         "testLastName",
-                        "test01@test.com",
+                        "test01909@test.com",
                         "test01",
                         "Comment1"
                 }
@@ -79,25 +74,28 @@ public class SmokeTest {
         anyPage.logIn(adminEmail, adminPassword);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
+//        driver.findElement(AnyPage.ADD_PROBLEM_BUTTON).click();
         id = problemPage.getProblemId(latitude, longitude);
 
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         problemPage.openProblemById(id);
 
         Assert.assertEquals(problemPage.getProblemTitle(), problemTitle);
 
-        problemPage.deleteOpenedProblem();
+        //problemPage.deleteOpenedProblem();
 
         anyPage.logOut();
 
-        driver.quit();
+        driver.close();
     }
 }
