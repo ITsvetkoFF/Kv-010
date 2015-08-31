@@ -216,8 +216,14 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         for (int i = 0; i < commentElements.size(); i++) {
             commentElements.get(i).sendKeys(imageComments.get(i));
         }
+        driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
 
-        closeAlertIfPresent();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //closeAlertIfPresent();
     }
 
     /**
@@ -472,10 +478,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
      * This method click 'close' button if alert presents
      */
     private void closeAlertIfPresent() {
-        driver.findElement(ADD_PROBLEM_SUBMIT_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-        WebElement login = (new WebDriverWait(driver, 1))
-                .until(ExpectedConditions.presenceOfElementLocated(LOGIN_LINK));
         WebElement alert = (new WebDriverWait(driver, 1))
                 .until(ExpectedConditions.presenceOfElementLocated(ALERT_WINDOW));
         alert.findElement(CLOSE_CROSS_IN_ALERT_WINDOW).click();

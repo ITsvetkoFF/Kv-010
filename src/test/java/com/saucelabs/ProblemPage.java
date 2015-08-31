@@ -139,7 +139,7 @@ public class ProblemPage extends AnyPage{
      * @param severity (from 1 to 5)
      */
     public void editProblemSeverity(Byte severity) {
-        By by = By.xpath("//i[" + severity + "]");
+        By by = By.xpath("//div[@ng-init='problem.Severity']//i[" + severity + "]");
         driver.findElement(by).click();
     }
 
