@@ -44,13 +44,9 @@ public class zOldFiltersTest {
         driver.manage().window().maximize();
     }
 
-    @AfterSuite
-    public void turnDown() {
-        this.driver.quit();
-    }
 
    //@Test
-   public void checkFiltersNegative() throws Exception {
+/*   public void checkFiltersNegative() throws Exception {
         mapPage.clickZoomOut();
         mapPage.openFiltersBoard();
         mapPage.setAfterDate(afterDate);
@@ -58,14 +54,14 @@ public class zOldFiltersTest {
         mapPage.selectOnlyOneFilter(typeNumber);
         mapPage.clickAtProblemByCoordinateVisible(latitude, longitude);
         Assert.assertTrue(problemPage.getProblemType().equals(mapPage.getFilterTitle(typeNumber)));
-    }
+    }*/
 
     @Test
     public void checkFiltersPositive() throws Exception {
         String imageURLsString = "";
         String imageCommentsString = "";
         anyPage.logIn("admin@.com","admin");
-        anyPage.addProblemToVisibleCenter(latitude, longitude, "ProblemFor Проблеми лісів", "Проблеми лісів", "Decsription", "problemProposeTest", Arrays.asList(imageURLsString.split("\n")), Arrays.asList(imageCommentsString.split("\n")));
+        anyPage.addProblemToVisibleCenter(latitude, longitude, "Problem67777For Проблеми лісів", "Проблеми лісів", "Decsription", "problemProposeTest", Arrays.asList(imageURLsString.split("\n")), Arrays.asList(imageCommentsString.split("\n")));
         anyPage.logOut();
         mapPage.clickZoomOut();
         mapPage.openFiltersBoard();
@@ -75,6 +71,7 @@ public class zOldFiltersTest {
         mapPage.clickAtProblemByCoordinateVisible(latitude, longitude);
 
         Assert.assertEquals(mapPage.getFilterTitle(typeNumber), problemPage.getProblemType());
+        driver.close();
     }
     }
 

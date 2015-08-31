@@ -36,40 +36,40 @@ public class ResourcesPageTest {
     static ResourcesPage resourcesPage = new ResourcesPage(driver);
 
     @BeforeSuite
-    public static void beforeTest() throws Exception{
+    public static void beforeTest() throws Exception {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get(Constant.URLlocal);
         resourcesPage.logIn("admin@.com", "admin");
     }
 
     @DataProvider(name = "testData", parallel = false)
-    public static Object[][] data() throws Exception{
+    public static Object[][] data() throws Exception {
         return ExcelUtils.getTableArray(Constant.Path_TestData + Constant.File_TestDataLocal, "Sheet1");
     }
 
     @Test(dataProvider = "testData")
-    public void createResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{
+    public void createResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
 
         resourcesPage.createResource(ResourceTitle, ResourceAlias, ResourceBody, PlaceToSave);
         Assert.assertEquals(resourcesPage.existResource(ResourceTitle), PlaceToSave);
     }
 
     @Test(dataProvider = "testData", dependsOnMethods = {"createResource"})
-    public void editResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{
+    public void editResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
 
         resourcesPage.editResource(ResourceTitle, TextToAdd);
         Assert.assertEquals(resourcesPage.existResource(ResourceTitle + TextToAdd), PlaceToSave);
     }
 
     @Test(dataProvider = "testData", dependsOnMethods = {"editResource"})
-    public void deleteResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception{
-        resourcesPage.deleteResource(ResourceTitle+TextToAdd);
-        Assert.assertEquals(resourcesPage.existResource(ResourceTitle+TextToAdd),null);
+    public void deleteResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
+        resourcesPage.deleteResource(ResourceTitle + TextToAdd);
+        Assert.assertEquals(resourcesPage.existResource(ResourceTitle + TextToAdd), "");
     }
 
     @AfterSuite
-    public static void afterTest() throws Exception{
+    public static void afterTest() throws Exception {
         resourcesPage.logOut();
-        driver.quit();
+        driver.close();
     }
 }
