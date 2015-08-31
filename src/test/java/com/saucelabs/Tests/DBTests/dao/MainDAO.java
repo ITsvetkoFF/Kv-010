@@ -1,13 +1,9 @@
 package com.saucelabs.Tests.DBTests.dao;
 
 
-import org.hibernate.CacheMode;
 import org.hibernate.Session;
-import org.hibernate.StatelessSession;
 import utility.HibernateUtil;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Base abstract Class for all DAO classes. It needs for working with a Session.

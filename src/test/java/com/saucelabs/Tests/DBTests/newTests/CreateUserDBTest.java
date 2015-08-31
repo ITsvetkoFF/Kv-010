@@ -31,7 +31,6 @@ public class CreateUserDBTest {
         return ExcelUtils.getTableArray(Constant.Path_SimpleUserCreateData + Constant.File_SimpleUserCreateData, "Sheet1");
     }
 
-    //@Test(sequential = true, dataProvider = "SimpleUser", groups = {"CreateUser"})
     @Test(dataProvider = "SimpleUser", groups = {"CreateUser"})
     public void userRegistrationDBCheck(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
         Users actualUser;
@@ -40,20 +39,19 @@ public class CreateUserDBTest {
         anyPage.register(userName, userSurname, userEmail, userPassword);
         actualUser = userInfoDB.findUserByEmail(userEmail);
 
-
         Assert.assertEquals(actualUser.getName(), userName);
         Assert.assertEquals(actualUser.getSurname(), userSurname);
         Assert.assertEquals(actualUser.getPassword(), HashUtil.hmacSha1(userPassword, Constant.HashKey));
         Assert.assertEquals(actualUser.getUserRoles().getRole(), userRole);
-        System.out.printf("------------------"+actualUser.getId()+"--------------------");
     }
 
 
-    //@Test(sequential = true, dataProvider = "SimpleUser", dependsOnMethods = {"userRegistrationDBCheck"}, groups = {"DBTests"})
+
     @Test(sequential = true, dataProvider = "SimpleUser", dependsOnGroups = {"DeleteProblem"})
     public void deleteUser(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
         userInfoDB.deleteUserByEmail(userEmail);
         Users actualUser = userInfoDB.findUserByEmail(userEmail);
+
         Assert.assertTrue(actualUser == null);
     }
 }
