@@ -13,6 +13,7 @@ public class Constant {
     public static final String Path_TestData = "./resources/";
     public static final String File_TestData = "TestData_os.xlsx";
     public static final String File_TestDataLocal = "TestData.xlsx";
+    public static final String File_ResourceTestDB = "ResourceTestDB.xlsx";
     public static final String Path_LocalTestData = "./resources/";
     public static final String File_LocalTestData = "LocalTestData.xlsx";
     public static final String Path_RemoteTestData = "./resources/";
