@@ -40,6 +40,7 @@ public class CreateProblemDBTest {
     public String editedProblemDescriptionTest = "editedDescription1";
     public String problemProposeTest = "propose1";
     public String editedProblemProposeTest = "editedPropose1";
+    public String addProblemActivityTypeName = "addProblem";
     public List<String> imagePath = Arrays.asList(new File("resources" + File.separator + "images" + File.separator + "bomb.jpg").getAbsolutePath(),
                                                     new File("resources" + File.separator + "images" + File.separator +  "svalka.jpg").getAbsolutePath());
     public List<String> imageComments = Arrays.asList("imageComment1", "imageComment2");
@@ -85,7 +86,7 @@ public class CreateProblemDBTest {
         int userID = usersDAO.findUserByEmail(Constant.SimpleUserUsername).getId();
         String activityTypeName = activitiesDAO.findByUserIdAndProblemID(userID, actualProblem.getId()).getActivityTypes().getName();
 
-        Assert.assertEquals(activityTypeName, Constant.AddProblemActivityTypeName);
+        Assert.assertEquals(activityTypeName, addProblemActivityTypeName);
     }
 
 
