@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by onikistc on 21.10.2014.
- * Refactoring by Vadym on 08/26/15.
  */
 public class ProblemPage extends AnyPage{
 
@@ -44,12 +43,10 @@ public class ProblemPage extends AnyPage{
         this.driver = driver;
     }
 
-    /**
-     * @return String with the name of problem type.
-     */
     public String getProblemType() {
-        String problemIconSRC = driver.findElement(PROBLEM_ICON_SRC).getAttribute("ng-src");
-        String problemType = "";
+        String problemIconSRC;
+        problemIconSRC = driver.findElement(PROBLEM_ICON_SRC).getAttribute("ng-src");
+        String problemType = null;
         switch(problemIconSRC) {
             case "images/markers/1.png":
                 problemType = "Проблеми лісів";
@@ -72,109 +69,70 @@ public class ProblemPage extends AnyPage{
             case "images/markers/7.png":
                 problemType = "Інші проблеми";
                 break;
-            default:
-                problemType = "Не знайдено";                // Правильно ли я сделал? добавил default
-                break;
         }
         return problemType;
     }
 
-    /**
-     * This method gets number id problem by coordinates;
-     *
-     * @param latitude is coordinate X where problem on the map.
-     * @param longitude is coordinate Y where problem on the map.
-     * @return problem id by parameters (latitude and longitude).
-     * @throws NumberFormatException if parseInt does not contain a parsable integer
-     */
-    public int getProblemId(double latitude, double longitude) throws NumberFormatException {
+    public int getProblemId(double latitude, double longitude) {
+        List<String> url;
         clickAtProblemByCoordinateVisible(latitude, longitude);
-        List<String> url = Arrays.asList(driver.getCurrentUrl().split("/"));
+        url = Arrays.asList(driver.getCurrentUrl().split("/"));
         return Integer.parseInt(url.get(url.size() - 1));
     }
 
-    /**
-     * @return problem title in the current article.
-     */
     public String getProblemTitle() {
         return driver.findElement(PROBLEM_TITLE).getText();
     }
 
 
-    /**
-     * Edit title of problem.
-     * @param newTitle New title for problem.
-     */
     public void editProblemTitle(String newTitle) {
+//        editProblemSeverity((byte)5);
         driver.findElement(PROBLEM_TITLE).click();
         driver.findElement(EDIT_PROBLEM_TITLE).clear();
         driver.findElement(EDIT_PROBLEM_TITLE).sendKeys(newTitle);
         clickAtVisibleMapCenter(0);
+       // driver.findElement(SAVE_CHANGES_BUTTON).click();
     }
 
-    /**
-     * Edit description of problem.
-     * @param newDescription New description for problem.
-     */
     public void editProblemDescription(String newDescription) {
         driver.findElement(PROBLEM_DESCRIPTION).click();
         driver.findElement(EDIT_PROBLEM_DESCRIPTION).clear();
         driver.findElement(EDIT_PROBLEM_DESCRIPTION).sendKeys(newDescription);
         clickAtVisibleMapCenter(0);
+        //driver.findElement(SAVE_CHANGES_BUTTON).click();
+        System.out.println("ddddddddddddddddddddddddddddddddddddd");
     }
 
-    /**
-     * Edit propose of problem.
-     * @param newPropose New propose for problem.
-     */
     public void editProblemPropose(String newPropose) {
         driver.findElement(PROBLEM_PROPOSE).click();
         driver.findElement(EDIT_PROBLEM_PROPOSE).clear();
         driver.findElement(EDIT_PROBLEM_PROPOSE).sendKeys(newPropose);
         clickAtVisibleMapCenter(0);
+        //driver.findElement(SAVE_CHANGES_BUTTON).click();
+        System.out.println("ggggggggggggggggggggggggggggggggggggggggg");
     }
 
-    /**
-     * Change severity of problem.
-     * @param severity (from 1 to 5)
-     */
     public void editProblemSeverity(Byte severity) {
         By by = By.xpath("//i[" + severity + "]");
         driver.findElement(by).click();
     }
-
-    /**
-     * Press SaveButtton after edit Problem.
-     */
     public void pressSaveButton() {
         driver.findElement(SAVE_CHANGES_BUTTON).click();
     }
 
-    /**
-     * @return problem description. This is text content from article.
-     */
     public String getProblemDescription() {
         return driver.findElement(PROBLEM_DESCRIPTION).getAttribute("textContent");
     }
 
-    /**
-     * @return How would you have solved this problem? Return this text description.
-     */
     public String getProblemPropose() {
         return driver.findElements(PROBLEM_PROPOSE).get(1).getAttribute("textContent");
     }
 
-    /**
-     * @return the current host name of a URL with the protocol name.
-     */
     public String getHostURL(){
         String currentUrlHost = driver.getCurrentUrl().split("/")[2];
         return "http://" + currentUrlHost + "/";
     }
 
-    /**
-     * @return all urls to existed images on the web-site.
-     */
     public List<String> getAllImagesURLs(){
         int imagesAmount = driver.findElements(IMAGES_EXISTED).size();
         List<String> imageUrls = new ArrayList<>();
@@ -185,17 +143,11 @@ public class ProblemPage extends AnyPage{
         return imageUrls;
     }
 
-    /**
-     * @param i order number image.
-     * @return image SRC by order number.
-     */
     private By getImageSRCByItsOrderNumber(int i) {
         return By.xpath("//div[@class='b-problem-deatiled-info-description-photos']/div[" + i + "]/img");
     }
 
-    /**
-     * @return all images comments to existed images on the web-site.
-     */
+
     public List<String> getImagesComments() {
         List<String> comments = new ArrayList<>();
         int commentsAmount = driver.findElements(IMAGES_EXISTED).size();
@@ -214,13 +166,6 @@ public class ProblemPage extends AnyPage{
         return comments;
     }
 
-    /**
-     * This method adds comments to the problem by coordinates.
-     *
-     * @param latitude is coordinate X where problem on the map.
-     * @param longitude is coordinate Y where problem on the map.
-     * @param comments which need to add to the problem.
-     */
     public void addComments(double latitude, double longitude, List<String> comments) {
         clickAtProblemByCoordinateVisible(latitude, longitude);
 
@@ -232,12 +177,6 @@ public class ProblemPage extends AnyPage{
         }
     }
 
-    /**
-     * This method deletes all comments to the problem by coordinates.
-     *
-     * @param latitude is coordinate X where problem on the map.
-     * @param longitude is coordinate Y where problem on the map.
-     */
     public void deleteComments(double latitude, double longitude) {
         clickAtProblemByCoordinateVisible(latitude, longitude);
         driver.findElement(COMMENTS_BUTTON).click();
@@ -247,58 +186,35 @@ public class ProblemPage extends AnyPage{
         }
     }
 
-    /**
-     * This method adds comments to the list and return all existed comments on the web-site.
-     *
-     * @return List (Strings) with comments to the problems.
-     */
     public List<String> getComments() {
         driver.findElement(COMMENTS_BUTTON).click();
         List<String> comments = new ArrayList<>();
         int commentsAmount = driver.findElements(ADDED_COMMENTS).size();
         for(int i = 1; i <= commentsAmount; i++) {
-            By xpathExpression = By.xpath("//div[@class='b-activity__comments']/div[" + i + "]/div[2]/span[2]");
-            comments.add(0, driver.findElement(xpathExpression).getAttribute("textContent"));
+            comments.add(0, driver.findElement(By.xpath("//div[@class='b-activity__comments']/div[" + i + "]/div[2]/span[2]")).getAttribute("textContent"));
         }
         return comments;
     }
 
-    /**
-     * This method opens problem by id.
-     *
-     * @param id Number id of the problem.
-     */
     public void openProblemById(int id) {
         driver.get(getHostURL() + "#/problem/showProblem/" + id);
     }
 
-    /**
-     * @return number of votes for the problem
-     */
     public String getVote() {
-        By xpathExpression = By.xpath("//div[@class='b-problem-deatiled-info-votes ng-binding']");
-        return driver.findElement(xpathExpression).getText().substring(1).trim();
+        String vote = driver.findElement(By.xpath("//div[@class='b-problem-deatiled-info-votes ng-binding']")).getText().substring(1).trim();
+        return vote;
     }
 
-    /**
-     * This method adds vote to the problem (click button 'like')
-     */
     public void addVoteToProblem() {
         driver.findElement(By.xpath("//button[@class='simple_like_img']")).click();
     }
 
-    /**
-     * This method just closes the problem.
-     */
     public void closeProblem() {
         driver.findElement(By.xpath("//a[@class='close']")).click();
     }
 
-    /**
-     * This method deletes opened problems;
-     */
     public void deleteOpenedProblem() {
-        driver.findElement(By.xpath("//button[@class='btn btn-danger btn-sm']")).click();       //Нужно ли проверять, открыта ли проблема?
+        driver.findElement(By.xpath("//button[@class='btn btn-danger btn-sm']")).click();
         driver.findElement(By.xpath("//button[@class='btn btn-warning ng-binding']")).click();
     }
 }
