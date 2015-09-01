@@ -19,17 +19,17 @@ import java.util.concurrent.TimeUnit;
 public class ProblemTest {
 
     private WebDriver driver;
-    ProblemPage problemPage;
-    AdminPage adminPage;
+    private ProblemPage problemPage;
+    private AdminPage adminPage;
 
     @DataProvider(name = "dataCreateProblem", parallel = false)
     public static Object[][] testDataExample() {
         return new Object[][]{
                 new Object[]{
-                        "58.46",
-                        "47.34",
+                        "50.15",
+                        "30.02",
                         "ProblemTest",
-                        "Çàãðîçè á³îð³çíîìàí³òòþ",
+                        "Ð—Ð°Ð³Ñ€Ð¾Ð·Ð¸ Ð±Ñ–Ð¾Ñ€Ñ–Ð·Ð½Ð¾Ð¼Ð°Ð½Ñ–Ñ‚Ñ‚ÑŽ",
                         "DescriptionTest",
                         "ProblemSolutionTest",
                         "http://i.imgur.com/ovdN1Sc.jpg",
@@ -73,6 +73,7 @@ public class ProblemTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         problemPage.addProblemToVisibleCenter(latitudeTest, longitudeTest, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imageURLsTest, imageCommentsTest);
+        problemPage.logOut();
     }
 
     private void registerUserAndLogIn(String first_name, String last_name, String email, String password) {
