@@ -1,0 +1,5 @@
+<root>
+    <item name='org.openqa.selenium.WebDriver org.openqa.selenium.WebElement findElement(org.openqa.selenium.By)'>
+        <annotation name='java.lang.annotation.Deprecated'/>
+    </item>
+</root>

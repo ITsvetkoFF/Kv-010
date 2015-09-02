@@ -1,5 +1,8 @@
 <component name="libraryTable">
   <library name="Maven: org.seleniumhq.selenium:selenium-api:2.47.1">
+    <ANNOTATIONS>
+      <root url="file://$PROJECT_DIR$" />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/seleniumhq/selenium/selenium-api/2.47.1/selenium-api-2.47.1.jar!/" />
     </CLASSES>
