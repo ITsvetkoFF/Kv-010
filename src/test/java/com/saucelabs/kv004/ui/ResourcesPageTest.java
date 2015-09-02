@@ -18,7 +18,7 @@ import static java.sql.DriverManager.getConnection;
 /**
  * Created by Olya on 10/31/14.
  */
-public class ResourcesPageTestLocal{
+public class ResourcesPageTest{
     static WebDriver driver = new FirefoxDriver();
     static ResourcesPage resourcesPage = new ResourcesPage(driver);
 
