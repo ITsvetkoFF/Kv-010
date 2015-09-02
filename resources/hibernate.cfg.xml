@@ -17,13 +17,13 @@
         <property name="hibernate.cache.use_query_cache">false</property>
         <property name="hibernate.connection.isolation">1</property>
         <property name="hibernate.cache.use_second_level_cache">false</property>
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.Activities" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.Photos" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.Problems" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.UserRoles" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.Resources" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.Users" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.ProblemTypes" />
-        <mapping class="com.saucelabs.Tests.DBTests.dataBaseTests.entities.ActivityTypes" />
+        <mapping class="com.saucelabs.kv004.entities.Activities" />
+        <mapping class="com.saucelabs.kv004.entities.Photos" />
+        <mapping class="com.saucelabs.kv004.entities.Problems" />
+        <mapping class="com.saucelabs.kv004.entities.UserRoles" />
+        <mapping class="com.saucelabs.kv004.entities.Resources" />
+        <mapping class="com.saucelabs.kv004.entities.Users" />
+        <mapping class="com.saucelabs.kv004.entities.ProblemTypes" />
+        <mapping class="com.saucelabs.kv004.entities.ActivityTypes" />
     </session-factory>
 </hibernate-configuration>
