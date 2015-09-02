@@ -88,7 +88,7 @@ public class MapPage implements IMapPage {
 
         WebElement map = driver.findElement(MAP);
         int navBarHeight = driver.findElement(NAV_BAR).getSize().getHeight();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         System.out.println("Before Explicit Wait during set view");
         if(driver.findElements(ADD_PROBLEM_MENU).size() != 0) {

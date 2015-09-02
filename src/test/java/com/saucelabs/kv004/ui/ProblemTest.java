@@ -31,8 +31,8 @@ public class ProblemTest {
     private String userEmail = "problemtestecomap@gmail.com";
     private String userPassword = "qwerty";
 
-    private double latitude = 50.1514;
-    private double longitude = 30.0214;
+    private double latitude = 50.453201;
+    private double longitude = 30.328796;
 
     @DataProvider(name = "dataProblem", parallel = false)
     public static Object[][] testDataProblem() {
@@ -71,7 +71,7 @@ public class ProblemTest {
 
     @AfterSuite
     public void turnDown() {
-        this.driver.quit();
+//        this.driver.quit();
     }
 
     @Test(dataProvider = "dataProblem")
@@ -96,7 +96,8 @@ public class ProblemTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         problemPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imageURLsTest, imageCommentsTest);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.navigate().refresh();
+        driver.manage().timeouts().implicitlyWait(70, TimeUnit.SECONDS);
         problemPage.logOut();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
@@ -104,22 +105,33 @@ public class ProblemTest {
     @Test(dependsOnMethods = {"createProblemByUser"}, dataProvider = "dataProblem")
     public void viewProblemByAdmin(String problemNameTest, String problemTypeTest,
                                    String problemDescriptionTest, String problemProposeTest,
-                                   String imageUrls, String imageComments) throws IOException {
+                                   String imageUrls, String imageComments) throws IOException, InterruptedException {
         List<String> imageURLsTest = Arrays.asList(imageUrls.split("\n"));
         List<String> imageCommentsTest = Arrays.asList(imageComments.split("\n"));
 
         problemPage.logIn(adminLogin, adminPassword);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         problemPage.clickAtProblemByCoordinateVisible(latitude, longitude);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        Thread.sleep(1000);
+        System.out.println("check");
 
-        Assert.assertTrue(problemPage.getProblemTitle().equals(problemNameTest));
+//        System.out.println(problemPage.getProblemTitle() + "hello");
         Assert.assertTrue(problemPage.getProblemType().equals(problemTypeTest));
+        System.out.println(problemPage.getProblemType());
         Assert.assertTrue(problemPage.getProblemPropose().equals(problemProposeTest));
         Assert.assertTrue(problemPage.getProblemDescription().equals(problemDescriptionTest));
+//        Assert.assertTrue(problemPage.getProblemTitle().equals(problemNameTest));
+
 
         // Check problem image
         List<String> receivedUrls = problemPage.getAllImagesURLs();
+
+        for (String urls : receivedUrls){
+            System.out.println(urls);
+        }
+
+
         for (int i = 0; i < receivedUrls.size(); i++) {
             Assert.assertTrue(ImageDistanceCalculator.isImagesSimilar(receivedUrls.get(i), imageURLsTest.get(i)));
         }
@@ -129,8 +141,6 @@ public class ProblemTest {
         for (int i = 0; i < receivedComments.size(); i++) {
             Assert.assertTrue(receivedComments.get(i).equals(imageCommentsTest.get(i)));
         }
-        problemPage.clickZoomOut();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
     @Test(dependsOnMethods = {"viewProblemByAdmin"}, dataProvider = "dataEditProblem")
@@ -139,8 +149,15 @@ public class ProblemTest {
         problemPage.clickAtProblemByCoordinateVisible(latitude, longitude);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         problemPage.editProblemTitle(problemNameTest);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        problemPage.pressSaveButton();
         problemPage.editProblemDescription(problemDescriptionTest);
+        problemPage.clickAtVisibleMapCenter(4);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        problemPage.pressSaveButton();
         problemPage.editProblemPropose(problemProposeTest);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        problemPage.pressSaveButton();
 
         Assert.assertTrue(problemPage.getProblemTitle().equals(problemNameTest));
         Assert.assertTrue(problemPage.getProblemPropose().equals(problemProposeTest));
@@ -155,6 +172,9 @@ public class ProblemTest {
                                        String problemDescriptionTest, String problemProposeTest) {
         problemPage.clickAtProblemByCoordinateVisible(latitude, longitude);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        System.out.println(problemPage.getProblemTitle());
+        System.out.println(problemNameTest);
 
         Assert.assertTrue(problemPage.getProblemTitle().equals(problemNameTest));
         Assert.assertTrue(problemPage.getProblemPropose().equals(problemProposeTest));
@@ -207,7 +227,7 @@ public class ProblemTest {
         problemPage.logIn(adminLogin, adminPassword);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        // BE CAREFUL, HERE I AM CHANGING THE COORDINATES FROM DATA PROVIDER!
+        // BE CAREFUL, HERE I AM CHANGING THE COORDINATES FROM DATA PROVIDER FOR CREATE NEW PROBLEM NEAR OLD PROBLEM!
         problemPage.addProblemToVisibleCenter(latitude + 0.4, longitude + 0.4, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imageURLsTest, imageCommentsTest);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
@@ -216,7 +236,7 @@ public class ProblemTest {
 
     @Test(dependsOnMethods = {"createProblemByAdmin"})
     public void deleteAdminProblemByAdmin() {
-        // BE CAREFUL, HERE I AM CHANGING THE COORDINATES FROM DATA PROVIDER!
+        // BE CAREFUL, HERE I AM CHANGING THE COORDINATES FROM DATA PROVIDER FOR CREATE NEW PROBLEM NEAR OLD PROBLEM!
         adminPage.clickAtProblemByCoordinateVisible(latitude + 0.4, longitude + 0.4);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         adminPage.pressDeleteProblemButton();
