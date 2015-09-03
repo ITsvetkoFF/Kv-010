@@ -118,6 +118,7 @@ public class ProblemPage extends AnyPage{
         driver.findElement(PROBLEM_TITLE).click();
         driver.findElement(EDIT_PROBLEM_TITLE).clear();
         driver.findElement(EDIT_PROBLEM_TITLE).sendKeys(newTitle);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         clickAtVisibleMapCenter(0);
     }
 
@@ -129,6 +130,7 @@ public class ProblemPage extends AnyPage{
         driver.findElement(PROBLEM_DESCRIPTION).click();
         driver.findElement(EDIT_PROBLEM_DESCRIPTION).clear();
         driver.findElement(EDIT_PROBLEM_DESCRIPTION).sendKeys(newDescription);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         clickAtVisibleMapCenter(0);
     }
 
@@ -140,6 +142,7 @@ public class ProblemPage extends AnyPage{
         driver.findElement(PROBLEM_PROPOSE).click();
         driver.findElement(EDIT_PROBLEM_PROPOSE).clear();
         driver.findElement(EDIT_PROBLEM_PROPOSE).sendKeys(newPropose);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         clickAtVisibleMapCenter(0);
     }
 
@@ -156,6 +159,7 @@ public class ProblemPage extends AnyPage{
      * Press SaveButtton after edit Problem.
      */
     public void pressSaveButton() {
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(SAVE_CHANGES_BUTTON).click();
     }
 
@@ -170,7 +174,7 @@ public class ProblemPage extends AnyPage{
      * @return How would you have solved this problem? Return this text description.
      */
     public String getProblemPropose() {
-        return driver.findElements(PROBLEM_PROPOSE).get(1).getAttribute("textContent");
+        return driver.findElements(PROBLEM_PROPOSE).get(0).getAttribute("textContent");
     }
 
     /**
