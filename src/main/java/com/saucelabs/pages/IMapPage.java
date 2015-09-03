@@ -22,8 +22,11 @@ public interface IMapPage {
 
     void selectAllExceptOneFilter(String typeName);
 
+    void selectUserProblems();
     void selectOnlyOneFilter(int typeNumber);
     void selectOnlyOneFilter(String typeName);
+    void selectNewProblems();
+    void selectClosedProblems();
     void setAfterDate(String afterDate);
     void setBeforeDate(String beforeDate);
     void datePickersButtons();
