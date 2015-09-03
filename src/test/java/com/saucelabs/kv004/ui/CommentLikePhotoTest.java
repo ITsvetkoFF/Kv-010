@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CommentLikePhotoTest {
 
-    public static double latitude = 50.064585;
+    public static double latitude = 50.072585;
     public static double longitude = 30.398938;
     public List<String> addedComments = Arrays.asList("Comment 1", "Comment 2", "Comment 3");
     public String problemNameTest = "VeryNewProblem";
@@ -40,7 +40,7 @@ public class CommentLikePhotoTest {
                         "admin",
                         "testFirstName",
                         "testLastName",
-                        "test223g@test.com",
+                        "test212g@test.com",
                         "test123"
                 }
         };
@@ -72,6 +72,13 @@ public class CommentLikePhotoTest {
         problemPage.addVoteToProblem();
         Assert.assertEquals(problemPage.getVote(), "1");
 
+        problemPage.addComments(latitude, longitude, addedComments);
+        int filledComments = problemPage.getComments().size();
+        List<String> foundComments = problemPage.getComments();
+        for (String comment : this.addedComments) {
+            Assert.assertTrue(comment.trim().equals(foundComments.remove(0).trim()));
+        }
+
         driver.navigate().refresh();
         problemPage.logOut();
 
@@ -81,29 +88,28 @@ public class CommentLikePhotoTest {
         } catch (Exception e) {
         }
 
+        problemPage.clickAtProblemByCoordinateVisible(latitude, longitude);
+        int amountBeforeAdding = problemPage.getComments().size();
         problemPage.addComments(latitude, longitude, addedComments);
         int amountAfterAdding = problemPage.getComments().size();
-        List<String> foundComments = problemPage.getComments();
-        for (String comment : addedComments) {
-            Assert.assertTrue(comment.trim().equals(foundComments.remove(0).trim()));
-        }
+        Assert.assertEquals(amountAfterAdding, amountBeforeAdding + filledComments);
 
         problemPage.addVoteToProblem();
         Assert.assertEquals(problemPage.getVote(), "1");
 
         problemPage.clickAtProblemByCoordinateVisible(latitude, longitude);
-        int expectedImgs = adminPage.getNumberOfPhotos() + images.size();
+        int expectedImgs = problemPage.getNumberOfPhotos() + images.size();
         problemPage.addNewPhotos(images, latitude, longitude);
-        int actualImgs = adminPage.getNumberOfPhotos();
+        int actualImgs = problemPage.getNumberOfPhotos();
         Assert.assertEquals(actualImgs, expectedImgs);
 
         problemPage.deleteComments(latitude, longitude);
         int amountAfterDeleting = problemPage.getComments().size();
-        Assert.assertTrue(amountAfterDeleting == amountAfterAdding - addedComments.size());
+        Assert.assertEquals(amountAfterDeleting, 0);
 
 
         adminPage.deleteAllPhotos(latitude, longitude);
-        Assert.assertTrue(adminPage.getNumberOfPhotos() == 0);
+        Assert.assertTrue(problemPage.getNumberOfPhotos() == 0);
 
     }
 

@@ -327,4 +327,11 @@ public class ProblemPage extends AnyPage{
             thread.interrupt();
         }
     }
+
+    /**
+     * This method returns number of added photos.
+     */
+    public int getNumberOfPhotos() {
+        return driver.findElements(IMAGES_EXISTED).size();
+    }
 }

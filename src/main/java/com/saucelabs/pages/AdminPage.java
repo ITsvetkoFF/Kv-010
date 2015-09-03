@@ -114,10 +114,4 @@ public class AdminPage extends AnyPage implements IAdminPage, IAnyPage, IMapPage
         }
     }
 
-    /**
-     * This method returns number of added photos.
-     */
-    public int getNumberOfPhotos() {
-        return driver.findElements(DELETE_PHOTO_CROSS).size();
-    }
 }
