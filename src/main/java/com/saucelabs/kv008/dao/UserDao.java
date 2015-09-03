@@ -14,6 +14,7 @@ import java.util.List;
  * Created by dmakstc on 02.09.2015.
  */
 public class UserDao extends BaseDao<UserEntity, Integer> {
+
     @Override
     protected String getQuery(QueryType queryType) {
         String res;
