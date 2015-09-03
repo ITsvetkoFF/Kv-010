@@ -17,6 +17,7 @@ public class ProblemPage extends AnyPage{
     private static final By PROBLEM_ICON_SRC = By.xpath("//img[@class='b-problem-deatiled-info-title__icon']");
     private static final By PROBLEM_TITLE = By.xpath("//h1");
     private static final By EDIT_PROBLEM_TITLE = By.xpath("//editproblemtitle/input");
+    private static final By EDIT_PROBLEM_SOLVED = By.xpath("//label[@class='onoffswitch-label onoffswitch-label-notAdmin_false']");
     private static final By PROBLEM_DESCRIPTION = By.xpath("//div[contains(@class,'b-problem-deatiled-info-description__content')]/editproblemcontent[@value='problem.Content']/span");
     private static final By EDIT_PROBLEM_DESCRIPTION = By.xpath("//editproblemcontent[@value='problem.Content']/textarea");
     private static final By PROBLEM_PROPOSE = By.xpath("//div[contains(@class,'b-problem-deatiled-info-description__content')]/editproblemcontent[@value='problem.Proposal']/span");
@@ -33,6 +34,8 @@ public class ProblemPage extends AnyPage{
     private static final By ADDED_COMMENTS = By.xpath("//div[contains(@class,'b-activity__comments-item')]/i[contains(@class,'fa-weixin')]");
     private static final By ADD_COMMENT_BUTTON = By.xpath("//div[@class='form-group']/a[contains(@class,'btn')]");
     private static final By DELETE_COMMENT_BUTTON = By.xpath(".//div[2]/span[2]/i");
+
+
     //private static final By ALL_ACTIVITIES = By.className("b-activity__comments-item");
     //private static final By CHECKER_THAT_ACTIVITY_IS_A_COMMENT = By.xpath(".//i[@class='fa fa-weixin b-activity__comments-item-image']");
 
@@ -100,6 +103,12 @@ public class ProblemPage extends AnyPage{
         return driver.findElement(PROBLEM_TITLE).getText();
     }
 
+    /**
+     * Change state of problem to solved/unsolved
+     */
+    public void editProblemSolved(){
+        driver.findElement(EDIT_PROBLEM_SOLVED).click();
+    }
 
     /**
      * Edit title of problem.
