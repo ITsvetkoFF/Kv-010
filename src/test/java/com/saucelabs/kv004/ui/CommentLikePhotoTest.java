@@ -19,7 +19,7 @@ public class CommentLikePhotoTest {
 
     ProblemPage problemPage;
     AdminPage adminPage;
-    private double latitude = 50.077585;
+    private double latitude = 50.083585;
     private double longitude = 30.398938;
     private List<String> addedComments = Arrays.asList("Comment 1", "Comment 2", "Comment 3");
     private String problemNameTest = "VeryNewProblem";
@@ -33,7 +33,7 @@ public class CommentLikePhotoTest {
     private WebDriver driver;
     private String newUserFirstName = "testFirstName";
     private String newUserLastName = "testLastName";
-    private String newUserEmail = "test201g@test.com";
+    private String newUserEmail = "test196g@test.com";
     private String newUserPassword = "test123";
 
 
@@ -44,7 +44,7 @@ public class CommentLikePhotoTest {
         driver.manage().window().maximize();
         problemPage = new ProblemPage(driver);
         adminPage = new AdminPage(driver);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
 
