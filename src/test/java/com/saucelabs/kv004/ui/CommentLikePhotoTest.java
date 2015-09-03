@@ -2,7 +2,6 @@ package com.saucelabs.kv004.ui;
 
 import com.saucelabs.pages.AdminPage;
 import com.saucelabs.pages.ProblemPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
