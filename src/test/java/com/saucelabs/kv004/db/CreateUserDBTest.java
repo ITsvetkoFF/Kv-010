@@ -48,7 +48,6 @@ public class CreateUserDBTest {
     public void deleteUser(String userName, String userSurname, String userEmail, String userPassword, String userRoleId, String userRole) throws Exception {
         userInfoDB.deleteUserByEmail(userEmail);
         Users actualUser = userInfoDB.findUserByEmail(userEmail);
-
         Assert.assertTrue(actualUser == null);
     }
 }
