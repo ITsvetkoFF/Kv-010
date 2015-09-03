@@ -47,8 +47,8 @@ public class AddAnonProblemTest {
                                         + File.separator + "bomb.jpg").getAbsolutePath(),
                                         new File("resources" + File.separator + "images"
                                         + File.separator + "svalka.jpg").getAbsolutePath()),
-                        49.5,
-                        33.5
+                        47.3,
+                        31.1
                 }
         };
     }
@@ -64,11 +64,11 @@ public class AddAnonProblemTest {
 
         problemPage = new ProblemPage(driver);
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemName1, problemTypeTest,
-                problemDescriptionTest, problemProposeTest, imagePath, imageComments);
+                problemDescriptionTest, problemProposeTest, null, null);
 
         problemPage = new ProblemPage(driver);
-        anyPage.addProblemToVisibleCenter(latitude + 0.2, longitude - 0.2, problemName2, problemTypeTest,
-                problemDescriptionTest, problemProposeTest, imagePath, imageComments);
+        anyPage.addProblemToVisibleCenter(latitude + 0.3, longitude - 0.3, problemName2, problemTypeTest,
+                problemDescriptionTest, problemProposeTest, null, null);
 
         driver.navigate().refresh();
     }

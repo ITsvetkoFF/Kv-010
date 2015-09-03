@@ -196,19 +196,20 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         driver.findElement(BODY).sendKeys(Keys.chord(Keys.CONTROL, Keys.HOME));
         driver.findElement(ADD_PROBLEM_TAB3_IMAGE).click();
 
-        for (String imageUrl : imageUrls) {
-            if (imageUrl == null || imageUrl.isEmpty()) {
-                continue;
+        if (imageUrls != null) {
+            if (!imageUrls.isEmpty()) {
+                for (String imageUrl : imageUrls) {
+                    Thread thread = new ClipboardUploadThread(imageUrl);
+                    thread.start();
+                    driver.findElement(DROP_ZONE).click();
+                    try {
+                        Thread.sleep(4000);              // Зачем? лучше сделать в самом потоке тогда уж... хотя.. нужно спросить
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    thread.interrupt(); //Тут точно нужно новый поток создавать?
+                }
             }
-            Thread thread = new ClipboardUploadThread(imageUrl);
-            thread.start();
-            driver.findElement(DROP_ZONE).click();
-            try {
-                Thread.sleep(4000);              // Зачем? лучше сделать в самом потоке тогда уж... хотя.. нужно спросить
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            thread.interrupt(); //Тут точно нужно новый поток создавать?
         }
 
         //add comments to our images
@@ -316,8 +317,8 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         driver.findElement(CLOSE).click();
     }
 
+    //НАХАРДКОДИЛИ
     /*--------------------Selenium 2.0 Web-driver and Sikuli-api integration------------------------------------------*/
-
     /**
      * This method adds problem to the website using forms and field for describe problem.
      *
@@ -360,9 +361,9 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         Canvas canvas = new DesktopCanvas();
         ScreenRegion screenRegion = new DesktopScreenRegion();
 
-        Target triangle = new ImageTarget(new File(".\\resources\\images\\Triangle.jpg"));
-        Target dropZone = new ImageTarget(new File(".\\resources\\images\\Drop Zone.jpg"));
-        Target cross = new ImageTarget(new File(".\\resources\\images\\Cross.jpg"));
+        Target triangle = new ImageTarget(new File("./resources/images/Triangle.jpg"));
+        Target dropZone = new ImageTarget(new File("./resources/images/Drop Zone.jpg"));
+        Target cross = new ImageTarget(new File("./resources/images/Cross.jpg"));
 
         triangle.setMinScore(0.8);
         dropZone.setMinScore(0.6);
