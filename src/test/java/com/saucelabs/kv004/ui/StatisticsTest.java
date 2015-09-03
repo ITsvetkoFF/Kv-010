@@ -1,8 +1,10 @@
 package com.saucelabs.kv004.ui;
 
+import com.googlecode.javacv.FrameRecorder;
 import com.saucelabs.pages.AnyPage;
+import com.saucelabs.utility.Constant;
 import com.saucelabs.pages.StatisticPage;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.openqa.selenium.WebDriver;
@@ -16,17 +18,23 @@ import java.util.concurrent.TimeUnit;
  */
 public class StatisticsTest{
 
-    WebDriver driver;
+    private WebDriver driver;
     private StatisticPage statisticPage;
     private AnyPage anyPage;
     private int actualNumber;
     private int expectedNumber;
 
+    private String newUserFirstName = "FirstNameUser5";
+    private String newUserSecondName = "SecondNameUser5";
+    private String newUserEmailName = "lord62@top.com";
+    private String newUserPasswordName = "password";
+
     @BeforeSuite
-    public void setUp() throws Exception {
+    public void setUp() throws FrameRecorder.Exception {
         driver = new FirefoxDriver();
         statisticPage = new StatisticPage(driver);
         anyPage = new AnyPage(driver);
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("http://localhost:8090/#/statistic");
     }
@@ -43,12 +51,8 @@ public class StatisticsTest{
     public void checkAddSeverityTest(){
         statisticPage.baseURL();
         expectedNumber = statisticPage.getSeverityNumberFirstProblem();
-        anyPage.logIn("admin@.com", "admin");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        anyPage.logIn(Constant.Username, Constant.Password);
+        statisticPage.waitSecond(1);
         statisticPage.baseURL();
         statisticPage.upSeverityInFirstSeverityProblemAndBackToStatisticPage();
         actualNumber = statisticPage.getSeverityNumberFirstProblem();
@@ -59,21 +63,22 @@ public class StatisticsTest{
     @Test(dependsOnMethods = {"checkAddSeverityTest"})
     public void checkAddCommentsTest(){
         statisticPage.baseURL();
-        anyPage.register("FirstNameUser6", "SecondNameUser6", "lord6@top.com", "userPassword");
+        anyPage.register(newUserFirstName, newUserSecondName, newUserEmailName, newUserPasswordName);
         statisticPage.baseURL();
         statisticPage.addCommentToFirstPopProblemAndBackToStatisticPage("Cool comment!");
+        expectedNumber = statisticPage.getCommentNumberFromFirstDiscussedProblem();
         statisticPage.addCommentToFirstPopProblemAndBackToStatisticPage("Old School!");
-        statisticPage.addCommentToFirstSeverityProblemAndBackToStatisticPage("Don't worry.");
+        actualNumber = statisticPage.getCommentNumberFromFirstDiscussedProblem();
         statisticPage.baseURL();
-        int[] a = statisticPage.getFirstAndSecondCommentNumber();
         anyPage.logOut();
-        Assert.assertTrue(a[0] >= a[1]);
+        Assert.assertEquals(expectedNumber, actualNumber - 1);
     }
 
     @AfterSuite
     public void tearDown() throws Exception {
         statisticPage.driverQuit();
     }
+
 
 }
 
