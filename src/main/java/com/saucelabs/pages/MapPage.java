@@ -78,6 +78,11 @@ public class MapPage implements IMapPage {
         if (driver instanceof JavascriptExecutor)
             script = (JavascriptExecutor) driver;
         if (script != null) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             script.executeScript(
                     "var map = document.getElementById(\"map-content\");" +
                             "var view = function() {angular.element(map).scope().$parent.$parent.$parent.geoJson" +
