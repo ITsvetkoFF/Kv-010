@@ -2,7 +2,8 @@ package com.saucelabs.kv004.ui;
 
 import com.saucelabs.pages.AnyPage;
 import com.saucelabs.pages.StatisticPage;
-import org.junit.Assert;
+
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.openqa.selenium.WebDriver;
