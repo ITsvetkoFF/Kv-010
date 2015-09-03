@@ -17,73 +17,77 @@ import java.util.List;
 
 /**
  * Created by vika on 02.09.15.
- * First test class adds problem as anon
- * Second test class approve problem as admin.
  *
+ * In first test class anon adds 2 problems.
+ * In second test class admin loges in and approve problem.
+ * In third test class admin delete problem.
  */
 public class AddAnonProblemTest {
 
+    //Used in more than one test class
     AnyPage anyPage;
     ProblemPage problemPage;
     AdminPage adminPage;
     WebDriver driver = SingletonWebDriver.getInstance();
 
-    //One @DataProvider for both test classes
+    String problemName1 = new String("problem name 1");
+    String problemName2 = new String("problem name 2");
+
+    //DataProvider for createProblem() test class
+    //Latitude and longitude must be different each time. So if test failed, try to change them.
     @DataProvider(name = "TestData", parallel = false)
     public static Object[][] testDataExample() {
         return new Object[][]{
                 new Object[]{
-                        "admin@.com",
-                        "admin",
-                        "test problem name",
                         "test problem type",
                         "test problem description",
                         "test problem propose",
                         Arrays.asList("1 test image comment", "2 test image comment"),
                         Arrays.asList(new File("resources" + File.separator + "images"
                                         + File.separator + "bomb.jpg").getAbsolutePath(),
-                                new File("resources" + File.separator + "images"
+                                        new File("resources" + File.separator + "images"
                                         + File.separator + "svalka.jpg").getAbsolutePath()),
-                        50.2,
-                        30.0
+                        49.5,
+                        33.5
                 }
         };
     }
 
 
     @Test(dataProvider = "TestData")
-    public void createProblem(String adminEmail, String adminPassword, String problemNameTest, String problemTypeTest,
-                              String problemDescriptionTest, String problemProposeTest, List<String> imageComments,
-                              List<String>imagePath,double latitude, double longitude)
+    public void createProblem(String problemTypeTest, String problemDescriptionTest, String problemProposeTest,
+                              List<String> imageComments, List<String>imagePath,double latitude, double longitude)
             throws SQLException, ClassNotFoundException {
 
         driver.get(Constant.URLlocal);
         anyPage = new AnyPage(driver);
 
         problemPage = new ProblemPage(driver);
+        anyPage.addProblemToVisibleCenter(latitude, longitude, problemName1, problemTypeTest,
+                problemDescriptionTest, problemProposeTest, imagePath, imageComments);
 
-        anyPage.addProblemToVisibleCenter(latitude, longitude, problemNameTest, problemTypeTest,
+        problemPage = new ProblemPage(driver);
+        anyPage.addProblemToVisibleCenter(latitude + 0.2, longitude - 0.2, problemName2, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imagePath, imageComments);
 
         driver.navigate().refresh();
     }
 
 
-    @Test(dataProvider = "TestData", sequential = true, dependsOnMethods = {"createProblem"})
-    public void adminAddProblem(String adminEmail, String adminPassword, String problemNameTest, String problemTypeTest,
-                                String problemDescriptionTest, String problemProposeTest, List<String> imageComments,
-                                List<String>imagePath,double latitude, double longitude) throws IOException {
+    @Test(sequential = true, dependsOnMethods = {"createProblem"})
+    public void adminAddProblem() throws IOException {
 
-        anyPage.logIn(adminEmail, adminPassword);
+        anyPage.logIn(Constant.Username, Constant.Password);
+        adminPage = new AdminPage(driver);
+        adminPage.approveProblem(problemName1);
+    }
 
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Test(sequential = true, dependsOnMethods = {"adminAddProblem"})
+    public void adminDeleteProblem() throws IOException {
 
         adminPage = new AdminPage(driver);
-        adminPage.approveProblem(problemNameTest);
+        driver.navigate().refresh();
+        adminPage.pressDeleteProblemButton();
 
         driver.close();
     }
