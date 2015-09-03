@@ -204,7 +204,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
             thread.start();
             driver.findElement(DROP_ZONE).click();
             try {
-                Thread.sleep(15000);              // Зачем? лучше сделать в самом потоке тогда уж... хотя.. нужно спросить
+                Thread.sleep(5000);              // Зачем? лучше сделать в самом потоке тогда уж... хотя.. нужно спросить
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

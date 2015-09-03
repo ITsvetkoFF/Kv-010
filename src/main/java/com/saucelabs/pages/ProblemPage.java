@@ -319,7 +319,7 @@ public class ProblemPage extends AnyPage{
             driver.findElement(ADD_NEXT_PHOTO).click();
 
             try {
-                Thread.sleep(21000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

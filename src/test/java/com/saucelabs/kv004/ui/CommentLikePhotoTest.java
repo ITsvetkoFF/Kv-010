@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
+import com.saucelabs.utility.Constant;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -19,37 +19,28 @@ public class CommentLikePhotoTest {
 
     ProblemPage problemPage;
     AdminPage adminPage;
-    private double latitude = 50.074585;
+    private double latitude = 50.077585;
     private double longitude = 30.398938;
     private List<String> addedComments = Arrays.asList("Comment 1", "Comment 2", "Comment 3");
     private String problemNameTest = "VeryNewProblem";
     private String problemTypeTest = "—Ï≥ÚÚ∫Á‚‡ÎË˘‡";
     private String problemDescriptionTest = "Some trash on streets";
     private String problemProposeTest = "Kick the trash out";
-    private List<String> imageUrls = Arrays.asList("https://www.eco-innovera.eu/lw_resource/datapool/_items/item_5/headerimage.jpg");
-    private List<String> images = Arrays.asList("http://files.usmre.com/4138/Asheville%20NC%20Eco%20Homes.jpg");
+    private String workingDir = System.getProperty("user.dir");
+    private List<String> imageUrls = Arrays.asList(workingDir + "\\resources\\images\\svalka.jpg");
+    private List<String> images = Arrays.asList(workingDir + "\\resources\\images\\bomb.jpg");
     private List<String> imageComments = Arrays.asList("comment1");
     private WebDriver driver;
+    private String newUserFirstName = "testFirstName";
+    private String newUserLastName = "testLastName";
+    private String newUserEmail = "test201g@test.com";
+    private String newUserPassword = "test123";
 
-
-    @DataProvider(name = "sampleTestData", parallel = false)
-    public static Object[][] testDataExample() {
-        return new Object[][]{
-                new Object[]{
-                        "admin@.com",
-                        "admin",
-                        "testFirstName",
-                        "testLastName",
-                        "test211g@test.com",
-                        "test123"
-                }
-        };
-    }
 
     @BeforeSuite
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        driver.get("http://localhost:8090/#/map");
+        driver.get(Constant.URLlocal);
         driver.manage().window().maximize();
         problemPage = new ProblemPage(driver);
         adminPage = new AdminPage(driver);
@@ -57,11 +48,8 @@ public class CommentLikePhotoTest {
     }
 
 
-
-    @Test(dataProvider = "sampleTestData")
-    public void addCommentsLikesPhotos(String adminEmail, String adminPassword,
-                                       String newUserFirstName, String newUserLastName,
-                                       String newUserEmail, String newUserPassword) throws InterruptedException, IOException {
+    @Test
+    public void addCommentsLikesPhotos() throws InterruptedException, IOException {
 
         problemPage.register(newUserFirstName, newUserLastName, newUserEmail, newUserPassword);
         Assert.assertEquals(problemPage.getLoggedInUserName().toUpperCase(),
@@ -82,7 +70,7 @@ public class CommentLikePhotoTest {
         driver.navigate().refresh();
         problemPage.logOut();
 
-        problemPage.logIn(adminEmail, adminPassword);
+        problemPage.logIn(Constant.Username, Constant.Password);
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
