@@ -180,7 +180,7 @@ public class ProblemTest {
         Assert.assertTrue(problemPage.getProblemPropose().equals(problemProposeTest));
         Assert.assertTrue(problemPage.getProblemDescription().equals(problemDescriptionTest));
 
-        problemPage.clickZoomOut();
+        driver.navigate().refresh();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
@@ -197,8 +197,9 @@ public class ProblemTest {
         Assert.assertTrue(problemPage.getProblemPropose().equals(problemProposeTest));
         Assert.assertTrue(problemPage.getProblemDescription().equals(problemDescriptionTest));
 
-        problemPage.clickZoomOut();
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        problemPage.logOut();
+        driver.navigate().refresh();
     }
 
     @Test(dependsOnMethods = {"viewProblemByUser"})
@@ -224,14 +225,11 @@ public class ProblemTest {
         List<String> imageURLsTest = Arrays.asList(imageUrls.split("\n"));
         List<String> imageCommentsTest = Arrays.asList(imageComments.split("\n"));
 
-        problemPage.logIn(adminLogin, adminPassword);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
         // BE CAREFUL, HERE I AM CHANGING THE COORDINATES FROM DATA PROVIDER FOR CREATE NEW PROBLEM NEAR OLD PROBLEM!
         problemPage.addProblemToVisibleCenter(latitude + 0.4, longitude + 0.4, problemNameTest, problemTypeTest,
                 problemDescriptionTest, problemProposeTest, imageURLsTest, imageCommentsTest);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        problemPage.clickZoomOut();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.navigate().refresh();
     }
 
     @Test(dependsOnMethods = {"createProblemByAdmin"})
@@ -240,6 +238,7 @@ public class ProblemTest {
         adminPage.clickAtProblemByCoordinateVisible(latitude + 0.4, longitude + 0.4);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         adminPage.pressDeleteProblemButton();
+        adminPage.logOut();
     }
 
     private void registerUserAndLogIn(String first_name, String last_name, String email, String password) {
