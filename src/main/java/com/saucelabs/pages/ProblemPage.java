@@ -1,5 +1,6 @@
 package com.saucelabs.pages;
 
+import com.saucelabs.utility.ClipboardUploadThread;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -27,12 +28,14 @@ public class ProblemPage extends AnyPage{
     private static final By THE_FIRST_ADDED_PHOTO = By.xpath("//div[@class='b-problem-deatiled-info-description-photos']/div[1]/img");
     private static final By NEXT_PHOTO_CONTROL = By.xpath("//div[@class='rn-carousel-controls ng-isolate-scope']/span[@ng-click='next()']");
     private static final By CLOSE_PHOTO_VIEWER_BUTTON = By.className("close");
+    private static final By ADD_NEXT_PHOTO = By.xpath("//div[@class='b-details-body-problem-photo_add ng-scope']");
+    private static final By SUBMIT_NEW_PHOTO = By.xpath("//input[@value='Додати']");
 
     private static final By COMMENTS_BUTTON = By.xpath("//div[@class='b-problem-tab ng-isolate-scope']/ul/li[2]/a");
     private static final By ADD_COMMENT_TEXT_FIELD = By.xpath("//div[@class='form-group']/textarea");
     private static final By ADDED_COMMENTS = By.xpath("//div[contains(@class,'b-activity__comments-item')]/i[contains(@class,'fa-weixin')]");
     private static final By ADD_COMMENT_BUTTON = By.xpath("//div[@class='form-group']/a[contains(@class,'btn')]");
-    private static final By DELETE_COMMENT_BUTTON = By.xpath(".//div[2]/span[2]/i");
+    private static final By DELETE_COMMENT_BUTTON = By.xpath("//span[(@class='ng-binding')]/i[contains(@class,'fa-close')]");
     //private static final By ALL_ACTIVITIES = By.className("b-activity__comments-item");
     //private static final By CHECKER_THAT_ACTIVITY_IS_A_COMMENT = By.xpath(".//i[@class='fa fa-weixin b-activity__comments-item-image']");
 
@@ -223,9 +226,8 @@ public class ProblemPage extends AnyPage{
      */
     public void addComments(double latitude, double longitude, List<String> comments) {
         clickAtProblemByCoordinateVisible(latitude, longitude);
-
         driver.findElement(COMMENTS_BUTTON).click();
-        for(String comment : comments) {
+        for (String comment : comments) {
             driver.findElement(ADD_COMMENT_TEXT_FIELD).sendKeys(comment);
             driver.findElement(ADD_COMMENT_BUTTON).click();
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -300,5 +302,29 @@ public class ProblemPage extends AnyPage{
     public void deleteOpenedProblem() {
         driver.findElement(By.xpath("//button[@class='btn btn-danger btn-sm']")).click();       //Нужно ли проверять, открыта ли проблема?
         driver.findElement(By.xpath("//button[@class='btn btn-warning ng-binding']")).click();
+    }
+
+    /**
+     * This method adds new photos to problem.
+     * @param imagePaths List of paths to new photos.
+     */
+    public void addNewPhotos(List<String> imagePaths, double latitude, double longitude) {
+        clickAtProblemByCoordinateVisible(latitude, longitude);
+        for (String imageUrl : imagePaths) {
+            if (imageUrl == null || imageUrl.isEmpty()) {
+                continue;
+            }
+            Thread thread = new ClipboardUploadThread(imageUrl);
+            thread.start();
+            driver.findElement(ADD_NEXT_PHOTO).click();
+
+            try {
+                Thread.sleep(21000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            driver.findElement(SUBMIT_NEW_PHOTO).click();
+            thread.interrupt();
+        }
     }
 }
