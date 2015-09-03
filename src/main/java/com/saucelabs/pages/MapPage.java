@@ -17,8 +17,11 @@ public class MapPage implements IMapPage {
     public static final By PROBLEM_TYPE = By.cssSelector(".problem label");
     public static final By ZOOM_OUT = By.xpath("//a[@title='Zoom out']");
     public static final By LEFT_SIDE_POINTER = By.xpath("//div[@class='b-left-side__pointer']");
+    public static final By USER_PROBLEM_FILTER = By.cssSelector(".problem.controls>label");
     public static final By BY_PROBLEM_TYPE_WITH_LABEL_FOR = By.cssSelector(".problem label[for^='type']");
     public static final By PROBLEM_TYPE_STARTS_WITH_TYPE_BY_ID = By.xpath("//input[starts-with(@id, 'type')]");
+    public static final By NEW_PROBLEM = By.cssSelector(".problem label[for='status0']");
+    public static final By SOLVED_PROBLEM = By.cssSelector(".problem label[for='status1']");
     public static final By INPUT_FIELD_FOR_DATE = By.cssSelector(".datepicker .form-control");
     public static final By DATE_PICKER = By.cssSelector(".datepicker");
     public static final By CALENDAR_ICON = By.cssSelector(".fa-calendar");
@@ -78,6 +81,11 @@ public class MapPage implements IMapPage {
         if (driver instanceof JavascriptExecutor)
             script = (JavascriptExecutor) driver;
         if (script != null) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             script.executeScript(
                     "var map = document.getElementById(\"map-content\");" +
                             "var view = function() {angular.element(map).scope().$parent.$parent.$parent.geoJson" +
@@ -88,7 +96,7 @@ public class MapPage implements IMapPage {
 
         WebElement map = driver.findElement(MAP);
         int navBarHeight = driver.findElement(NAV_BAR).getSize().getHeight();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         System.out.println("Before Explicit Wait during set view");
         if(driver.findElements(ADD_PROBLEM_MENU).size() != 0) {
@@ -226,6 +234,16 @@ public class MapPage implements IMapPage {
     }
 
     /**
+     * Find all problems for current user. Only available for not anonymous users.
+     */
+    @Override
+    public void selectUserProblems(){
+        WebElement filterUser = driver.findElement(USER_PROBLEM_FILTER);
+        filterUser.click();
+
+    }
+
+    /**
      * Find all problems with one filter by id (int)
      *
      * @param typeNumber is filter (id) for searching problems.
@@ -267,6 +285,24 @@ public class MapPage implements IMapPage {
                 }
             }
         }
+    }
+
+    /**
+     * Find all new (not solved) problems. By default checkbox enabled.
+     */
+    @Override
+    public void selectNewProblems(){
+        WebElement filterNewProblems = driver.findElement(NEW_PROBLEM);
+        filterNewProblems.click();
+    }
+
+    /**
+     * Find all solved problems. By default checkbox enabled.
+     */
+    @Override
+    public void selectClosedProblems(){
+        WebElement filterClosedProblems = driver.findElement(SOLVED_PROBLEM);
+        filterClosedProblems.click();
     }
 
     /**
