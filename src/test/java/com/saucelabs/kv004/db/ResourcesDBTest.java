@@ -2,6 +2,7 @@ package com.saucelabs.kv004.db;
 
 import com.saucelabs.kv004.dao.ResourcesDAO;
 import com.saucelabs.kv004.entities.Resources;
+import com.saucelabs.pages.AnyPage;
 import com.saucelabs.pages.ResourcesPage;
 import com.saucelabs.utility.Constant;
 import com.saucelabs.utility.ExcelUtils;
@@ -21,39 +22,43 @@ public class ResourcesDBTest {
 
     WebDriver driver = SingletonWebDriver.getInstance();
     ResourcesPage resourcesPage = new ResourcesPage(driver);
+    AnyPage anyPage = new AnyPage(driver);
     ResourcesDAO resoursesDAO = new ResourcesDAO();
     Resources actualResource = null;
+    String newResource = "newResource";
+    String placeToSave = "В розділі \"Ресурси\"";
+    String addedText = "aaaaaaaaaaa";
 
-    @DataProvider(name = "resourceTestDB", parallel = false)
-    public static Object[][] data() throws Exception {
-        return ExcelUtils.getTableArray(Constant.Path_TestData + Constant.File_ResourceTestDB, "Sheet1");
-    }
 
-    @Test(dataProvider = "resourceTestDB", groups = {"ResourcesDBTest"})
-    public void checkAddedResourceDBTest(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
+
+    @Test(groups = {"ResourcesDBTest"})
+    public void checkAddedResourceDBTest() throws Exception {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.get(Constant.URLlocal);
+        anyPage.logOut();
+        driver.navigate().refresh();
         resourcesPage.logIn(Constant.Username, Constant.Password);
-        resourcesPage.createResource(ResourceTitle, ResourceAlias, ResourceBody, PlaceToSave);
-        actualResource = resoursesDAO.findResourceByTitle(ResourceTitle);
-        Assert.assertEquals(actualResource.getTitle(), ResourceTitle);
-        Assert.assertEquals(actualResource.getAlias(), ResourceAlias);
-        Assert.assertTrue(actualResource.getContent().contains(ResourceBody));
-        //Assert.assertEquals(actualResource.isIsResource(), convertStringIsResourceToInteger(PlaceToSave));
+        resourcesPage.createResource(newResource, newResource, newResource, placeToSave);
+        actualResource = resoursesDAO.findResourceByTitle(newResource);
+        Assert.assertEquals(actualResource.getTitle(), newResource);
+        Assert.assertEquals(actualResource.getAlias(), newResource);
+        Assert.assertTrue(actualResource.getContent().contains(newResource));
+        //Assert.assertEquals(actualResource.isIsResource(), convertStringIsResourceToInteger(placeToSave));
 
     }
 
-    @Test(dataProvider = "resourceTestDB", dependsOnMethods = {"checkAddedResourceDBTest"}, groups = {"ResourcesDBTest"})
-    public void checkEditedResourceDBTest(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
-        resourcesPage.editResource(ResourceTitle, TextToAdd);
-        String newResourceTitle = ResourceTitle + TextToAdd;
-        Assert.assertEquals(actualResource = resoursesDAO.findResourceByTitle(newResourceTitle), newResourceTitle);
+    @Test(sequential = true, dependsOnMethods = {"checkAddedResourceDBTest"}, groups = {"ResourcesDBTest"})
+    public void checkEditedResourceDBTest() throws Exception {
+        resourcesPage.editResource(newResource, addedText);
+        String editedResource = newResource + addedText;
+        Assert.assertEquals(resoursesDAO.findResourceByTitle(editedResource).getTitle(), editedResource);
     }
 
-    @Test(dataProvider = "resourceTestDB", dependsOnMethods = {"checkEditedResourceDBTest"})
-    public void deleteResource(String UserName, String Password, String ResourceTitle, String ResourceAlias, String ResourceBody, String PlaceToSave, String TextToAdd) throws Exception {
-        String newResourceTitle = ResourceTitle + TextToAdd;
-        Assert.assertEquals(resoursesDAO.findResourceByTitle(newResourceTitle), null);
+    @Test(sequential = true, dependsOnMethods = {"checkEditedResourceDBTest"})
+    public void deleteResource() throws Exception {
+        String editedResource = newResource + addedText;
+        resourcesPage.deleteResource(editedResource);
+        Assert.assertEquals(resoursesDAO.findResourceByTitle(editedResource), null);
     }
 
     /**
@@ -63,8 +68,8 @@ public class ResourcesDBTest {
      * @param resourceLocation string name of resource location.
      * @return Integer code where resource is located (top menu or in Resources).
      */
-    public boolean convertStringIsResourceToInteger(String resourceLocation) {
-        String isResource = "� ����� \"�������\"";
+    public boolean convertStringIsResourceToBoolean(String resourceLocation) {
+        String isResource = "В розділі \"Ресурси\"";
         if (resourceLocation.equals(isResource)) {
             return true;
         }

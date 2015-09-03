@@ -86,12 +86,10 @@ public class ProblemPage extends AnyPage{
 
 
     public void editProblemTitle(String newTitle) {
-//        editProblemSeverity((byte)5);
         driver.findElement(PROBLEM_TITLE).click();
         driver.findElement(EDIT_PROBLEM_TITLE).clear();
         driver.findElement(EDIT_PROBLEM_TITLE).sendKeys(newTitle);
         clickAtVisibleMapCenter(0);
-       // driver.findElement(SAVE_CHANGES_BUTTON).click();
     }
 
     public void editProblemDescription(String newDescription) {
@@ -99,8 +97,6 @@ public class ProblemPage extends AnyPage{
         driver.findElement(EDIT_PROBLEM_DESCRIPTION).clear();
         driver.findElement(EDIT_PROBLEM_DESCRIPTION).sendKeys(newDescription);
         clickAtVisibleMapCenter(0);
-        //driver.findElement(SAVE_CHANGES_BUTTON).click();
-        System.out.println("ddddddddddddddddddddddddddddddddddddd");
     }
 
     public void editProblemPropose(String newPropose) {
@@ -108,8 +104,6 @@ public class ProblemPage extends AnyPage{
         driver.findElement(EDIT_PROBLEM_PROPOSE).clear();
         driver.findElement(EDIT_PROBLEM_PROPOSE).sendKeys(newPropose);
         clickAtVisibleMapCenter(0);
-        //driver.findElement(SAVE_CHANGES_BUTTON).click();
-        System.out.println("ggggggggggggggggggggggggggggggggggggggggg");
     }
 
     public void editProblemSeverity(Byte severity) {
