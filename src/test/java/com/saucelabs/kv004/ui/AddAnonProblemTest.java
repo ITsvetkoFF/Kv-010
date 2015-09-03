@@ -6,6 +6,7 @@ import com.saucelabs.pages.ProblemPage;
 import com.saucelabs.utility.Constant;
 import com.saucelabs.utility.SingletonWebDriver;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,7 @@ public class AddAnonProblemTest {
                         "test problem description",
                         "test problem propose",
                         47.3,
-                        31.1
+                        30.1
                 }
         };
     }
@@ -73,6 +74,10 @@ public class AddAnonProblemTest {
     public void adminAddProblem() throws IOException {
 
         anyPage.logIn(Constant.Username, Constant.Password);
+
+        Assert.assertEquals(anyPage.getLoggedInUserName().toUpperCase(),
+                ("admin").toUpperCase());
+
         adminPage = new AdminPage(driver);
         adminPage.approveProblem(problemName1);
     }
@@ -85,6 +90,7 @@ public class AddAnonProblemTest {
         adminPage.pressDeleteProblemButton();
 
         driver.close();
+
     }
 }
 
