@@ -18,19 +18,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class CommentLikePhotoTest {
 
-    public static double latitude = 50.072585;
-    public static double longitude = 30.398938;
-    public List<String> addedComments = Arrays.asList("Comment 1", "Comment 2", "Comment 3");
-    public String problemNameTest = "VeryNewProblem";
-    public String problemTypeTest = "Сміттєзвалища";
-    public String problemDescriptionTest = "Some trash on streets";
-    public String problemProposeTest = "Kick the trash out";
-    public List<String> imageUrls = Arrays.asList("https://www.eco-innovera.eu/lw_resource/datapool/_items/item_5/headerimage.jpg");
-    public List<String> images = Arrays.asList("http://files.usmre.com/4138/Asheville%20NC%20Eco%20Homes.jpg");
-    public List<String> imageComments = Arrays.asList("comment1");
-    private WebDriver driver;
     ProblemPage problemPage;
     AdminPage adminPage;
+    private double latitude = 50.074585;
+    private double longitude = 30.398938;
+    private List<String> addedComments = Arrays.asList("Comment 1", "Comment 2", "Comment 3");
+    private String problemNameTest = "VeryNewProblem";
+    private String problemTypeTest = "Сміттєзвалища";
+    private String problemDescriptionTest = "Some trash on streets";
+    private String problemProposeTest = "Kick the trash out";
+    private List<String> imageUrls = Arrays.asList("https://www.eco-innovera.eu/lw_resource/datapool/_items/item_5/headerimage.jpg");
+    private List<String> images = Arrays.asList("http://files.usmre.com/4138/Asheville%20NC%20Eco%20Homes.jpg");
+    private List<String> imageComments = Arrays.asList("comment1");
+    private WebDriver driver;
+
 
     @DataProvider(name = "sampleTestData", parallel = false)
     public static Object[][] testDataExample() {
@@ -40,7 +41,7 @@ public class CommentLikePhotoTest {
                         "admin",
                         "testFirstName",
                         "testLastName",
-                        "test212g@test.com",
+                        "test211g@test.com",
                         "test123"
                 }
         };
