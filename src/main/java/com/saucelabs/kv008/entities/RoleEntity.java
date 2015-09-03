@@ -1,4 +1,4 @@
-package com.softserve.edu.db.entities;
+package com.saucelabs.kv008.entities;
 
 /**
  * __tablename__ = 'roles'

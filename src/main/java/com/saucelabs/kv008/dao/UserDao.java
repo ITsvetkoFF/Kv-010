@@ -1,8 +1,8 @@
-package com.softserve.edu.db.dao;
+package com.saucelabs.kv008.dao;
 
-import com.softserve.edu.db.entities.RegionEntity;
-import com.softserve.edu.db.entities.UserEntity;
-import org.postgis.PGgeometry;
+
+import com.saucelabs.kv008.entities.UserEntity;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

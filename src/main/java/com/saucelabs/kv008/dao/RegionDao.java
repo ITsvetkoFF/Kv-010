@@ -1,17 +1,17 @@
-package com.softserve.edu.db.dao;
+package com.saucelabs.kv008.dao;
 
-import com.softserve.edu.db.entities.RegionEntity;
+
+import com.saucelabs.kv008.entities.RegionEntity;
 import org.postgis.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by dmakstc on 01.09.2015.
+ *
  */
 public class RegionDao extends BaseDao<RegionEntity,Integer> {
 
