@@ -1,4 +1,4 @@
-package com.softserve.edu.db.dao;
+package com.saucelabs.kv008.dao;
 
 import java.io.Serializable;
 import java.util.List;

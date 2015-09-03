@@ -1,4 +1,4 @@
-package com.saucelabs.kv008;
+package com.saucelabs.kv008.util;
 
 import java.sql.Connection;
 import java.sql.Driver;

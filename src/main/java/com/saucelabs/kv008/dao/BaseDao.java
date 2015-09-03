@@ -1,6 +1,9 @@
-package com.softserve.edu.db.dao;
+package com.saucelabs.kv008.dao;
 
-import com.softserve.edu.db.ConnectorDB;
+
+
+
+import com.saucelabs.kv008.util.ConnectorDB;
 
 import java.io.Serializable;
 import java.sql.*;

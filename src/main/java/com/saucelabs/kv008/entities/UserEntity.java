@@ -1,6 +1,7 @@
-package com.softserve.edu.db.entities;
+package com.saucelabs.kv008.entities;
 
-import com.softserve.edu.db.dao.RegionDao;
+
+import com.saucelabs.kv008.dao.RegionDao;
 
 /**
  *  __tablename__ = 'users'
