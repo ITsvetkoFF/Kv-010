@@ -1,23 +1,18 @@
-package com.saucelabs.Tests.LocalTests;
+package com.saucelabs.kv004.ui;
 
-import com.saucelabs.AnyPage;
-import com.saucelabs.Tests.DAO.DeleteUserDAO;
+import com.saucelabs.pages.AnyPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.*;
-import com.saucelabs.Tests.DBTests.dataBaseTests.dao.UsersDAO;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by yioteh on 27.08.15.
  */
 public class RegistrationLoginLogoutTest {
-
-    UsersDAO userInfoDB = new UsersDAO();
 
     @DataProvider(name = "sampleTestData", parallel = false)
     public static Object[][] testDataExample() {
@@ -27,8 +22,9 @@ public class RegistrationLoginLogoutTest {
                         "admin",
                         "testRagFirstName",
                         "testGerLastName",
-                        "test12131g@test.com",
-                        "test123"
+                        "test12131e@test.com",
+                        "test123",
+                        "test234"
                 }
         };
     }
@@ -36,7 +32,7 @@ public class RegistrationLoginLogoutTest {
     @Test(dataProvider = "sampleTestData")
     public void sampleAll(String adminEmail, String adminPassword,
                           String newUserFirstName, String newUserLastName,
-                          String newUserEmail, String newUserPassword) throws IOException {
+                          String newUserEmail, String newUserPassword, String newUserPasswordChange) throws IOException {
 
         WebDriver driver = new FirefoxDriver();
         driver.get("http://localhost:8090");
@@ -69,8 +65,23 @@ public class RegistrationLoginLogoutTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        anyPage.changePassword(newUserPassword, newUserPasswordChange);
+
         Assert.assertEquals(anyPage.getLoggedInUserName().toUpperCase(),
                 (newUserFirstName + " " + newUserLastName).toUpperCase());
+        anyPage.logOut();
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        anyPage.logIn(newUserEmail, newUserPasswordChange);
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         anyPage.logOut();
         driver.close();
     }

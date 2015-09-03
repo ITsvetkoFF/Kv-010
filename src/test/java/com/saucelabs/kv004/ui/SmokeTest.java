@@ -79,7 +79,6 @@ public class SmokeTest {
             e.printStackTrace();
         }
 
-//        driver.findElement(AnyPage.ADD_PROBLEM_BUTTON).click();
         id = problemPage.getProblemId(latitude, longitude);
 
         try {
@@ -91,8 +90,6 @@ public class SmokeTest {
         problemPage.openProblemById(id);
 
         Assert.assertEquals(problemPage.getProblemTitle(), problemTitle);
-
-        //problemPage.deleteOpenedProblem();
 
         anyPage.logOut();
 
