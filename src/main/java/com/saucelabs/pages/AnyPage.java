@@ -43,7 +43,7 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
     public static final By PROBLEM_TYPE_DROP_DOWN_LIST = By.cssSelector("#select-field option");
     public static final By PROBLEM_DESCRIPTION_FIELD = By.id("description-field");
     public static final By PROBLEM_PROPOSE_FIELD = By.id("proposal-field");
-    public static final By DROP_ZONE = By.xpath("//div[contains(@class,'dz-clickable')]/span");
+    public static final By DROP_ZONE = By.xpath("//div[contains(@class,'dz-clickable')]");
     public static final By IMAGE_COMMENT_TEXT_BOX = By.cssSelector("textarea.comment_field");
     public static final By ADD_PROBLEM_SUBMIT_BUTTON = By.id("btn-submit");
     public static final By ALERT_WINDOW = By.className("alert");
@@ -317,8 +317,8 @@ public class AnyPage extends MapPage implements IAnyPage, IMapPage {
         driver.findElement(CLOSE).click();
     }
 
-    //НАХАРДКОДИЛИ
     /*--------------------Selenium 2.0 Web-driver and Sikuli-api integration------------------------------------------*/
+
     /**
      * This method adds problem to the website using forms and field for describe problem.
      *

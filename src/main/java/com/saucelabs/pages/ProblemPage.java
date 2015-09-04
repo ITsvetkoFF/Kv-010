@@ -1,5 +1,6 @@
 package com.saucelabs.pages;
 
+import com.saucelabs.utility.ClipboardUploadThread;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Created by onikistc on 21.10.2014.
  * Refactoring by Vadym on 08/26/15.
  */
-public class ProblemPage extends AnyPage{
+public class ProblemPage extends AnyPage {
 
     private static final By PROBLEM_ICON_SRC = By.xpath("//img[@class='b-problem-deatiled-info-title__icon']");
     private static final By PROBLEM_TITLE = By.xpath("//h1");
@@ -28,14 +29,14 @@ public class ProblemPage extends AnyPage{
     private static final By THE_FIRST_ADDED_PHOTO = By.xpath("//div[@class='b-problem-deatiled-info-description-photos']/div[1]/img");
     private static final By NEXT_PHOTO_CONTROL = By.xpath("//div[@class='rn-carousel-controls ng-isolate-scope']/span[@ng-click='next()']");
     private static final By CLOSE_PHOTO_VIEWER_BUTTON = By.className("close");
+    private static final By ADD_NEXT_PHOTO = By.xpath("//div[@class='b-details-body-problem-photo_add ng-scope']");
+    private static final By SUBMIT_NEW_PHOTO = By.xpath("//input[@value='Додати']");
 
     private static final By COMMENTS_BUTTON = By.xpath("//div[@class='b-problem-tab ng-isolate-scope']/ul/li[2]/a");
     private static final By ADD_COMMENT_TEXT_FIELD = By.xpath("//div[@class='form-group']/textarea");
     private static final By ADDED_COMMENTS = By.xpath("//div[contains(@class,'b-activity__comments-item')]/i[contains(@class,'fa-weixin')]");
     private static final By ADD_COMMENT_BUTTON = By.xpath("//div[@class='form-group']/a[contains(@class,'btn')]");
-    private static final By DELETE_COMMENT_BUTTON = By.xpath(".//div[2]/span[2]/i");
-
-
+    private static final By DELETE_COMMENT_BUTTON = By.xpath("//span[(@class='ng-binding')]/i[contains(@class,'fa-close')]");
     //private static final By ALL_ACTIVITIES = By.className("b-activity__comments-item");
     //private static final By CHECKER_THAT_ACTIVITY_IS_A_COMMENT = By.xpath(".//i[@class='fa fa-weixin b-activity__comments-item-image']");
 
@@ -53,7 +54,7 @@ public class ProblemPage extends AnyPage{
     public String getProblemType() {
         String problemIconSRC = driver.findElement(PROBLEM_ICON_SRC).getAttribute("ng-src");
         String problemType = "";
-        switch(problemIconSRC) {
+        switch (problemIconSRC) {
             case "images/markers/1.png":
                 problemType = "Проблеми лісів";
                 break;
@@ -85,7 +86,7 @@ public class ProblemPage extends AnyPage{
     /**
      * This method gets number id problem by coordinates;
      *
-     * @param latitude is coordinate X where problem on the map.
+     * @param latitude  is coordinate X where problem on the map.
      * @param longitude is coordinate Y where problem on the map.
      * @return problem id by parameters (latitude and longitude).
      * @throws NumberFormatException if parseInt does not contain a parsable integer
@@ -106,12 +107,13 @@ public class ProblemPage extends AnyPage{
     /**
      * Change state of problem to solved/unsolved
      */
-    public void editProblemSolved(){
+    public void editProblemSolved() {
         driver.findElement(EDIT_PROBLEM_SOLVED).click();
     }
 
     /**
      * Edit title of problem.
+     *
      * @param newTitle New title for problem.
      */
     public void editProblemTitle(String newTitle) {
@@ -124,6 +126,7 @@ public class ProblemPage extends AnyPage{
 
     /**
      * Edit description of problem.
+     *
      * @param newDescription New description for problem.
      */
     public void editProblemDescription(String newDescription) {
@@ -136,6 +139,7 @@ public class ProblemPage extends AnyPage{
 
     /**
      * Edit propose of problem.
+     *
      * @param newPropose New propose for problem.
      */
     public void editProblemPropose(String newPropose) {
@@ -148,6 +152,7 @@ public class ProblemPage extends AnyPage{
 
     /**
      * Change severity of problem.
+     *
      * @param severity (from 1 to 5)
      */
     public void editProblemSeverity(Byte severity) {
@@ -180,7 +185,7 @@ public class ProblemPage extends AnyPage{
     /**
      * @return the current host name of a URL with the protocol name.
      */
-    public String getHostURL(){
+    public String getHostURL() {
         String currentUrlHost = driver.getCurrentUrl().split("/")[2];
         return "http://" + currentUrlHost + "/";
     }
@@ -188,11 +193,11 @@ public class ProblemPage extends AnyPage{
     /**
      * @return all urls to existed images on the web-site.
      */
-    public List<String> getAllImagesURLs(){
+    public List<String> getAllImagesURLs() {
         int imagesAmount = driver.findElements(IMAGES_EXISTED).size();
         List<String> imageUrls = new ArrayList<>();
         String currentUrlHost = getHostURL();
-        for(int i = 1; i <= imagesAmount; i++) {
+        for (int i = 1; i <= imagesAmount; i++) {
             imageUrls.add(currentUrlHost + driver.findElement(getImageSRCByItsOrderNumber(i)).getAttribute("ng-src"));
         }
         return imageUrls;
@@ -216,7 +221,7 @@ public class ProblemPage extends AnyPage{
             return comments;
         }
         driver.findElement(THE_FIRST_ADDED_PHOTO).click();
-        for(int i = 1; i <= commentsAmount; i++){
+        for (int i = 1; i <= commentsAmount; i++) {
             comments.add(driver.findElement(By.xpath(".//div[@class='container slider']/div/ul/li[" + i + "]/div"))
                     .getAttribute("textContent"));
             if (i < commentsAmount) {
@@ -230,15 +235,14 @@ public class ProblemPage extends AnyPage{
     /**
      * This method adds comments to the problem by coordinates.
      *
-     * @param latitude is coordinate X where problem on the map.
+     * @param latitude  is coordinate X where problem on the map.
      * @param longitude is coordinate Y where problem on the map.
-     * @param comments which need to add to the problem.
+     * @param comments  which need to add to the problem.
      */
     public void addComments(double latitude, double longitude, List<String> comments) {
         clickAtProblemByCoordinateVisible(latitude, longitude);
-
         driver.findElement(COMMENTS_BUTTON).click();
-        for(String comment : comments) {
+        for (String comment : comments) {
             driver.findElement(ADD_COMMENT_TEXT_FIELD).sendKeys(comment);
             driver.findElement(ADD_COMMENT_BUTTON).click();
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -248,14 +252,14 @@ public class ProblemPage extends AnyPage{
     /**
      * This method deletes all comments to the problem by coordinates.
      *
-     * @param latitude is coordinate X where problem on the map.
+     * @param latitude  is coordinate X where problem on the map.
      * @param longitude is coordinate Y where problem on the map.
      */
     public void deleteComments(double latitude, double longitude) {
         clickAtProblemByCoordinateVisible(latitude, longitude);
         driver.findElement(COMMENTS_BUTTON).click();
         int commentsAmount = driver.findElements(ADDED_COMMENTS).size();
-        for(int i = 0; i < commentsAmount; i++) {
+        for (int i = 0; i < commentsAmount; i++) {
             driver.findElement(DELETE_COMMENT_BUTTON).click();
         }
     }
@@ -269,7 +273,7 @@ public class ProblemPage extends AnyPage{
         driver.findElement(COMMENTS_BUTTON).click();
         List<String> comments = new ArrayList<>();
         int commentsAmount = driver.findElements(ADDED_COMMENTS).size();
-        for(int i = 1; i <= commentsAmount; i++) {
+        for (int i = 1; i <= commentsAmount; i++) {
             By xpathExpression = By.xpath("//div[@class='b-activity__comments']/div[" + i + "]/div[2]/span[2]");
             comments.add(0, driver.findElement(xpathExpression).getAttribute("textContent"));
         }
@@ -313,5 +317,39 @@ public class ProblemPage extends AnyPage{
     public void deleteOpenedProblem() {
         driver.findElement(By.xpath("//button[@class='btn btn-danger btn-sm']")).click();       //Нужно ли проверять, открыта ли проблема?
         driver.findElement(By.xpath("//button[@class='btn btn-warning ng-binding']")).click();
+    }
+
+    /**
+     * This method adds new photos to problem.
+     *
+     * @param imagePaths List of paths to new photos.
+     */
+    public void addNewPhotos(List<String> imagePaths, double latitude, double longitude) {
+        clickAtProblemByCoordinateVisible(latitude, longitude);
+
+        if (imagePaths != null) {
+            if (!imagePaths.isEmpty()) {
+                for (String imagePath : imagePaths) {
+                    Thread thread = new ClipboardUploadThread(imagePath);
+                    thread.start();
+                    driver.findElement(ADD_NEXT_PHOTO).click();
+                    try {
+                        Thread.sleep(4000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    driver.findElement(SUBMIT_NEW_PHOTO).click();
+                    thread.interrupt();
+                }
+            }
+        }
+
+    }
+
+    /**
+     * This method returns number of added photos.
+     */
+    public int getNumberOfPhotos() {
+        return driver.findElements(IMAGES_EXISTED).size();
     }
 }

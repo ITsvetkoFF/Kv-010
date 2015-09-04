@@ -20,6 +20,7 @@ public class AdminPage extends AnyPage implements IAdminPage, IAnyPage, IMapPage
     public static final By APPROVE_PROBLEM_TICK_MARK = By.xpath("..//ul/li");
     public static final By DELETE_PROBLEM_BUTTON = By.xpath("//button[contains(@ng-click,'deleteProblemFromDb()')]");
     public static final By APPROVE_DELETE_PROBLEM_BUTTON = By.className("btn-warning");
+    public static final By DELETE_PHOTO_CROSS = By.xpath("//i[@class='fa fa-close show_photo_delete_lavel_true']");
     private WebDriver driver;
 
     public AdminPage(WebDriver driver) {
@@ -101,4 +102,16 @@ public class AdminPage extends AnyPage implements IAdminPage, IAnyPage, IMapPage
         WebElement approve = wait.until(ExpectedConditions.visibilityOfElementLocated(APPROVE_DELETE_PROBLEM_BUTTON));
         approve.click();
     }
+
+    /**
+     * This method deletes all the photos.
+     */
+    public void deleteAllPhotos(double latitude, double longitude) {
+        clickAtProblemByCoordinateVisible(latitude, longitude);
+        int imagesAmount = driver.findElements(DELETE_PHOTO_CROSS).size();
+        for (int i = 0; i < imagesAmount; i++) {
+            driver.findElement(DELETE_PHOTO_CROSS).click();
+        }
+    }
+
 }
