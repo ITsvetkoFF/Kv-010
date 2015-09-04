@@ -10,5 +10,5 @@ public interface IStatisticPage {
     void upSeverityInFirstSeverityProblemAndBackToStatisticPage();
     int getLikesNumberFirstPopProblem();
     int getSeverityNumberFirstProblem();
-    int[] getFirstAndSecondCommentNumber();
+    int getCommentNumberFromFirstDiscussedProblem();
 }
