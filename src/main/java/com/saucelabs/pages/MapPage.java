@@ -81,6 +81,11 @@ public class MapPage implements IMapPage {
         if (driver instanceof JavascriptExecutor)
             script = (JavascriptExecutor) driver;
         if (script != null) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             script.executeScript(
                     "var map = document.getElementById(\"map-content\");" +
                             "var view = function() {angular.element(map).scope().$parent.$parent.$parent.geoJson" +
@@ -91,7 +96,7 @@ public class MapPage implements IMapPage {
 
         WebElement map = driver.findElement(MAP);
         int navBarHeight = driver.findElement(NAV_BAR).getSize().getHeight();
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         System.out.println("Before Explicit Wait during set view");
         if(driver.findElements(ADD_PROBLEM_MENU).size() != 0) {
