@@ -94,7 +94,10 @@ public class UserEntity {
     }
 
     public RegionEntity getRegion() {
-        return new RegionDao().readByKey(this.getRegion_id());
+        if(this.region == null && this.region_id !=0){
+            region=  new RegionDao().readByKey(this.getRegion_id());
+        }
+        return region;
     }
 
     public void setRegion(RegionEntity region) {

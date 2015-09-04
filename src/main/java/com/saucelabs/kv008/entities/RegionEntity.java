@@ -10,6 +10,7 @@ import org.postgis.PGgeometry;
  * location = Column(Geometry, nullable=False)
  */
 public class RegionEntity {
+
     private int id;
     private String name;
     private PGgeometry location;

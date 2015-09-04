@@ -11,6 +11,7 @@ package com.saucelabs.kv008.entities;
  * is_resource = Column(Boolean, nullable=False)
  */
 public class PageEntity {
+
     private int id;
     private String alias;
     private String title;

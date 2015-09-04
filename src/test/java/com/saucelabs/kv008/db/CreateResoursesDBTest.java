@@ -7,7 +7,7 @@ import com.saucelabs.pages.ResourcesPage;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import  org.testng.Assert;
+import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -16,15 +16,16 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Created by a
+ * Class creates and deletes Resources and checks that changes are represented in DataBase,
+ * Created by a DenysMaksymchuk
  */
-public class CreateResoursesDBTest{
+public class CreateResoursesDBTest {
 
     static WebDriver driver = new FirefoxDriver();
     static ResourcesPage resourcesPage = new ResourcesPage(driver);
+
     private PageEntity pageEntityTopFromDB;
     private PageEntity pageEntityTop = new PageEntity();
-
 
     private PageEntity pageEntityResFromDB;
     private PageEntity pageEntityRes = new PageEntity();
@@ -33,7 +34,7 @@ public class CreateResoursesDBTest{
     private final PageDao pageDao = new PageDao();
 
     @BeforeSuite
-    public  void beforeTest() throws Exception {
+    public void beforeTest() throws Exception {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);  //Waiting 15 sec for browser opening
         driver.get("http://localhost:8888/"); //Open page by URL (localhost:8888)
         resourcesPage.logIn("aaa@aaa.aaa", "aaa"); // Authentication as Administrator.
@@ -42,7 +43,7 @@ public class CreateResoursesDBTest{
         pageEntityTop.setTitle("ddd");
         pageEntityTop.setContent("ddd");
         pageEntityTop.setResource(false);
-        //
+        //stub2 init
         pageEntityRes.setAlias("sss");
         pageEntityRes.setContent("sss");
         pageEntityRes.setTitle("sss");
@@ -52,26 +53,20 @@ public class CreateResoursesDBTest{
     }
 
     @Test
-    public void createResource(){
-        resourcesPage.createResource(pageEntityTop.getTitle(),pageEntityTop.getAlias(),
-                pageEntityTop.getContent(),"У верхньому меню");
+    public void createResource() {
+        resourcesPage.createResource(pageEntityTop.getTitle(), pageEntityTop.getAlias(),
+                pageEntityTop.getContent(), "У верхньому меню");
         pageEntityTopFromDB = pageDao.readByAlias(pageEntityTop.getAlias());
-        resourcesPage.createResource(pageEntityRes.getTitle(),pageEntityRes.getAlias(),
-                pageEntityRes.getContent(),"В розділі \"Ресурси\"");
+        resourcesPage.createResource(pageEntityRes.getTitle(), pageEntityRes.getAlias(),
+                pageEntityRes.getContent(), "В розділі \"Ресурси\"");
         pageEntityResFromDB = pageDao.readByAlias(pageEntityRes.getAlias());
-        System.out.println(pageEntityTop);
-        System.out.println(pageEntityTopFromDB);
-        System.out.println(pageEntityTop.equals(pageEntityTopFromDB));
-        System.out.println(pageEntityRes);
-        System.out.println(pageEntityResFromDB);
-        System.out.println(pageEntityRes.equals(pageEntityResFromDB));
         Assert.assertTrue(pageEntityTop.equals(pageEntityTopFromDB));
         Assert.assertTrue(pageEntityRes.equals(pageEntityResFromDB));
     }
 
 
     @AfterSuite
-    public  void afterTest() throws Exception {
+    public void afterTest() throws Exception {
         pageDao.delete(pageEntityTopFromDB);
         pageDao.delete(pageEntityResFromDB);
         resourcesPage.logOut();

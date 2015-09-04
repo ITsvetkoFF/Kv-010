@@ -33,7 +33,94 @@ public class ProblemEntity {
     private int problem_type_id;
     private int regionId;
 
-//    private ProblemTypeEntity problem_type;
-//    private RegionEntity region;
+    private ProblemTypeEntity problem_type;
+    private RegionEntity region;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getProposal() {
+        return proposal;
+    }
+
+    public void setProposal(String proposal) {
+        this.proposal = proposal;
+    }
+
+    public SeverityTypes getSeverity() {
+        return severity;
+    }
+
+    public void setSeverity(SeverityTypes severity) {
+        this.severity = severity;
+    }
+
+    public Point getLocation() {
+        return location;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public int getProblem_type_id() {
+        return problem_type_id;
+    }
+
+    public void setProblem_type_id(int problem_type_id) {
+        this.problem_type_id = problem_type_id;
+    }
+
+    public int getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(int regionId) {
+        this.regionId = regionId;
+    }
+
+    public ProblemTypeEntity getProblem_type() {
+        return problem_type;
+    }
+
+    public void setProblem_type(ProblemTypeEntity problem_type) {
+        this.problem_type = problem_type;
+    }
+
+    public RegionEntity getRegion() {
+        return region;
+    }
+
+    public void setRegion(RegionEntity region) {
+        this.region = region;
+    }
 }
