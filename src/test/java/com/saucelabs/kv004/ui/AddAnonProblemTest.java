@@ -6,6 +6,7 @@ import com.saucelabs.pages.ProblemPage;
 import com.saucelabs.utility.Constant;
 import com.saucelabs.utility.SingletonWebDriver;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -30,8 +31,8 @@ public class AddAnonProblemTest {
     AdminPage adminPage;
     WebDriver driver = SingletonWebDriver.getInstance();
 
-    String problemName1 = new String("problem name 1");
-    String problemName2 = new String("problem name 2");
+    String problemName1 = new String("the 1st problem name");
+    String problemName2 = new String("thr 2nd problem name");
 
     //DataProvider for createProblem() test class
     //Latitude and longitude must be different each time. So if test failed, try to change them.
@@ -39,11 +40,11 @@ public class AddAnonProblemTest {
     public static Object[][] testDataExample() {
         return new Object[][]{
                 new Object[]{
-                        "test problem type",
-                        "test problem description",
-                        "test problem propose",
-                        47.3,
-                        31.1
+                        "problem type",
+                        "problem description",
+                        "problem propose",
+                        46.4,
+                        33.7
                 }
         };
     }
@@ -52,18 +53,18 @@ public class AddAnonProblemTest {
     @Test(dataProvider = "TestData")
     public void createProblem(String problemTypeTest, String problemDescriptionTest, String problemProposeTest,
                               double latitude, double longitude)
-            throws SQLException, ClassNotFoundException {
+                              throws SQLException, ClassNotFoundException {
 
         driver.get(Constant.URLlocal);
-        anyPage = new AnyPage(driver);
 
+        anyPage     = new AnyPage(driver);
         problemPage = new ProblemPage(driver);
         anyPage.addProblemToVisibleCenter(latitude, longitude, problemName1, problemTypeTest,
-                problemDescriptionTest, problemProposeTest, null, null);
+                                          problemDescriptionTest, problemProposeTest, null, null);
 
-        problemPage = new ProblemPage(driver);
-        anyPage.addProblemToVisibleCenter(latitude + 0.3, longitude - 0.3, problemName2, problemTypeTest,
-                problemDescriptionTest, problemProposeTest, null, null);
+        //problemPage = new ProblemPage(driver);
+        anyPage.addProblemToVisibleCenter(latitude + 0.1, longitude - 0.1, problemName2, problemTypeTest,
+                                          problemDescriptionTest, problemProposeTest, null, null);
 
         driver.navigate().refresh();
     }
@@ -73,8 +74,28 @@ public class AddAnonProblemTest {
     public void adminAddProblem() throws IOException {
 
         anyPage.logIn(Constant.Username, Constant.Password);
+        Assert.assertEquals(anyPage.getLoggedInUserName().toUpperCase(),
+                ("admin").toUpperCase());
+
         adminPage = new AdminPage(driver);
         adminPage.approveProblem(problemName1);
+
+        try {
+            Thread.sleep(5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int id = problemPage.getProblemId(46.4, 33.7);
+
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        problemPage.openProblemById(id);
+        Assert.assertEquals(problemPage.getProblemTitle(), problemName1);
     }
 
     @Test(sequential = true, dependsOnMethods = {"adminAddProblem"})
@@ -87,4 +108,3 @@ public class AddAnonProblemTest {
         driver.close();
     }
 }
-
