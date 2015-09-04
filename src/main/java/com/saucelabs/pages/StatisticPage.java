@@ -50,8 +50,9 @@ public class StatisticPage implements IStatisticPage{
     @Override
     public void likeFirstPopProblemAndBackToStatisticPage() {
         driver.findElement(FIELD_OF_FIRST_POP_PROBLEM).click();
+        waitSecond(3);
         driver.findElement(LIKE_PROBLEM).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(BUTTON_STATISTICS));
+        waitSecond(1);
         driver.findElement(BUTTON_STATISTICS).click();
     }
 
@@ -77,7 +78,6 @@ public class StatisticPage implements IStatisticPage{
      */
     @Override
     public int getLikesNumberFirstPopProblem() {
-        wait.until(ExpectedConditions.elementToBeClickable(LIKES_NUMBER));
         tempString = driver.findElement(LIKES_NUMBER).getText();
         number = Integer.parseInt(tempString.substring(1));
         return number;
