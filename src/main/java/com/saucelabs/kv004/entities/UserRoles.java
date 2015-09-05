@@ -53,7 +53,7 @@ public class UserRoles implements java.io.Serializable {
 		this.role = role;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userRoles")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "userRoles")
 	public Set<Users> getUserses() {
 		return this.userses;
 	}

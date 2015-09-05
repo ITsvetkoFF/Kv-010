@@ -14,9 +14,9 @@
         <property name="hibernate.connection.useUnicode">true</property>
         <property name="hibernate.connection.characterEncoding">UTF-8</property>
         <property name="hibernate.connection.charSet">UTF-8</property>
-        <property name="hibernate.cache.use_query_cache">false</property>
+        <!--<property name="hibernate.cache.use_query_cache">false</property>-->
         <property name="hibernate.connection.isolation">1</property>
-        <property name="hibernate.cache.use_second_level_cache">false</property>
+        <!--<property name="hibernate.cache.use_second_level_cache">false</property>-->
         <mapping class="com.saucelabs.kv004.entities.Activities" />
         <mapping class="com.saucelabs.kv004.entities.Photos" />
         <mapping class="com.saucelabs.kv004.entities.Problems" />
